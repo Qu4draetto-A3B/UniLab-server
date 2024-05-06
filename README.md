@@ -29,10 +29,10 @@ Server monitoraggio climatico
 - area **FK PK**
 - date **PK**
 - operator **FK PK**
-- vento
-- umidità
-- pressione
-- temperatura
-- precipitazioni
-- altitudine dei ghiacciai
-- massa dei ghiacciai
+- wind
+- humidity
+- pressure
+- temperature
+- precipitation
+- glaciersAltitude
+- glaciersMass
