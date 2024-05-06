@@ -1,7 +1,4 @@
-# Use postgres/example user/password credentials
 version: '3.9'
-
-env_file: ./docker.env
 
 services:
 
@@ -10,8 +7,7 @@ services:
     restart: unless-stopped
     # set shared memory limit when using docker-compose
     shm_size: 256mb
-    environment:
-      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    env_file: ./postgres.env
 
   adminer:
     image: adminer
