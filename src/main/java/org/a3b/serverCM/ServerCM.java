@@ -18,17 +18,13 @@ public class ServerCM {
 
 		log.info("Starting server");
 		try (ServerSocket server = new ServerSocket(8080)) {
-			while (true) {
-				if (Thread.interrupted())
-					throw new InterruptedException("Main interrupted");
+			while (!Thread.interrupted()) {
 				log.trace("Waiting connection");
 				pool.execute(server.accept());
 			}
 		} catch (IOException e) {
 			log.error("Stopping server due to IOException");
 			log.error(e.toString());
-		} catch (InterruptedException e) {
-			log.info("Stopping server gracefully after interrupt");
 		} finally {
 			pool.close();
 		}
