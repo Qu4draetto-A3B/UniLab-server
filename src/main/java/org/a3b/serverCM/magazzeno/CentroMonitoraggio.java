@@ -14,6 +14,7 @@
  */
 package org.a3b.serverCM.magazzeno;
 
+import lombok.Data;
 import org.a3b.serverCM.utils.DataTable;
 
 import java.io.Serial;
@@ -23,6 +24,7 @@ import java.io.Serializable;
  * La classe {@code CentroMonitoraggio} rappresenta un centro di monitoraggio
  * identificato da nome, indirizzo e aree associate.
  */
+@Data
 public class CentroMonitoraggio implements DataTable, Serializable {
 	@Serial
 	private static final long serialVersionUID = 1L;

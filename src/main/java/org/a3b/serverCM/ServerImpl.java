@@ -1,11 +1,13 @@
 package org.a3b.serverCM;
 
+import lombok.extern.log4j.Log4j2;
 import org.a3b.serverCM.magazzeno.*;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 
+@Log4j2
 public class ServerImpl extends UnicastRemoteObject implements ServicesCM {
     public ServerImpl() throws RemoteException {
         super();

@@ -14,6 +14,8 @@
  */
 package org.a3b.serverCM.magazzeno;
 
+import lombok.Data;
+
 import java.io.Serial;
 import java.io.Serializable;
 
@@ -21,7 +23,7 @@ import java.io.Serializable;
  * La classe {@code Indirizzo} rappresenta un indirizzo identificato
  * da: nome della via, numero civico, CAP, comune di appartenenza e provincia.
  */
-
+@Data
 public class Indirizzo implements Serializable {
 	@Serial
 	private static final long serialVersionUID = 1L;

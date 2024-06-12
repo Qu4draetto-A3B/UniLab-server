@@ -14,6 +14,7 @@
  */
 package org.a3b.serverCM.magazzeno;
 
+import lombok.Data;
 import org.a3b.serverCM.utils.DataTable;
 
 import java.io.Serial;
@@ -26,6 +27,7 @@ import java.io.Serializable;
  * Questa classe implementa l'interfaccia {@link DataTable} per consentire la
  * gestione dei dati.
  */
+@Data
 public class AreaGeografica implements DataTable, Serializable {
 	@Serial
 	private static final long serialVersionUID = 1L;

@@ -19,6 +19,7 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
+import lombok.Data;
 import org.a3b.serverCM.utils.DataTable;
 import org.a3b.serverCM.utils.TipoDatoGeografico;
 
@@ -30,6 +31,7 @@ import org.a3b.serverCM.utils.TipoDatoGeografico;
  * Questa classe implementa l'interfaccia {@link DataTable} per consentire la
  * gestione dei dati.
  */
+@Data
 public class DatoGeografico implements DataTable, Serializable {
 	@Serial
 	private static final long serialVersionUID = 1L;

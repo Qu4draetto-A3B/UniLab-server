@@ -18,6 +18,8 @@ import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
+import lombok.Data;
+import lombok.Getter;
 import org.a3b.serverCM.utils.DataTable;
 import org.a3b.serverCM.utils.result.Result;
 
@@ -27,11 +29,48 @@ import org.a3b.serverCM.utils.result.Result;
  * associato.
  */
 
+@Data
 public class Operatore implements DataTable, Serializable {
 	@Serial
 	private static final long serialVersionUID = 1L;
-	private String nome, cognome, email, cf, uid;
-	private CentroMonitoraggio centro;
+    /**
+     * -- GETTER --
+     *  Restituisce il nome dell'operatore.
+     *
+     * @return {@link #nome} relativo all'{@code Operatore}
+     */
+    private String nome, /**
+     * -- GETTER --
+     *  Restituisce il cognome dell'operatore.
+     *
+     * @return {@link #cognome} relativo all'{@code Operatore}
+     */
+            cognome, /**
+     * -- GETTER --
+     *  Restituisce la e-mail dell'operatore.
+     *
+     * @return {@link #email} relativo all'{@code Operatore}
+     */
+            email, /**
+     * -- GETTER --
+     *  Restituisce il codice fiscale dell'operatore.
+     *
+     * @return {@link #cf} relativo all'{@code Operatore}
+     */
+            cf, /**
+     * -- GETTER --
+     *  Restituisce lo user ID dell'operatore.
+     *
+     * @return {@link #uid} relativo all'{@code Operatore}
+     */
+            uid;
+    /**
+     * -- GETTER --
+     *  Restituisce il centro di monitoraggio a cui &egrave associato l'operatore.
+     *
+     * @return {@link #centro} relativo all'{@code Operatore}
+     */
+    private CentroMonitoraggio centro;
 
 	/**
 	 * Costruttore di un'istanza di {@code Operatore}
@@ -80,61 +119,7 @@ public class Operatore implements DataTable, Serializable {
 		return DataBase.misurazioni.addMisurazione(mis);
 	}
 
-	/**
-	 * Restituisce il codice fiscale dell'operatore.
-	 *
-	 * @return {@link #cf} relativo all'{@code Operatore}
-	 */
-	public String getCf() {
-		return cf;
-	}
-
-	/**
-	 * Restituisce il centro di monitoraggio a cui &egrave associato l'operatore.
-	 *
-	 * @return {@link #centro} relativo all'{@code Operatore}
-	 */
-	public CentroMonitoraggio getCentro() {
-		return centro;
-	}
-
-	/**
-	 * Restituisce il cognome dell'operatore.
-	 *
-	 * @return {@link #cognome} relativo all'{@code Operatore}
-	 */
-	public String getCognome() {
-		return cognome;
-	}
-
-	/**
-	 * Restituisce la e-mail dell'operatore.
-	 *
-	 * @return {@link #email} relativo all'{@code Operatore}
-	 */
-	public String getEmail() {
-		return email;
-	}
-
-	/**
-	 * Restituisce il nome dell'operatore.
-	 *
-	 * @return {@link #nome} relativo all'{@code Operatore}
-	 */
-	public String getNome() {
-		return nome;
-	}
-
-	/**
-	 * Restituisce lo user ID dell'operatore.
-	 *
-	 * @return {@link #uid} relativo all'{@code Operatore}
-	 */
-	public String getUid() {
-		return uid;
-	}
-
-	@Override
+    @Override
 	public String toString() {
 		String str = String.format(
 				"%s: (\n\tCF: %s\n\tUserID: %s\n\tNome: %s\n\tCognome: %s\n\tEmail: %s\n\tCentro: %s\n)",

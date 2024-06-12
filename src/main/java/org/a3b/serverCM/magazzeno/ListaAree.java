@@ -18,6 +18,7 @@ import java.io.Serial;
 import java.io.Serializable;
 import java.util.NoSuchElementException;
 
+import lombok.Data;
 import org.a3b.serverCM.utils.CercaAree;
 import org.a3b.serverCM.utils.ListaCustom.*;
 import org.a3b.serverCM.utils.result.Result;
@@ -35,6 +36,7 @@ import java.util.Iterator;
  * {@link Convertable} forniscono metodi per effettuare
  * operazioni di ricerca e convertire le istanze.
  */
+@Data
 public class ListaAree implements Iterable<AreaGeografica>, CercaAree, Serializable {
 	@Serial
 	private static final long serialVersionUID = 1L;

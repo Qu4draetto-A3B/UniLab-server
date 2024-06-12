@@ -19,6 +19,7 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+import lombok.Data;
 import org.a3b.serverCM.utils.DataTable;
 
 /**
@@ -26,7 +27,7 @@ import org.a3b.serverCM.utils.DataTable;
  * da: ID, dato geografico, data e ora, operatore, centro di monitoraggio e area
  * geografica.
  */
-
+@Data
 public class Misurazione implements DataTable, Serializable {
 	@Serial
 	private static final long serialVersionUID = 1L;
