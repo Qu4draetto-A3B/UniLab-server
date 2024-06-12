@@ -20,7 +20,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import lombok.Data;
-import org.a3b.serverCM.utils.DataTable;
 import org.a3b.serverCM.utils.TipoDatoGeografico;
 
 /**
@@ -32,7 +31,7 @@ import org.a3b.serverCM.utils.TipoDatoGeografico;
  * gestione dei dati.
  */
 @Data
-public class DatoGeografico implements DataTable, Serializable {
+public class DatoGeografico implements Serializable {
 	@Serial
 	private static final long serialVersionUID = 1L;
 	private long rid;
@@ -76,7 +75,7 @@ public class DatoGeografico implements DataTable, Serializable {
 	 * @param massaGhiacciai       valore da 0 (valore nullo, di default) a 5
 	 *                             relativo alla criticita' della massa dei
 	 *                             ghiacciai
-	 * @param altituidineGhiacciai valore da 0 (valore nullo, di default) a 5
+	 * @param altitudineGhiacciai valore da 0 (valore nullo, di default) a 5
 	 *                             relativo alla criticita' dell'altitudine dei
 	 *                             ghiacciai
 	 * @param precipitazioni       valore da 0 (valore nullo, di default) a 5
@@ -220,39 +219,16 @@ public class DatoGeografico implements DataTable, Serializable {
 	 */
 
 	public byte getDato(TipoDatoGeografico tipo) {
-		byte dato = 0;
-
-		switch (tipo) {
-			case MassaGhiacciai:
-				dato = massaGhiacciai;
-				break;
-
-			case AltitudineGhiacciai:
-				dato = altitudineGhiacciai;
-				break;
-
-			case Precipitazioni:
-				dato = precipitazioni;
-				break;
-
-			case Pressione:
-				dato = pressione;
-				break;
-
-			case Temperatura:
-				dato = temperatura;
-				break;
-
-			case Umidita:
-				dato = umidita;
-				break;
-
-			case Vento:
-				dato = vento;
-				break;
-		}
-
-		return dato;
+		byte dato = switch (tipo) {
+            case MassaGhiacciai -> massaGhiacciai;
+            case AltitudineGhiacciai -> altitudineGhiacciai;
+            case Precipitazioni -> precipitazioni;
+            case Pressione -> pressione;
+            case Temperatura -> temperatura;
+            case Umidita -> umidita;
+            case Vento -> vento;
+        };
+        return dato;
 	}
 
 	/**
@@ -313,13 +289,10 @@ public class DatoGeografico implements DataTable, Serializable {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (!(obj instanceof DatoGeografico)) {
+		if (!(obj instanceof DatoGeografico dato)) {
 			return super.equals(obj);
 		}
-
-		DatoGeografico dato = (DatoGeografico) obj;
-
-		return dato.getRid() == rid;
+        return dato.getRid() == rid;
 	}
 
 	@Override

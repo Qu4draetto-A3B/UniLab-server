@@ -19,10 +19,6 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 
 import lombok.Data;
-import lombok.Getter;
-import org.a3b.serverCM.utils.DataTable;
-import org.a3b.serverCM.utils.result.Result;
-
 /**
  * La classe {@code Operatore} rappresenta un operatore identificato
  * da: nome, cognome, e-mail, codice fiscale, user ID e centro di monitoraggio
@@ -30,48 +26,15 @@ import org.a3b.serverCM.utils.result.Result;
  */
 
 @Data
-public class Operatore implements DataTable, Serializable {
+public class Operatore implements Serializable {
 	@Serial
 	private static final long serialVersionUID = 1L;
-    /**
-     * -- GETTER --
-     *  Restituisce il nome dell'operatore.
-     *
-     * @return {@link #nome} relativo all'{@code Operatore}
-     */
-    private String nome, /**
-     * -- GETTER --
-     *  Restituisce il cognome dell'operatore.
-     *
-     * @return {@link #cognome} relativo all'{@code Operatore}
-     */
-            cognome, /**
-     * -- GETTER --
-     *  Restituisce la e-mail dell'operatore.
-     *
-     * @return {@link #email} relativo all'{@code Operatore}
-     */
-            email, /**
-     * -- GETTER --
-     *  Restituisce il codice fiscale dell'operatore.
-     *
-     * @return {@link #cf} relativo all'{@code Operatore}
-     */
-            cf, /**
-     * -- GETTER --
-     *  Restituisce lo user ID dell'operatore.
-     *
-     * @return {@link #uid} relativo all'{@code Operatore}
-     */
-            uid;
-    /**
-     * -- GETTER --
-     *  Restituisce il centro di monitoraggio a cui &egrave associato l'operatore.
-     *
-     * @return {@link #centro} relativo all'{@code Operatore}
-     */
+    private String nome;
+	private String cognome;
+	private String email;
+	private String cf;
+	private String uid;
     private CentroMonitoraggio centro;
-
 	/**
 	 * Costruttore di un'istanza di {@code Operatore}
 	 *
@@ -115,17 +78,14 @@ public class Operatore implements DataTable, Serializable {
 	 * @param tempo data e ora in cui avviene l'inserimento dei dati nel database
 	 */
 	public Misurazione inserisciParametri(AreaGeografica area, DatoGeografico dato, LocalDateTime tempo) {
-		Misurazione mis = new Misurazione(0, tempo, this, centro, area, dato);
-		return mis;
+        return new Misurazione(0, tempo, this, centro, area, dato);
 	}
 
     @Override
 	public String toString() {
-		String str = String.format(
+        return String.format(
 				"%s: (\n\tCF: %s\n\tUserID: %s\n\tNome: %s\n\tCognome: %s\n\tEmail: %s\n\tCentro: %s\n)",
 				super.toString(), cf, uid, nome, cognome, email, centro.getNome());
-
-		return str;
 	}
 
 	public String toStringPretty() {
@@ -136,15 +96,9 @@ public class Operatore implements DataTable, Serializable {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (!(obj instanceof Operatore)) {
+		if (!(obj instanceof Operatore op)) {
 			return super.equals(obj);
 		}
-
-		Operatore op = (Operatore) obj;
-
-		if (cf.equals(op.getCf()))
-			return true;
-
-		return false;
-	}
+        return cf.equals(op.getCf());
+    }
 }

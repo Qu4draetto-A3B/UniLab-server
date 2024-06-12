@@ -15,7 +15,6 @@
 package org.a3b.serverCM.magazzeno;
 
 import lombok.Data;
-import org.a3b.serverCM.utils.DataTable;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -28,7 +27,7 @@ import java.io.Serializable;
  * gestione dei dati.
  */
 @Data
-public class AreaGeografica implements DataTable, Serializable {
+public class AreaGeografica implements Serializable {
 	@Serial
 	private static final long serialVersionUID = 1L;
 	private long geoID;
@@ -70,15 +69,9 @@ public class AreaGeografica implements DataTable, Serializable {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (!(obj instanceof AreaGeografica)) {
+		if (!(obj instanceof AreaGeografica ag)) {
 			return super.equals(obj);
 		}
-
-		AreaGeografica ag = (AreaGeografica) obj;
-
-		if (this.geoID == ag.getGeoID())
-			return true;
-		else
-			return false;
+        return this.geoID == ag.getGeoID();
 	}
 }
