@@ -67,15 +67,4 @@ public class ServerImpl extends UnicastRemoteObject implements ServicesCM {
     public Misurazione getMisurazione(int recordID) throws RemoteException {
         return null;
     }
-
-    public static void main(String[] args){
-        try {
-            Registry reg = LocateRegistry.createRegistry(1099);
-            ServerImpl s = new ServerImpl();
-            reg.rebind("server",s);
-        } catch (RemoteException e) {
-            throw new RuntimeException(e);
-        }
-
-    }
 }

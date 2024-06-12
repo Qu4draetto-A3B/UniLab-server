@@ -40,7 +40,7 @@ public class ServerCM {
 		db = DriverManager.getConnection(url, props);
 
 		registry = LocateRegistry.createRegistry(Registry.REGISTRY_PORT);
-		registry.rebind("CM", new UnicastRemoteObject() {});
+		registry.rebind("CM", new ServerImpl());
 
 		log.trace("ServerCM initialized");
 	}
