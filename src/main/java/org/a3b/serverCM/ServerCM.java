@@ -3,6 +3,7 @@ package org.a3b.serverCM;
 import io.github.cdimascio.dotenv.Dotenv;
 import lombok.Data;
 import lombok.extern.log4j.Log4j2;
+import org.a3b.serverCM.magazzeno.Operatore;
 
 import java.io.IOException;
 import java.net.ServerSocket;
