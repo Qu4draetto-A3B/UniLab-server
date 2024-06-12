@@ -18,13 +18,16 @@ import java.util.Properties;
 public class ServerCM {
 	public static Connection db;
 	public static Registry registry;
+	private static ServerImpl server;
 
 	public static void main(String[] args) {
+		Runtime.getRuntime().addShutdownHook(new Thread(() -> System.exit(0)));
 		try {
 			init();
+			log.info(server.getAreaGeografica(123456));
+			throw new Exception("Ha!");
 		} catch (Exception e) {
-			e.printStackTrace();
-			//log.error(e);
+			log.error("Error! ", e);
 		}
 	}
 
@@ -39,8 +42,9 @@ public class ServerCM {
 		props.setProperty("password", env.get("POSTGRES_PASSWORD"));
 		db = DriverManager.getConnection(url, props);
 
+		server = new ServerImpl();
 		registry = LocateRegistry.createRegistry(Registry.REGISTRY_PORT);
-		registry.rebind("CM", new ServerImpl());
+		registry.rebind("CM", server);
 
 		log.trace("ServerCM initialized");
 	}

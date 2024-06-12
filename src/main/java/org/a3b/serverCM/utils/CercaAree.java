@@ -41,5 +41,5 @@ public interface CercaAree {
 	 * @param longitudine longitudine di una coordinata geografica
 	 */
 
-	public Result<AreaGeografica> cercaAreeGeografiche(double latitudine, double longitudine);
+	public ListaAree cercaAreeGeografiche(double latitudine, double longitudine);
 }

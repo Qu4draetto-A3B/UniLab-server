@@ -6,6 +6,9 @@ import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 @Log4j2
 public class ServerImpl extends UnicastRemoteObject implements ServicesCM {
@@ -20,12 +23,33 @@ public class ServerImpl extends UnicastRemoteObject implements ServicesCM {
 
     @Override
     public AreaGeografica cercaAreaGeografica(long latitude, long longitude) throws RemoteException {
-        return null;
+        return new ListaAree().cercaAreeGeografiche(latitude, longitude).getFirst();
     }
 
     @Override
     public AreaGeografica getAreaGeografica(int geoID) throws RemoteException {
-        return null;
+        try (var stmt = ServerCM.db.prepareStatement(
+                """
+                   SELECT *
+                   FROM "CoordinateMonitoraggio"
+                   WHERE "GeoID" = ?;
+                   """
+        )) {
+            stmt.setInt(1, geoID);
+            ResultSet set = stmt.executeQuery();
+            set.next();
+            return new AreaGeografica(
+                    set.getLong("GeoID"),
+                    set.getDouble("Latitude"),
+                    set.getDouble("Longitude"),
+                    set.getString("CountryCode"),
+                    set.getString("Name")
+            );
+        } catch (SQLException e) {
+            e.printStackTrace();
+		}
+
+		return new AreaGeografica();
     }
 
     @Override

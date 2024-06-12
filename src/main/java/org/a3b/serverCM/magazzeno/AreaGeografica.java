@@ -54,49 +54,12 @@ public class AreaGeografica implements DataTable, Serializable {
 		this.denominazione = denominazione;
 	}
 
-	/**
-	 * Restituisce l'ID dell'area geografica.
-	 *
-	 * @return {@link #geoID} relativo all'{@code AreaGeografica}
-	 */
-	public long getGeoID() {
-		return geoID;
-	}
-
-	/**
-	 * Restituisce la latitudine dell'area geografica.
-	 *
-	 * @return {@link #latitudine} relativa all'{@code AreaGeografica}
-	 */
-	public double getLatitudine() {
-		return latitudine;
-	}
-
-	/**
-	 * Restituisce la longitudine dell'area geografica.
-	 *
-	 * @return {@link #longitudine} relativa all'{@code AreaGeografica}
-	 */
-	public double getLongitudine() {
-		return longitudine;
-	}
-
-	/**
-	 * Restituisce lo stato in cui si trova dell'area geografica.
-	 *
-	 * @return {@link #stato} relativo all'{@code AreaGeografica}
-	 */
-	public String getStato() {
-		return stato;
-	}
-
-	/**
-	 * Restituisce il nome dell'area geografica.
-	 *
-	 * @return {@link #denominazione} relativa all'{@code AreaGeografica}
-	 */
-	public String getDenominazione() {
-		return denominazione;
+	public AreaGeografica() {
+		geoID = 0;
+		latitudine = 0;
+		longitudine = 0;
+		stato = "//";
+		denominazione = "//";
 	}
 
 	@Override

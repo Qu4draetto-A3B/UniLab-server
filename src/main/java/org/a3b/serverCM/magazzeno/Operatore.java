@@ -114,9 +114,9 @@ public class Operatore implements DataTable, Serializable {
 	 * @param dato  {@link DatoGeografico} contenente i valori dei parametri climatici
 	 * @param tempo data e ora in cui avviene l'inserimento dei dati nel database
 	 */
-	public Result<Misurazione> inserisciParametri(AreaGeografica area, DatoGeografico dato, LocalDateTime tempo) {
+	public Misurazione inserisciParametri(AreaGeografica area, DatoGeografico dato, LocalDateTime tempo) {
 		Misurazione mis = new Misurazione(0, tempo, this, centro, area, dato);
-		return DataBase.misurazioni.addMisurazione(mis);
+		return mis;
 	}
 
     @Override

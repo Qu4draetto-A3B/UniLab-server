@@ -33,15 +33,13 @@ import java.util.Iterator;
  * <p>
  * Implementa l'interfaccia {@link Iterable} per consentire l'iterazione delle
  * aree geografiche nella lista, mentre le interfacce {@link CercaAree} e
- * {@link Convertable} forniscono metodi per effettuare
- * operazioni di ricerca e convertire le istanze.
  */
 @Data
 public class ListaAree implements Iterable<AreaGeografica>, CercaAree, Serializable {
 	@Serial
 	private static final long serialVersionUID = 1L;
-	Nodo<AreaGeografica> head;
-	Nodo<AreaGeografica> tail;
+	private Nodo<AreaGeografica> head;
+	private Nodo<AreaGeografica> tail;
 
 	/**
 	 * Controlla se la lista di aree georgafiche &egrave vuota.
@@ -199,18 +197,19 @@ public class ListaAree implements Iterable<AreaGeografica>, CercaAree, Serializa
 	}
 
 	@Override
-	public Result<AreaGeografica> cercaAreeGeografiche(double latitudine, double longitudine) {
+	public ListaAree cercaAreeGeografiche(double latitudine, double longitudine) throws IllegalArgumentException {
+		ListaAree lr = new ListaAree();
 
 		if ((latitudine < -90) || (latitudine > 90)) {
-			return new Result<>(1, "hai inserito valori errati riprova");
+			throw new IllegalArgumentException("Incorrect latitude");
 		}
 		if ((longitudine < -180) || (longitudine > 180)) {
-			return new Result<>(1, "hai inserito valori errati riprova");
+			throw new IllegalArgumentException("Incorrect longitude");
 		}
 
 		for (AreaGeografica areaGeografica : this) {
 			if ((latitudine == areaGeografica.getLatitudine()) && (longitudine == areaGeografica.getLongitudine()))
-				return new Result<>(areaGeografica);
+				lr.addFirst(areaGeografica);
 		}
 
 		AreaGeografica ag = this.getFirst();
@@ -237,7 +236,7 @@ public class ListaAree implements Iterable<AreaGeografica>, CercaAree, Serializa
 			}
 
 		}
-		return new Result<>(ag);
+		return lr;
 
 	}
 
