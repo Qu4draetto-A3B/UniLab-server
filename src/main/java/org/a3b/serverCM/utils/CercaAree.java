@@ -16,8 +16,6 @@ package org.a3b.serverCM.utils;
 
 import  org.a3b.serverCM.magazzeno.AreaGeografica;
 import  org.a3b.serverCM.magazzeno.ListaAree;
-import  org.a3b.serverCM.utils.result.Result;
-
 /**
  * L'interfaccia {@code CercaAree} modella la ricerca di aree geografiche.
  */
@@ -41,5 +39,5 @@ public interface CercaAree {
 	 * @param longitudine longitudine di una coordinata geografica
 	 */
 
-	public Result<AreaGeografica> cercaAreeGeografiche(double latitudine, double longitudine);
+	public AreaGeografica cercaAreaGeografica(double latitudine, double longitudine);
 }

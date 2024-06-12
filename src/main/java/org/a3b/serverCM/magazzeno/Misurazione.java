@@ -20,7 +20,6 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 import lombok.Data;
-import org.a3b.serverCM.utils.DataTable;
 
 /**
  * La classe {@code Misurazione} rappresenta una misurazione identificata
@@ -28,7 +27,7 @@ import org.a3b.serverCM.utils.DataTable;
  * geografica.
  */
 @Data
-public class Misurazione implements DataTable, Serializable {
+public class Misurazione implements Serializable {
 	@Serial
 	private static final long serialVersionUID = 1L;
 	private long rid;
@@ -139,10 +138,9 @@ public class Misurazione implements DataTable, Serializable {
 
 	@Override
 	public String toString() {
-		String str = String.format(
+        return String.format(
 				"%s <<<\n- DateTime: \n%s\n- AreaGeografica: \n%s\n- Operatore: \n%s\n- Centro: \n%s\n- Dato: \n%s\n>>> %s",
 				super.toString(), getTimeString(),
 				area, operatore, centro, dato, super.toString());
-		return str;
 	}
 }

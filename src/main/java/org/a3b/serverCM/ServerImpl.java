@@ -15,54 +15,63 @@ public class ServerImpl extends UnicastRemoteObject implements ServicesCM {
 
     @Override
     public AreaGeografica cercaAreaGeografica(String name, String country) throws RemoteException {
-        return null;
+        return new ListaAree().cercaAreaGeografica(name, country).getFirst();
     }
 
     @Override
-    public AreaGeografica cercaAreaGeografica(long latitude, long longitude) throws RemoteException {
-        return null;
+    public AreaGeografica cercaAreaGeografica(double latitude, double longitude) throws RemoteException {
+        return new ListaAree().cercaAreaGeografica(latitude, longitude);
     }
 
+    //TODO
     @Override
     public AreaGeografica getAreaGeografica(int geoID) throws RemoteException {
         return null;
     }
 
+    //TODO
     @Override
     public Misurazione visualizzaAreaGeografica(int geoID) throws RemoteException {
         return null;
     }
 
+    //TODO
     @Override
     public Operatore registrazione(Operatore operator, String password) throws RemoteException {
         return null;
     }
 
+    //TODO
     @Override
     public Operatore login(int userID, String password) throws RemoteException {
         return null;
     }
 
+    //TODO
     @Override
     public CentroMonitoraggio registraCentroAree(String name, String street, int civic, int zipcode, String town, String province, ListaAree areas) throws RemoteException {
         return null;
     }
 
+    //TODO
     @Override
     public boolean alterListaAreeCentro(CentroMonitoraggio center, ListaAree newlist) throws RemoteException {
         return false;
     }
 
+    //TODO
     @Override
     public ListaAree getListaAree(int centerID) throws RemoteException {
         return null;
     }
 
+    //TODO
     @Override
     public boolean inserisciParametriClimatici(Misurazione misurazione) throws RemoteException {
         return false;
     }
 
+    //TODO
     @Override
     public Misurazione getMisurazione(int recordID) throws RemoteException {
         return null;

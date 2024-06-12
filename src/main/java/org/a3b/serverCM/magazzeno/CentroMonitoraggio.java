@@ -15,7 +15,6 @@
 package org.a3b.serverCM.magazzeno;
 
 import lombok.Data;
-import org.a3b.serverCM.utils.DataTable;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -25,7 +24,7 @@ import java.io.Serializable;
  * identificato da nome, indirizzo e aree associate.
  */
 @Data
-public class CentroMonitoraggio implements DataTable, Serializable {
+public class CentroMonitoraggio implements Serializable {
 	@Serial
 	private static final long serialVersionUID = 1L;
 	private String nome;
@@ -109,15 +108,10 @@ public class CentroMonitoraggio implements DataTable, Serializable {
 	@Override
 	public boolean equals(Object obj) {
 
-		if (!(obj instanceof CentroMonitoraggio)) {
+		if (!(obj instanceof CentroMonitoraggio cm)) {
 			return super.equals(obj);
 		}
 
-		CentroMonitoraggio cm = (CentroMonitoraggio) obj;
-
-		if (nome.equals(cm.getNome()))
-			return true;
-
-		return false;
-	}
+        return nome.equals(cm.getNome());
+    }
 }

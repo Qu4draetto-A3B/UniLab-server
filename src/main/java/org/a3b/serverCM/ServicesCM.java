@@ -6,7 +6,7 @@ import java.rmi.RemoteException;
 
 public interface ServicesCM extends Remote {
     AreaGeografica cercaAreaGeografica(String name, String country) throws RemoteException;
-    AreaGeografica cercaAreaGeografica(long latitude, long longitude) throws RemoteException;
+    AreaGeografica cercaAreaGeografica(double latitude, double longitude) throws RemoteException;
     AreaGeografica getAreaGeografica(int geoID) throws RemoteException;
     Misurazione visualizzaAreaGeografica(int geoID) throws RemoteException;
     Operatore registrazione(Operatore operator, String password) throws RemoteException;
