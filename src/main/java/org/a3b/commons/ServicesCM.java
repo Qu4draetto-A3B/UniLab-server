@@ -6,9 +6,9 @@ import java.rmi.Remote;
 import java.rmi.RemoteException;
 
 public interface ServicesCM extends Remote {
-	AreaGeografica cercaAreaGeografica(String name, String country) throws RemoteException;
+	ListaAree cercaAreaGeografica(String name, String country) throws RemoteException;
 
-	AreaGeografica cercaAreaGeografica(double latitude, double longitude) throws RemoteException;
+	ListaAree cercaAreaGeografica(double latitude, double longitude) throws RemoteException;
 
 	AreaGeografica getAreaGeografica(int geoID) throws RemoteException;
 
@@ -18,7 +18,7 @@ public interface ServicesCM extends Remote {
 
 	Operatore login(int userID, String password) throws RemoteException;
 
-	CentroMonitoraggio registraCentroAree(String name, String street, int civic, int zipcode, String town, String province, ListaAree areas) throws RemoteException;
+	CentroMonitoraggio registraCentroAree(CentroMonitoraggio centro) throws RemoteException;
 
 	boolean alterListaAreeCentro(CentroMonitoraggio center, ListaAree newlist) throws RemoteException;
 

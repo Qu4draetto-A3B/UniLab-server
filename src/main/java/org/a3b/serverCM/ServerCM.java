@@ -16,17 +16,14 @@ public class ServerCM {
 	private static ServerImpl server;
 
 	public static void main(String[] args) {
-		Runtime.getRuntime().addShutdownHook(new Thread(() -> System.exit(0)));
 		try {
 			init();
-			log.info(server.getAreaGeografica(123456));
-			throw new Exception("Ha!");
 		} catch (Exception e) {
-			log.error("Error! ", e);
+			log.fatal("Error! ", e);
 		}
 	}
 
-	private static void init() throws Exception {
+	public static void init() throws Exception {
 		log.trace("Initializing ServerCM");
 
 		Dotenv env = Dotenv.configure().filename("postgres.env").load();
