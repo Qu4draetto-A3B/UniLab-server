@@ -14,12 +14,12 @@
  */
 package org.a3b.serverCM.magazzeno;
 
+import lombok.Data;
+import org.a3b.serverCM.utils.CercaAree;
+
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.LinkedList;
-
-import lombok.Data;
-import org.a3b.serverCM.utils.CercaAree;
 
 /**
  * La classe {@code ListaAree} rappresenta una lista di istanze di
@@ -52,7 +52,7 @@ public class ListaAree extends LinkedList<AreaGeografica> implements CercaAree, 
 	}
 
 	@Override
-	public ListaAree cercaAreaGeografica(String denominazione, String stato) {
+	public ListaAree cercaAreeGeografiche(String denominazione, String stato) {
 
 		ListaAree la = new ListaAree();
 		ListaAree lt = this;
@@ -81,7 +81,8 @@ public class ListaAree extends LinkedList<AreaGeografica> implements CercaAree, 
 	}
 
 	@Override
-	public AreaGeografica cercaAreaGeografica(double latitudine, double longitudine) {
+	public ListaAree cercaAreeGeografiche(double latitudine, double longitudine) {
+		var list = new ListaAree();
 
 		if ((latitudine < -90) || (latitudine > 90)) {
 			throw new IllegalArgumentException("hai inserito valori errati riprova");
@@ -91,8 +92,10 @@ public class ListaAree extends LinkedList<AreaGeografica> implements CercaAree, 
 		}
 
 		for (AreaGeografica areaGeografica : this) {
-			if ((latitudine == areaGeografica.getLatitudine()) && (longitudine == areaGeografica.getLongitudine()))
-				return areaGeografica;
+			if ((latitudine == areaGeografica.getLatitudine()) && (longitudine == areaGeografica.getLongitudine())) {
+				list.add(areaGeografica);
+				return list;
+			}
 		}
 
 		AreaGeografica ag = this.getFirst();
@@ -116,10 +119,11 @@ public class ListaAree extends LinkedList<AreaGeografica> implements CercaAree, 
 			if (min > dist) {
 				min = dist;
 				ag = areaGeografica;
+				list.add(ag);
 			}
 
 		}
-		return ag;
+		return list;
 
 	}
 

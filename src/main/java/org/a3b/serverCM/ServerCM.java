@@ -1,15 +1,10 @@
 package org.a3b.serverCM;
 
 import io.github.cdimascio.dotenv.Dotenv;
-import lombok.Data;
 import lombok.extern.log4j.Log4j2;
-import org.a3b.serverCM.magazzeno.Operatore;
 
-import java.io.IOException;
-import java.net.ServerSocket;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
-import java.rmi.server.UnicastRemoteObject;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.util.Properties;
@@ -34,7 +29,7 @@ public class ServerCM {
 	private static void init() throws Exception {
 		log.trace("Initializing ServerCM");
 
-		Dotenv env = Dotenv.configure().filename("postgres.env").ignoreIfMissing().load();
+		Dotenv env = Dotenv.configure().filename("postgres.env").load();
 
 		String url = "jdbc:postgresql://localhost/dbCM";
 		Properties props = new Properties();

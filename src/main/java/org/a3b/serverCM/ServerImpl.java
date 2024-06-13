@@ -1,14 +1,13 @@
 package org.a3b.serverCM;
 
 import lombok.extern.log4j.Log4j2;
+import org.a3b.commons.ServicesCM;
 import org.a3b.serverCM.magazzeno.*;
+
 import java.rmi.RemoteException;
-import java.rmi.registry.LocateRegistry;
-import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 
 @Log4j2
 public class ServerImpl extends UnicastRemoteObject implements ServicesCM {
@@ -18,7 +17,7 @@ public class ServerImpl extends UnicastRemoteObject implements ServicesCM {
 
     @Override
     public AreaGeografica cercaAreaGeografica(String name, String country) throws RemoteException {
-        return new ListaAree().cercaAreaGeografica(name, country).getFirst();
+        return new ListaAree().cercaAreeGeografiche(name, country).getFirst();
     }
 
     @Override
@@ -30,10 +29,10 @@ public class ServerImpl extends UnicastRemoteObject implements ServicesCM {
     public AreaGeografica getAreaGeografica(int geoID) throws RemoteException {
         try (var stmt = ServerCM.db.prepareStatement(
                 """
-                   SELECT *
-                   FROM "CoordinateMonitoraggio"
-                   WHERE "GeoID" = ?;
-                   """
+                        SELECT *
+                        FROM "CoordinateMonitoraggio"
+                        WHERE "GeoID" = ?;
+                        """
         )) {
             stmt.setInt(1, geoID);
             ResultSet set = stmt.executeQuery();
@@ -46,7 +45,7 @@ public class ServerImpl extends UnicastRemoteObject implements ServicesCM {
                     set.getString("Name")
             );
         } catch (SQLException e) {
-            e.printStackTrace();
+            log.error("Error!", e);
 		}
 
 		return new AreaGeografica();

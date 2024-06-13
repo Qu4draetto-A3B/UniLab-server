@@ -14,13 +14,13 @@
  */
 package org.a3b.serverCM.magazzeno;
 
+import lombok.Data;
+import org.a3b.serverCM.utils.TipoDatoGeografico;
+
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
-
-import lombok.Data;
-import org.a3b.serverCM.utils.TipoDatoGeografico;
 
 /**
  * La classe {@code DatGeografico} rappresenta un dato geografico
@@ -71,30 +71,30 @@ public class DatoGeografico implements Serializable {
 	/**
 	 * Costruttore di un'istanza di {@code DatoGeografico}.
 	 *
-	 * @param rid                  ID relativo al record del dato
-	 * @param massaGhiacciai       valore da 0 (valore nullo, di default) a 5
-	 *                             relativo alla criticita' della massa dei
-	 *                             ghiacciai
+	 * @param rid                 ID relativo al record del dato
+	 * @param massaGhiacciai      valore da 0 (valore nullo, di default) a 5
+	 *                            relativo alla criticita' della massa dei
+	 *                            ghiacciai
 	 * @param altitudineGhiacciai valore da 0 (valore nullo, di default) a 5
-	 *                             relativo alla criticita' dell'altitudine dei
-	 *                             ghiacciai
-	 * @param precipitazioni       valore da 0 (valore nullo, di default) a 5
-	 *                             relativo alla criticita' delle precipitazioni
-	 * @param temperatura          valore da 0 (valore nullo, di default) a 5
-	 *                             relativo alla criticita' della temperatura
-	 * @param pressione            valore da 0 (valore nullo, di default) a 5
-	 *                             relativo alla criticita' della pressione
-	 * @param umidita              valore da 0 (valore nullo, di default) a 5
-	 *                             relativo alla criticita' dell'umidita'
-	 * @param vento                valore da 0 (valore nullo, di default) a 5
-	 *                             relativo alla criticita' dei venti
-	 * @param note                 {@link HashMap} contenente le note relative al
-	 *                             dato geografico
+	 *                            relativo alla criticita' dell'altitudine dei
+	 *                            ghiacciai
+	 * @param precipitazioni      valore da 0 (valore nullo, di default) a 5
+	 *                            relativo alla criticita' delle precipitazioni
+	 * @param temperatura         valore da 0 (valore nullo, di default) a 5
+	 *                            relativo alla criticita' della temperatura
+	 * @param pressione           valore da 0 (valore nullo, di default) a 5
+	 *                            relativo alla criticita' della pressione
+	 * @param umidita             valore da 0 (valore nullo, di default) a 5
+	 *                            relativo alla criticita' dell'umidita'
+	 * @param vento               valore da 0 (valore nullo, di default) a 5
+	 *                            relativo alla criticita' dei venti
+	 * @param note                {@link HashMap} contenente le note relative al
+	 *                            dato geografico
 	 */
 
 	public DatoGeografico(long rid, byte massaGhiacciai, byte altitudineGhiacciai, byte precipitazioni,
-			byte temperatura,
-			byte pressione, byte umidita, byte vento, HashMap<TipoDatoGeografico, String> note) {
+						  byte temperatura,
+						  byte pressione, byte umidita, byte vento, HashMap<TipoDatoGeografico, String> note) {
 		/*
 		 * I byte vengono inizializzati a 0 implicitamente,
 		 * se tutti i dati sono 0 anche la loro somma sara' 0,
@@ -169,10 +169,10 @@ public class DatoGeografico implements Serializable {
 	 * <p>
 	 * Controlla che il valore fornito sia valido e lo assegna al relativo tipo.
 	 *
-	 * @throws IllegalArgumentException se il valore del dato non &egrave compreso
-	 *                                  tra 0 e 5
 	 * @param tipo {@link TipoDatoGeografico}
 	 * @param dato valore del dato geografico
+	 * @throws IllegalArgumentException se il valore del dato non &egrave compreso
+	 *                                  tra 0 e 5
 	 */
 
 	private void setDato(TipoDatoGeografico tipo, byte dato) {
@@ -220,15 +220,15 @@ public class DatoGeografico implements Serializable {
 
 	public byte getDato(TipoDatoGeografico tipo) {
 		byte dato = switch (tipo) {
-            case MassaGhiacciai -> massaGhiacciai;
-            case AltitudineGhiacciai -> altitudineGhiacciai;
-            case Precipitazioni -> precipitazioni;
-            case Pressione -> pressione;
-            case Temperatura -> temperatura;
-            case Umidita -> umidita;
-            case Vento -> vento;
-        };
-        return dato;
+			case MassaGhiacciai -> massaGhiacciai;
+			case AltitudineGhiacciai -> altitudineGhiacciai;
+			case Precipitazioni -> precipitazioni;
+			case Pressione -> pressione;
+			case Temperatura -> temperatura;
+			case Umidita -> umidita;
+			case Vento -> vento;
+		};
+		return dato;
 	}
 
 	/**
@@ -250,7 +250,7 @@ public class DatoGeografico implements Serializable {
 	 * @param key  {@link TipoDatoGeografico} (chiave per inserire la nota)
 	 * @param nota nota relative al dato geografico
 	 * @return {@code boolean} che indica se la nota &egrave stata impostata
-	 *         correttamente
+	 * correttamente
 	 */
 
 	private boolean setNota(TipoDatoGeografico key, String nota) {
@@ -292,7 +292,7 @@ public class DatoGeografico implements Serializable {
 		if (!(obj instanceof DatoGeografico dato)) {
 			return super.equals(obj);
 		}
-        return dato.getRid() == rid;
+		return dato.getRid() == rid;
 	}
 
 	@Override
@@ -312,7 +312,7 @@ public class DatoGeografico implements Serializable {
 	 *
 	 * @param dato {@link DatoGeografico} con cui confrontare le note
 	 * @return {@code boolean} che indica se le note dei dati geografici sono
-	 *         uaguali
+	 * uaguali
 	 */
 
 	public boolean noteEquals(DatoGeografico dato) {
@@ -332,7 +332,7 @@ public class DatoGeografico implements Serializable {
 	 *
 	 * @param dato {@link DatoGeografico} con cui confrontare i valori dei dati
 	 * @return {@code boolean} che indica se i valori dei dati dei dati geografici
-	 *         sono uguali
+	 * sono uguali
 	 */
 
 	public boolean datoEquals(DatoGeografico dato) {

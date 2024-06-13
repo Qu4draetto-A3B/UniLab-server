@@ -14,9 +14,8 @@
  */
 package org.a3b.serverCM.utils;
 
-import  org.a3b.serverCM.magazzeno.AreaGeografica;
-import  org.a3b.serverCM.magazzeno.ListaAree;
-import  org.a3b.serverCM.utils.result.Result;
+import org.a3b.serverCM.magazzeno.AreaGeografica;
+import org.a3b.serverCM.magazzeno.ListaAree;
 
 /**
  * L'interfaccia {@code CercaAree} modella la ricerca di aree geografiche.
@@ -26,20 +25,20 @@ public interface CercaAree {
 	/**
 	 * Ricerca un'area geografica in base a denominazione e stato di appartenenza forniti.
 	 *
-	 * @return aree nel cui nome &egrave presente la stringa di caratteri fornita
 	 * @param denominazione nome relativo a un'{@link AreaGeografica}
 	 * @param stato         stato di appartenenza di un'{@link AreaGeografica}
+	 * @return aree nel cui nome &egrave presente la stringa di caratteri fornita
 	 */
-	public ListaAree cercaAreaGeografica(String denominazione, String stato);
+	ListaAree cercaAreeGeografiche(String denominazione, String stato);
 
 	/**
 	 * Ricerca delle aree geografiche in base alle coordinate geografiche fornite.
 	 *
-	 * @return nome dell'{@link AreaGeografica} corrispondente alle coordinate geografiche corrispondenti o delle aree geografiche corrispondenti
-	 *         con coordinate più vicine
 	 * @param latitudine  latitudine di una coordinata geografica
 	 * @param longitudine longitudine di una coordinata geografica
+	 * @return nome dell'{@link AreaGeografica} corrispondente alle coordinate geografiche corrispondenti o delle aree geografiche corrispondenti
+	 * con coordinate più vicine
 	 */
 
-	public ListaAree cercaAreeGeografiche(double latitudine, double longitudine);
+	ListaAree cercaAreeGeografiche(double latitudine, double longitudine);
 }

@@ -14,12 +14,12 @@
  */
 package org.a3b.serverCM.magazzeno;
 
+import lombok.Data;
+
 import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-
-import lombok.Data;
 
 /**
  * La classe {@code Misurazione} rappresenta una misurazione identificata
@@ -65,7 +65,7 @@ public class Misurazione implements Serializable {
 	 * @param dato      dato geografico relativo alla misurazione
 	 */
 	public Misurazione(long rid, LocalDateTime dateTime, Operatore operatore, CentroMonitoraggio centro,
-			AreaGeografica area, DatoGeografico dato) {
+					   AreaGeografica area, DatoGeografico dato) {
 		this.dato = dato;
 		this.operatore = operatore;
 		this.area = area;
@@ -138,7 +138,7 @@ public class Misurazione implements Serializable {
 
 	@Override
 	public String toString() {
-        return String.format(
+		return String.format(
 				"%s <<<\n- DateTime: \n%s\n- AreaGeografica: \n%s\n- Operatore: \n%s\n- Centro: \n%s\n- Dato: \n%s\n>>> %s",
 				super.toString(), getTimeString(),
 				area, operatore, centro, dato, super.toString());

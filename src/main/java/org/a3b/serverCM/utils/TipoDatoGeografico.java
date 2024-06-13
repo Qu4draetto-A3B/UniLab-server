@@ -12,7 +12,7 @@
  * Some rights reserved.
  * See LICENSE file for additional information.
  */
-package  org.a3b.serverCM.utils;
+package org.a3b.serverCM.utils;
 
 /**
  * L'enumerativo {@code TipoDatoGeografico}rappresenta il tipo di un {@link DatoGeografico}.
@@ -25,5 +25,5 @@ public enum TipoDatoGeografico {
 	Pressione,
 	Temperatura,
 	Umidita,
-	Vento;
+	Vento
 }

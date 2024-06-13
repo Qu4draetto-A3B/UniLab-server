@@ -13,6 +13,7 @@
  * See LICENSE file for additional information.
  */
 package org.a3b.serverCM.utils;
+
 import org.a3b.serverCM.magazzeno.AreaGeografica;
 import org.a3b.serverCM.magazzeno.DatoGeografico;
 
@@ -21,5 +22,5 @@ import org.a3b.serverCM.magazzeno.DatoGeografico;
  */
 public interface MediaAree {
 
-	public DatoGeografico visualizzaAreaGeografica(AreaGeografica area);
+	DatoGeografico visualizzaAreaGeografica(AreaGeografica area);
 }

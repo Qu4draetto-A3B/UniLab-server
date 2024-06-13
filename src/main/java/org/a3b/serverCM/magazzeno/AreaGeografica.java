@@ -72,6 +72,6 @@ public class AreaGeografica implements Serializable {
 		if (!(obj instanceof AreaGeografica ag)) {
 			return super.equals(obj);
 		}
-        return this.geoID == ag.getGeoID();
+		return this.geoID == ag.getGeoID();
 	}
 }

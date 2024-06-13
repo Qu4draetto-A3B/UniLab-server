@@ -14,11 +14,12 @@
  */
 package org.a3b.serverCM.magazzeno;
 
+import lombok.Data;
+
 import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
-import lombok.Data;
 /**
  * La classe {@code Operatore} rappresenta un operatore identificato
  * da: nome, cognome, e-mail, codice fiscale, user ID e centro di monitoraggio
@@ -29,12 +30,13 @@ import lombok.Data;
 public class Operatore implements Serializable {
 	@Serial
 	private static final long serialVersionUID = 1L;
-    private String nome;
+	private String nome;
 	private String cognome;
 	private String email;
 	private String cf;
 	private String uid;
-    private CentroMonitoraggio centro;
+	private CentroMonitoraggio centro;
+
 	/**
 	 * Costruttore di un'istanza di {@code Operatore}
 	 *
@@ -78,12 +80,12 @@ public class Operatore implements Serializable {
 	 * @param tempo data e ora in cui avviene l'inserimento dei dati nel database
 	 */
 	public Misurazione inserisciParametri(AreaGeografica area, DatoGeografico dato, LocalDateTime tempo) {
-        return new Misurazione(0, tempo, this, centro, area, dato);
+		return new Misurazione(0, tempo, this, centro, area, dato);
 	}
 
-    @Override
+	@Override
 	public String toString() {
-        return String.format(
+		return String.format(
 				"%s: (\n\tCF: %s\n\tUserID: %s\n\tNome: %s\n\tCognome: %s\n\tEmail: %s\n\tCentro: %s\n)",
 				super.toString(), cf, uid, nome, cognome, email, centro.getNome());
 	}
@@ -99,6 +101,6 @@ public class Operatore implements Serializable {
 		if (!(obj instanceof Operatore op)) {
 			return super.equals(obj);
 		}
-        return cf.equals(op.getCf());
-    }
+		return cf.equals(op.getCf());
+	}
 }

@@ -112,6 +112,6 @@ public class CentroMonitoraggio implements Serializable {
 			return super.equals(obj);
 		}
 
-        return nome.equals(cm.getNome());
-    }
+		return nome.equals(cm.getNome());
+	}
 }
