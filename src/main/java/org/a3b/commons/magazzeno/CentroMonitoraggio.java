@@ -59,36 +59,6 @@ public class CentroMonitoraggio implements Serializable {
 		aree = new ListaAree();
 	}
 
-	/**
-	 * Restituisce il nome del centro di monitoraggio.
-	 *
-	 * @return {@link #nome} relativo al centro di monitoraggio
-	 */
-
-	public String getNome() {
-		return nome;
-	}
-
-	/**
-	 * Restituisce la lista di aree associate al centro di monitoraggio.
-	 *
-	 * @return {@link #aree} associate al {@code CentroMonitoraggio}
-	 */
-
-	public ListaAree getListaAree() {
-		return this.aree;
-	}
-
-	/**
-	 * Restituisce l'indirizzo relativo al centro di monitoraggio.
-	 *
-	 * @return {@link #indirizzo} relativo al {@code CentroMonitoraggio}
-	 */
-
-	public Indirizzo getIndirizzo() {
-		return indirizzo;
-	}
-
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder(String.format(
@@ -113,5 +83,61 @@ public class CentroMonitoraggio implements Serializable {
 		}
 
 		return nome.equals(cm.getNome());
+	}
+}
+
+/**
+ * La classe {@code Indirizzo} rappresenta un indirizzo identificato
+ * da: nome della via, numero civico, CAP, comune di appartenenza e provincia.
+ */
+@Data
+class Indirizzo implements Serializable {
+	@Serial
+	private static final long serialVersionUID = 1L;
+	private String nomeVia;
+	private int civico;
+	private int cap;
+	private String comune;
+	private String provincia;
+
+	/**
+	 * Costruttore di un'istanza di {@code Indirizzo} con valori predefiniti.
+	 * <p>
+	 * Il {@link #nomeVia} della via viene impostato su "<i>Via Durin I</i>", il {@link #civico} su "<i>42</i>",
+	 * il {@link #cap} su "<i>12345</i>", il {@link #comune} su "<i>Westfalia</i>" e la {@link #provincia} su "<i>Norrenia</i>".
+	 */
+
+	public Indirizzo() {
+		nomeVia = "Via Durin I";
+		civico = 42;
+		cap = 12345;
+		comune = "Westfalia";
+		provincia = "Norrenia";
+	}
+
+	/**
+	 * Costruttore di un'istanza di {@link Indirizzo}.
+	 *
+	 * @param nomeVia   nome della via relativa all'indirizzo
+	 * @param civico    numero civico relativo all'indirizzo
+	 * @param cap       CAP relativo all'indirizzo
+	 * @param comune    comune relativo all'indirizzo
+	 * @param provincia provincia relativa all'indirizzo
+	 */
+	public Indirizzo(String nomeVia, int civico, int cap, String comune, String provincia) {
+		if (cap >= 100000)
+			throw new IllegalArgumentException("CAP invalido");
+		this.nomeVia = nomeVia;
+		this.civico = civico;
+		this.cap = cap;
+		this.comune = comune;
+		this.provincia = provincia;
+	}
+
+	@Override
+	public String toString() {
+		return String.format(
+				"%s: (\n\tnomeVia: %s\n\tCivico: %d\n\tCap: %d\n\tComune: %s\n\tProvincia: %s\n)",
+				super.toString(), nomeVia, civico, cap, comune, provincia);
 	}
 }

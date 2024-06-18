@@ -57,8 +57,9 @@ public class ServerImpl extends UnicastRemoteObject implements ServicesCM {
 			}
 		} catch (SQLException e) {
 			log.error("Error!", e);
+			return new Result<>(e);
 		}
-		return la.cercaAreeGeografiche(latitude, longitude);
+		return new Result<>(la.cercaAreeGeografiche(latitude, longitude));
 	}
 
 	@Override
@@ -73,12 +74,11 @@ public class ServerImpl extends UnicastRemoteObject implements ServicesCM {
 			ResultSet set = stmt.executeQuery();
 			set.next();
 
-			return DataFactory.buildAreaGeografica(set);
+			return new Result<>(DataFactory.buildAreaGeografica(set));
 		} catch (SQLException e) {
 			log.error("Error!", e);
+			return new Result<>(e);
 		}
-
-		return new AreaGeografica();
 	}
 
 	//TODO

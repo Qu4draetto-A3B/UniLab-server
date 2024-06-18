@@ -15,10 +15,12 @@
 package org.a3b.commons.magazzeno;
 
 import lombok.Data;
+import org.a3b.commons.utils.TipoDatoGeografico;
 
 import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.HashMap;
 
 /**
  * La classe {@code Operatore} rappresenta un operatore identificato
@@ -76,11 +78,10 @@ public class Operatore implements Serializable {
 	 * Imposta i dati climatici di una determinata area nel database.
 	 *
 	 * @param area  {@link AreaGeografica} relativa ai dati
-	 * @param dato  {@link DatoGeografico} contenente i valori dei parametri climatici
 	 * @param tempo data e ora in cui avviene l'inserimento dei dati nel database
 	 */
-	public Misurazione inserisciParametri(AreaGeografica area, DatoGeografico dato, LocalDateTime tempo) {
-		return new Misurazione(0, tempo, this, centro, area, dato);
+	public Misurazione inserisciParametri(AreaGeografica area, LocalDateTime tempo, HashMap<TipoDatoGeografico, Byte> dati, HashMap<TipoDatoGeografico, String> note) {
+		return new Misurazione(0, tempo, this, centro, area, dati, note);
 	}
 
 	@Override

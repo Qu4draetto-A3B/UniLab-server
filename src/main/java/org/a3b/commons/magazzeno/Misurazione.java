@@ -15,11 +15,13 @@
 package org.a3b.commons.magazzeno;
 
 import lombok.Data;
+import org.a3b.commons.utils.TipoDatoGeografico;
 
 import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.HashMap;
 
 /**
  * La classe {@code Misurazione} rappresenta una misurazione identificata
@@ -28,26 +30,28 @@ import java.time.format.DateTimeFormatter;
  */
 @Data
 public class Misurazione implements Serializable {
+	public static final DateTimeFormatter DATE_TIME_FORMAT = DateTimeFormatter.RFC_1123_DATE_TIME;
 	@Serial
 	private static final long serialVersionUID = 1L;
 	private long rid;
-	private DatoGeografico dato;
+	private HashMap<TipoDatoGeografico, Byte> dati;
+	private HashMap<TipoDatoGeografico, String> note;
 	private LocalDateTime time;
 	private Operatore operatore;
 	private CentroMonitoraggio centro;
 	private AreaGeografica area;
-	public static final DateTimeFormatter DATE_TIME_FORMAT = DateTimeFormatter.ISO_INSTANT;
 
 	/**
 	 * Costruttore di un'istanza di {@code Misurazione}.
 	 *
 	 * @param rid       ID del record della misurazione
-	 * @param dato      dato geografico relativo alla misurazione
+	 * @param dati      dato geografico relativo alla misurazione
 	 * @param operatore operatore relativo alla misurazione
 	 * @param area      area geografica relativa alla misurazione
 	 */
-	public Misurazione(long rid, DatoGeografico dato, Operatore operatore, AreaGeografica area) {
-		this.dato = dato;
+	public Misurazione(long rid, Operatore operatore, AreaGeografica area, HashMap<TipoDatoGeografico, Byte> dati, HashMap<TipoDatoGeografico, String> note) {
+		this.dati = dati;
+		this.note = note;
 		this.operatore = operatore;
 		this.area = area;
 		time = LocalDateTime.now();
@@ -62,85 +66,41 @@ public class Misurazione implements Serializable {
 	 * @param operatore operatore relativo alla misurazione
 	 * @param centro    centro di monitoraggio relativo alla misurazione
 	 * @param area      area geografica relativa alla misurazione
-	 * @param dato      dato geografico relativo alla misurazione
+	 * @param dati      dato geografico relativo alla misurazione
 	 */
-	public Misurazione(long rid, LocalDateTime dateTime, Operatore operatore, CentroMonitoraggio centro,
-					   AreaGeografica area, DatoGeografico dato) {
-		this.dato = dato;
+	public Misurazione(long rid, LocalDateTime dateTime, Operatore operatore, CentroMonitoraggio centro, AreaGeografica area, HashMap<TipoDatoGeografico, Byte> dati, HashMap<TipoDatoGeografico, String> note) {
+		this.dati = dati;
+		this.note = note;
 		this.operatore = operatore;
 		this.area = area;
-		time = LocalDateTime.now();
-		centro = operatore.getCentro();
-	}
-
-	/**
-	 * Restituisce l'ID della misurazione.
-	 *
-	 * @return {@link #rid} relativo alla {@code Misurazione}
-	 */
-	public long getRid() {
-		return rid;
+		time = dateTime;
+		this.centro = centro;
 	}
 
 	/**
 	 * Restituisce il dato della misurazione.
 	 *
-	 * @return {@link #dato} relativo alla {@code Misurazione}
+	 * @return dato relativo alla {@code Misurazione}
 	 */
-	public DatoGeografico getDato() {
-		return this.dato;
+	public byte getDato(TipoDatoGeografico tipo) {
+		return dati.get(tipo);
 	}
 
-	/**
-	 * Restituisce data e ora della misurazione.
-	 *
-	 * @return {@link #time} relativo alla {@code Misurazione}
-	 */
-	public LocalDateTime getTime() {
-		return this.time;
+	public String getNota(TipoDatoGeografico tipo) {
+		return note.get(tipo);
 	}
 
-	/**
-	 * Restituisce la stringa relativa a data e ora della misurazione.
-	 *
-	 * @return stringa formattata relativa a data e ora della {@code Misurazione}
-	 */
 	public String getTimeString() {
 		return time.format(DATE_TIME_FORMAT);
 	}
 
-	/**
-	 * Restituisce l'operatore della misurazione.
-	 *
-	 * @return {@link #operatore} relativo alla {@code Misurazione}
-	 */
-	public Operatore getOperatore() {
-		return this.operatore;
-	}
-
-	/**
-	 * Restituisce il centro di monitoraggio della misurazione.
-	 *
-	 * @return {@link #centro} relativo alla {@code Misurazione}
-	 */
-	public CentroMonitoraggio getCentro() {
-		return this.centro;
-	}
-
-	/**
-	 * Restituisce l'area geografica della misurazione.
-	 *
-	 * @return {@link #area} relativo alla {@code Misurazione}
-	 */
-	public AreaGeografica getArea() {
-		return this.area;
-	}
-
-	@Override
 	public String toString() {
-		return String.format(
-				"%s <<<\n- DateTime: \n%s\n- AreaGeografica: \n%s\n- Operatore: \n%s\n- Centro: \n%s\n- Dato: \n%s\n>>> %s",
-				super.toString(), getTimeString(),
-				area, operatore, centro, dato, super.toString());
+		StringBuilder dato = new StringBuilder();
+
+		for (TipoDatoGeografico tipo : TipoDatoGeografico.values()) {
+			dato.append(String.format("%s: %d, '%s'", tipo.name(), getDato(tipo), getNota(tipo)));
+		}
+
+		return String.format("%s <<<\n- DateTime: \n%s\n- AreaGeografica: \n%s\n- Operatore: \n%s\n- Centro: \n%s\n- Dato: \n%s\n>>> %s", super.toString(), getTimeString(), area, operatore, centro, dato, super.toString());
 	}
 }

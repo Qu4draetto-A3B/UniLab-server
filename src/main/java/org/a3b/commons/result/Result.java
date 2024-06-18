@@ -133,6 +133,7 @@ public class Result<T> {
 	}
 
 	/**
+	 *
 	 */
 	public void panic() {
 		throw new Error(error);

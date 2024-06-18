@@ -15,12 +15,12 @@
 package org.a3b.commons.utils;
 
 import org.a3b.commons.magazzeno.AreaGeografica;
-import org.a3b.commons.magazzeno.DatoGeografico;
+import org.a3b.commons.magazzeno.Misurazione;
 
 /**
  * L'interfaccia {@link MediaAree} si occupa di calcolare la media dei dati di una {@link AreaGeografica}.
  */
 public interface MediaAree {
 
-	DatoGeografico visualizzaAreaGeografica(AreaGeografica area);
+	Misurazione visualizzaAreaGeografica(AreaGeografica area);
 }

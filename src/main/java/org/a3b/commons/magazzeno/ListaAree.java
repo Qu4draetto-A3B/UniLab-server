@@ -53,36 +53,38 @@ public class ListaAree extends LinkedList<AreaGeografica> implements CercaAree, 
 
 	@Override
 	public ListaAree cercaAreeGeografiche(String denominazione, String stato) {
+		if (denominazione == null) {
+			denominazione = "";
+		}
+		if (stato == null) {
+			stato = "";
+		}
+
+		denominazione = denominazione.strip();
+		stato = stato.strip();
 
 		ListaAree la = new ListaAree();
-		ListaAree lt = this;
 
-		if ((denominazione != null) && (!denominazione.isEmpty())) {
-			for (AreaGeografica areaGeografica : lt) {
-				if (areaGeografica.getDenominazione().toLowerCase().contains(denominazione.toLowerCase()))
+		if (!denominazione.isEmpty()) {
+			for (AreaGeografica areaGeografica : this) {
+				if (areaGeografica.getDenominazione().equalsIgnoreCase(denominazione))
 					la.addFirst(areaGeografica);
 			}
-
-			lt = la;
-			la = null;
 		}
 
-		if ((stato != null) && (!stato.isEmpty())) {
-			for (AreaGeografica areaGeografica : lt) {
-				if (areaGeografica.getStato().toLowerCase().contains(stato.toLowerCase()))
-					la.addFirst(areaGeografica);
+		if (!stato.isEmpty()) {
+			for (AreaGeografica areaGeografica : la) {
+				if (areaGeografica.getStato().equalsIgnoreCase(stato))
+					la.add(areaGeografica);
 			}
-
-			lt = la;
-			la = null;
 		}
 
-		return lt;
+		return la;
 	}
 
 	@Override
 	public ListaAree cercaAreeGeografiche(double latitudine, double longitudine) {
-		var list = new ListaAree();
+		ListaAree list = new ListaAree();
 
 		if ((latitudine < -90) || (latitudine > 90)) {
 			throw new IllegalArgumentException("hai inserito valori errati riprova");
