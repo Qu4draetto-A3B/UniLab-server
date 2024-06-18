@@ -12,7 +12,7 @@ import java.util.function.Supplier;
  */
 public class Result<T> {
 	private final T content;
-	private final ResultException error;
+	private final Throwable error;
 
 	/**
 	 * Costruttore di un'istanza di {@code Result} contenente un'operazione eseguita
@@ -25,10 +25,7 @@ public class Result<T> {
 		this(content, null);
 	}
 
-	/**
-	 * Costruttore di un'istanza di {@code Result} contenente un errore.
-	 */
-	public Result(ResultException error) {
+	public Result(Throwable error) {
 		this(null, error);
 	}
 
@@ -41,7 +38,7 @@ public class Result<T> {
 	 * @param content contenuto del {@code Result}, {@code null} se l'operazione non
 	 *                viene eseguita correttamente
 	 */
-	public Result(T content, ResultException error) {
+	public Result(T content, Throwable error) {
 		this.content = content;
 		this.error = error;
 	}
@@ -73,7 +70,7 @@ public class Result<T> {
 	 * @param fn funzione da eseguire con contenuto e codice di errore come
 	 *           parametri
 	 */
-	public void ifValid(BiConsumer<T, ResultException> fn) {
+	public void ifValid(BiConsumer<T, Throwable> fn) {
 		if (isValid()) {
 			fn.accept(content, error);
 		}
@@ -85,7 +82,7 @@ public class Result<T> {
 	 * @param fn funzione da eseguire con contenuto e codice di errore come
 	 *           parametri
 	 */
-	public void ifError(BiConsumer<T, ResultException> fn) {
+	public void ifError(BiConsumer<T, Throwable> fn) {
 		if (isError()) {
 			fn.accept(content, error);
 		}

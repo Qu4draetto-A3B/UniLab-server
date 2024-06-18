@@ -12,10 +12,10 @@
  * Some rights reserved.
  * See LICENSE file for additional information.
  */
-package org.a3b.serverCM.utils;
+package org.a3b.commons.utils;
 
-import org.a3b.serverCM.magazzeno.AreaGeografica;
-import org.a3b.serverCM.magazzeno.ListaAree;
+import org.a3b.commons.magazzeno.AreaGeografica;
+import org.a3b.commons.magazzeno.ListaAree;
 
 /**
  * L'interfaccia {@code CercaAree} modella la ricerca di aree geografiche.

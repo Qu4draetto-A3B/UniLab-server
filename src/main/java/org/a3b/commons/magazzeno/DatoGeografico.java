@@ -12,10 +12,10 @@
  * Some rights reserved.
  * See LICENSE file for additional information.
  */
-package org.a3b.serverCM.magazzeno;
+package org.a3b.commons.magazzeno;
 
 import lombok.Data;
-import org.a3b.serverCM.utils.TipoDatoGeografico;
+import org.a3b.commons.utils.TipoDatoGeografico;
 
 import java.io.Serial;
 import java.io.Serializable;

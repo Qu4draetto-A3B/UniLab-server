@@ -12,7 +12,7 @@
  * Some rights reserved.
  * See LICENSE file for additional information.
  */
-package org.a3b.serverCM.utils;
+package org.a3b.commons.utils;
 
 /**
  * L'enumerativo {@code TipoDatoGeografico}rappresenta il tipo di un {@link DatoGeografico}.

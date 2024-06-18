@@ -1,6 +1,6 @@
 package org.a3b.serverCM;
 
-import org.a3b.serverCM.magazzeno.AreaGeografica;
+import org.a3b.commons.magazzeno.AreaGeografica;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

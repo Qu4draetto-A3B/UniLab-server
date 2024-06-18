@@ -12,10 +12,10 @@
  * Some rights reserved.
  * See LICENSE file for additional information.
  */
-package org.a3b.serverCM.magazzeno;
+package org.a3b.commons.magazzeno;
 
 import lombok.Data;
-import org.a3b.serverCM.utils.CercaAree;
+import org.a3b.commons.utils.CercaAree;
 
 import java.io.Serial;
 import java.io.Serializable;

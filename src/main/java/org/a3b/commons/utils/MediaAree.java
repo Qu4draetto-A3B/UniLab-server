@@ -12,10 +12,10 @@
  * Some rights reserved.
  * See LICENSE file for additional information.
  */
-package org.a3b.serverCM.utils;
+package org.a3b.commons.utils;
 
-import org.a3b.serverCM.magazzeno.AreaGeografica;
-import org.a3b.serverCM.magazzeno.DatoGeografico;
+import org.a3b.commons.magazzeno.AreaGeografica;
+import org.a3b.commons.magazzeno.DatoGeografico;
 
 /**
  * L'interfaccia {@link MediaAree} si occupa di calcolare la media dei dati di una {@link AreaGeografica}.
