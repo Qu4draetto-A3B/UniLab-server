@@ -34,7 +34,7 @@ public class Operatore implements Serializable {
 	private String cognome;
 	private String email;
 	private String cf;
-	private String uid;
+	private long uid;
 	private CentroMonitoraggio centro;
 
 	/**
@@ -47,7 +47,7 @@ public class Operatore implements Serializable {
 	 * @param email   e-mail dell'operatore
 	 * @param centro  centro di monitoraggio a cui l'operatore &egrave associato
 	 */
-	public Operatore(String cf, String uid, String nome, String cognome, String email, CentroMonitoraggio centro) {
+	public Operatore(long uid, String nome, String cognome, String cf, String email, CentroMonitoraggio centro) {
 		this.cf = cf;
 		this.uid = uid;
 		this.nome = nome;
@@ -65,7 +65,7 @@ public class Operatore implements Serializable {
 	 */
 	public Operatore() {
 		cf = "CIVILE";
-		uid = "civile";
+		uid = 0000;
 		nome = "Civile";
 		cognome = "Civile";
 		email = "civile@example.com";
