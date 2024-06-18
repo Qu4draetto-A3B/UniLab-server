@@ -13,7 +13,7 @@ import java.util.Properties;
 public class ServerCM {
 	public static Connection db;
 	public static Registry registry;
-	private static ServerImpl server;
+	public static ServerImpl server;
 
 	public static void main(String[] args) {
 		try {

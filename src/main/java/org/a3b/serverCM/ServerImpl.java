@@ -128,4 +128,14 @@ public class ServerImpl extends UnicastRemoteObject implements ServicesCM {
 	public Result<Misurazione> getMisurazione(int recordID) throws RemoteException {
 		return null;
 	}
+
+	@Override
+	public Result<CentroMonitoraggio> getCentroMonitoraggio(long centerID) throws RemoteException {
+		return null;
+	}
+
+	@Override
+	public Result<Operatore> getOperatore(long userID) throws RemoteException {
+		return null;
+	}
 }

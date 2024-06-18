@@ -27,6 +27,7 @@ import java.io.Serializable;
 public class CentroMonitoraggio implements Serializable {
 	@Serial
 	private static final long serialVersionUID = 1L;
+	private long CenterID
 	private String nome;
 	private Indirizzo indirizzo;
 	private ListaAree aree;
@@ -39,7 +40,8 @@ public class CentroMonitoraggio implements Serializable {
 	 * @param lag       lista delle aree associate al centro di monitoraggio
 	 */
 
-	public CentroMonitoraggio(String nome, Indirizzo indirizzo, ListaAree lag) {
+	public CentroMonitoraggio(long CenterID, String nome, Indirizzo indirizzo, ListaAree lag) {
+		this.CenterID = CenterID;
 		this.nome = nome;
 		this.indirizzo = indirizzo;
 		this.aree = lag;
