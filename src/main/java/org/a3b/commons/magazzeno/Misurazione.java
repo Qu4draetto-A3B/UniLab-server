@@ -22,6 +22,7 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
+import java.util.Locale;
 
 /**
  * La classe {@code Misurazione} rappresenta una misurazione identificata
@@ -30,7 +31,7 @@ import java.util.HashMap;
  */
 @Data
 public class Misurazione implements Serializable {
-	public static final DateTimeFormatter DATE_TIME_FORMAT = DateTimeFormatter.RFC_1123_DATE_TIME;
+	public static final DateTimeFormatter DATE_TIME_FORMAT = DateTimeFormatter.RFC_1123_DATE_TIME.localizedBy(Locale.getDefault());
 	@Serial
 	private static final long serialVersionUID = 1L;
 	private long rid;
@@ -75,6 +76,30 @@ public class Misurazione implements Serializable {
 		this.area = area;
 		time = dateTime;
 		this.centro = centro;
+	}
+
+	public static HashMap<TipoDatoGeografico, Byte> buildDati(byte altitudineGhiacciai, byte massaGhiacciai, byte precipitazioni, byte pressione, byte temperatura, byte umidita, byte vento) {
+		HashMap<TipoDatoGeografico, Byte> dati = new HashMap<>();
+		dati.put(TipoDatoGeografico.AltitudineGhiacciai, altitudineGhiacciai);
+		dati.put(TipoDatoGeografico.MassaGhiacciai, massaGhiacciai);
+		dati.put(TipoDatoGeografico.Precipitazioni, precipitazioni);
+		dati.put(TipoDatoGeografico.Pressione, pressione);
+		dati.put(TipoDatoGeografico.Temperatura, temperatura);
+		dati.put(TipoDatoGeografico.Umidita, umidita);
+		dati.put(TipoDatoGeografico.Vento, vento);
+		return dati;
+	}
+
+	public static HashMap<TipoDatoGeografico, String> buildNote(String altitudineGhiacciai, String massaGhiacciai, String precipitazioni, String pressione, String temperatura, String umidita, String vento) {
+		HashMap<TipoDatoGeografico, String> dati = new HashMap<>();
+		dati.put(TipoDatoGeografico.AltitudineGhiacciai, altitudineGhiacciai);
+		dati.put(TipoDatoGeografico.MassaGhiacciai, massaGhiacciai);
+		dati.put(TipoDatoGeografico.Precipitazioni, precipitazioni);
+		dati.put(TipoDatoGeografico.Pressione, pressione);
+		dati.put(TipoDatoGeografico.Temperatura, temperatura);
+		dati.put(TipoDatoGeografico.Umidita, umidita);
+		dati.put(TipoDatoGeografico.Vento, vento);
+		return dati;
 	}
 
 	/**

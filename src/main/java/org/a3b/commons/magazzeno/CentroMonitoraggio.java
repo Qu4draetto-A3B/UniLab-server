@@ -27,10 +27,14 @@ import java.io.Serializable;
 public class CentroMonitoraggio implements Serializable {
 	@Serial
 	private static final long serialVersionUID = 1L;
-	private long CenterID
+	private long CenterID;
 	private String nome;
-	private Indirizzo indirizzo;
 	private ListaAree aree;
+	private String nomeVia;
+	private int civico;
+	private int cap;
+	private String comune;
+	private String provincia;
 
 	/**
 	 * Costruttore di un'istanza di {@code CentroMonitoraggio}.
@@ -40,11 +44,17 @@ public class CentroMonitoraggio implements Serializable {
 	 * @param lag       lista delle aree associate al centro di monitoraggio
 	 */
 
-	public CentroMonitoraggio(long CenterID, String nome, Indirizzo indirizzo, ListaAree lag) {
+	public CentroMonitoraggio(long CenterID, String nome, String via, int civico, int cap, String comune, String provincia, ListaAree lag) {
+		if (cap >= 100000)
+			throw new IllegalArgumentException("CAP invalido");
 		this.CenterID = CenterID;
 		this.nome = nome;
-		this.indirizzo = indirizzo;
 		this.aree = lag;
+		this.nomeVia = via;
+		this.civico = civico;
+		this.cap = cap;
+		this.comune = comune;
+		this.provincia = provincia;
 	}
 
 	/**
@@ -56,8 +66,12 @@ public class CentroMonitoraggio implements Serializable {
 	 */
 
 	public CentroMonitoraggio() {
-		nome = "Torre Civile";
-		indirizzo = new Indirizzo();
+		nome = "Centro non trovato";
+		nomeVia = "Via Delle Vie";
+		civico = 0;
+		cap = 0;
+		comune = "Atlantide";
+		provincia = "I Sette Mari";
 		aree = new ListaAree();
 	}
 
@@ -66,8 +80,7 @@ public class CentroMonitoraggio implements Serializable {
 		StringBuilder sb = new StringBuilder(String.format(
 				"%s: (\n\tNome: %s\n\tIndirizzo: %s, %d, %d, %s (%s)",
 				super.toString(), nome,
-				indirizzo.getNomeVia(), indirizzo.getCivico(),
-				indirizzo.getCap(), indirizzo.getComune(), indirizzo.getProvincia()));
+				nomeVia, civico, cap, comune, provincia));
 
 		for (AreaGeografica area : aree) {
 			sb.append(String.format("\n\t\t%s", area));
@@ -79,67 +92,10 @@ public class CentroMonitoraggio implements Serializable {
 
 	@Override
 	public boolean equals(Object obj) {
-
 		if (!(obj instanceof CentroMonitoraggio cm)) {
 			return super.equals(obj);
 		}
 
 		return nome.equals(cm.getNome());
-	}
-}
-
-/**
- * La classe {@code Indirizzo} rappresenta un indirizzo identificato
- * da: nome della via, numero civico, CAP, comune di appartenenza e provincia.
- */
-@Data
-class Indirizzo implements Serializable {
-	@Serial
-	private static final long serialVersionUID = 1L;
-	private String nomeVia;
-	private int civico;
-	private int cap;
-	private String comune;
-	private String provincia;
-
-	/**
-	 * Costruttore di un'istanza di {@code Indirizzo} con valori predefiniti.
-	 * <p>
-	 * Il {@link #nomeVia} della via viene impostato su "<i>Via Durin I</i>", il {@link #civico} su "<i>42</i>",
-	 * il {@link #cap} su "<i>12345</i>", il {@link #comune} su "<i>Westfalia</i>" e la {@link #provincia} su "<i>Norrenia</i>".
-	 */
-
-	public Indirizzo() {
-		nomeVia = "Via Durin I";
-		civico = 42;
-		cap = 12345;
-		comune = "Westfalia";
-		provincia = "Norrenia";
-	}
-
-	/**
-	 * Costruttore di un'istanza di {@link Indirizzo}.
-	 *
-	 * @param nomeVia   nome della via relativa all'indirizzo
-	 * @param civico    numero civico relativo all'indirizzo
-	 * @param cap       CAP relativo all'indirizzo
-	 * @param comune    comune relativo all'indirizzo
-	 * @param provincia provincia relativa all'indirizzo
-	 */
-	public Indirizzo(String nomeVia, int civico, int cap, String comune, String provincia) {
-		if (cap >= 100000)
-			throw new IllegalArgumentException("CAP invalido");
-		this.nomeVia = nomeVia;
-		this.civico = civico;
-		this.cap = cap;
-		this.comune = comune;
-		this.provincia = provincia;
-	}
-
-	@Override
-	public String toString() {
-		return String.format(
-				"%s: (\n\tnomeVia: %s\n\tCivico: %d\n\tCap: %d\n\tComune: %s\n\tProvincia: %s\n)",
-				super.toString(), nomeVia, civico, cap, comune, provincia);
 	}
 }

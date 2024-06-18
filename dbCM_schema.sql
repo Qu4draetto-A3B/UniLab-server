@@ -26,7 +26,7 @@ CREATE TABLE "public"."CentriMonitoraggio"
 ) WITH (oids = false);
 
 INSERT INTO "CentriMonitoraggio"
-VALUES (0, 'Centro non definito', 'Via Delle Vie', 0, '00000', 'Atlantide', 'I Sette Mari');
+VALUES (0, 'Centro non trovato', 'Via Delle Vie', 0, '00000', 'Atlantide', 'I Sette Mari');
 
 
 DROP TABLE IF EXISTS "CoordinateMonitoraggio";

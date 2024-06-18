@@ -63,14 +63,14 @@ public class ServerImpl extends UnicastRemoteObject implements ServicesCM {
 	}
 
 	@Override
-	public Result<AreaGeografica> getAreaGeografica(int geoID) throws RemoteException {
+	public Result<AreaGeografica> getAreaGeografica(long geoID) throws RemoteException {
 		String query = """
 				SELECT *
 				FROM "CoordinateMonitoraggio"
 				WHERE "GeoID" = ?;
 				""";
 		try (var stmt = ServerCM.db.prepareStatement(query)) {
-			stmt.setInt(1, geoID);
+			stmt.setLong(1, geoID);
 			ResultSet set = stmt.executeQuery();
 			set.next();
 
@@ -81,51 +81,43 @@ public class ServerImpl extends UnicastRemoteObject implements ServicesCM {
 		}
 	}
 
-	//TODO
 	@Override
-	public Result<Misurazione> visualizzaAreaGeografica(int geoID) throws RemoteException {
+	public Result<Misurazione> visualizzaAreaGeografica(long geoID) throws RemoteException {
 		return null;
 	}
 
-	//TODO
 	@Override
 	public Result<Operatore> registrazione(Operatore operator, String password) throws RemoteException {
 		return null;
 	}
 
-	//TODO
 	@Override
-	public Result<Operatore> login(int userID, String password) throws RemoteException {
+	public Result<Operatore> login(long userID, String password) throws RemoteException {
 		return null;
 	}
 
-	//TODO
 	@Override
 	public Result<CentroMonitoraggio> registraCentroAree(CentroMonitoraggio centro) throws RemoteException {
 		return null;
 	}
 
-	//TODO
 	@Override
 	public Result<Boolean> alterListaAreeCentro(CentroMonitoraggio center, ListaAree newlist) throws RemoteException {
 		return null;
 	}
 
-	//TODO
 	@Override
-	public Result<ListaAree> getListaAree(int centerID) throws RemoteException {
+	public Result<ListaAree> getListaAree(long centerID) throws RemoteException {
 		return null;
 	}
 
-	//TODO
 	@Override
 	public Result<Boolean> inserisciParametriClimatici(Misurazione misurazione) throws RemoteException {
 		return null;
 	}
 
-	//TODO
 	@Override
-	public Result<Misurazione> getMisurazione(int recordID) throws RemoteException {
+	public Result<Misurazione> getMisurazione(long recordID) throws RemoteException {
 		return null;
 	}
 

@@ -1,5 +1,9 @@
 package org.a3b.commons.result;
 
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.ToString;
+
 import java.util.Objects;
 import java.util.function.BiConsumer;
 import java.util.function.Supplier;
@@ -10,9 +14,12 @@ import java.util.function.Supplier;
  *
  * @param <T> tipo del contenuto del {@code Result}
  */
+@EqualsAndHashCode
+@ToString
 public class Result<T> {
 	private final T content;
-	private final Throwable error;
+	@Getter
+	private final ResultException error;
 
 	/**
 	 * Costruttore di un'istanza di {@code Result} contenente un'operazione eseguita
@@ -40,7 +47,7 @@ public class Result<T> {
 	 */
 	public Result(T content, Throwable error) {
 		this.content = content;
-		this.error = error;
+		this.error = new ResultException(error);
 	}
 
 	/**
@@ -128,14 +135,14 @@ public class Result<T> {
 	 *
 	 * @return contenuto del {@code Result}
 	 */
-	public T except() {
+	public T getOrNull() {
 		return content;
 	}
 
 	/**
-	 *
+	 * Alza la {@link ResultException} contenuta in questo {@code Result}
 	 */
 	public void panic() {
-		throw new Error(error);
+		throw error;
 	}
 }

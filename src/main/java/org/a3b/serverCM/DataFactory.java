@@ -28,7 +28,7 @@ public class DataFactory {
 		);
 	}
 
-	public static CentroMonitoraggio buildCentroMonitoraggio(ResultSet record) throws SQLException {
+	public static CentroMonitoraggio buildCentroMonitoraggio(ResultSet record) throws SQLException, RemoteException {
 		if (Objects.isNull(record)) {
 			throw new NullPointerException("record was null while trying to extract CentroMonitoraggio");
 		}
@@ -36,15 +36,16 @@ public class DataFactory {
 			throw new IllegalArgumentException("Invalid row in record while trying to extract CentroMonitoraggio");
 		}
 
+		long id = record.getLong("CenterID");
 		return new CentroMonitoraggio(
-				record.getLong("CenterID"),
+				id,
 				record.getString("Name"),
 				record.getString("Street"),
 				record.getInt("CivicNumber"),
-				record.getString("ZIPCode"),
+				Integer.parseInt(record.getString("ZIPCode")),
 				record.getString("Town"),
-				record.getString("Province")
-				//serve ListaAree per costruire l'oggetto
+				record.getString("Province"),
+				ServerCM.server.getListaAree(id).get()
 		);
 	}
 
@@ -76,25 +77,28 @@ public class DataFactory {
 
 		return new Misurazione(
 				record.getLong("RecordID"),
-				ServerCM.server.getCentroMonitoraggio(record.getLong("Center")).get(),
+				record.getTimestamp("Datetime").toLocalDateTime(), //misurazione usa localdatetime
 				ServerCM.server.getOperatore(record.getLong("Operator")).get(),
+				ServerCM.server.getCentroMonitoraggio(record.getLong("Center")).get(),
 				ServerCM.server.getAreaGeografica(record.getLong("Area")).get(),
-				record.getTimestamp("Datetime"), //misurazione usa localdatetime
-				record.getInt("Wind"),
-				record.getInt("Humidity"),
-				record.getInt("Pressure"),
-				record.getInt("Temperature"),
-				record.getInt("Precipitation"),
-				record.getInt("GlacierAltitude"),
-				record.getInt("GlacierMass"),
-				record.getString("WindNotes"),
-				record.getString("HumidityNotes"),
-				record.getString("PressureNotes"),
-				record.getString("TemperatureNotes"),
-				record.getString("PrecipitationNotes"),
-				record.getString("GlacierAltitudeNotes"),
-				record.getString("GlacierMassNotes"),
-				record.getString("GlacierMassNotes")
+				Misurazione.buildDati(
+						record.getByte("GlacierAltitude"),
+						record.getByte("GlacierMass"),
+						record.getByte("Precipitation"),
+						record.getByte("Pressure"),
+						record.getByte("Temperature"),
+						record.getByte("Humidity"),
+						record.getByte("Wind")
+				),
+				Misurazione.buildNote(
+						record.getString("GlacierAltitudeNotes"),
+						record.getString("GlacierMassNotes"),
+						record.getString("PrecipitationNotes"),
+						record.getString("PressureNotes"),
+						record.getString("TemperatureNotes"),
+						record.getString("HumidityNotes"),
+						record.getString("WindNotes")
+				)
 		);
 	}
 }
