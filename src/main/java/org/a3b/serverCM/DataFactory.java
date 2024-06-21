@@ -77,7 +77,7 @@ public class DataFactory {
 
 		return new Misurazione(
 				record.getLong("RecordID"),
-				record.getTimestamp("Datetime").toLocalDateTime(), //misurazione usa localdatetime
+				record.getTimestamp("Datetime").toLocalDateTime(),
 				ServerCM.server.getOperatore(record.getLong("Operator")).get(),
 				ServerCM.server.getCentroMonitoraggio(record.getLong("Center")).get(),
 				ServerCM.server.getAreaGeografica(record.getLong("Area")).get(),

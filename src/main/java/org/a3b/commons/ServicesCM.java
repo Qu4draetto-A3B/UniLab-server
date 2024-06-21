@@ -19,9 +19,7 @@ public interface ServicesCM extends Remote {
 
 	Result<CentroMonitoraggio> registraCentroAree(CentroMonitoraggio centro) throws RemoteException;
 
-	Result<Boolean> alterListaAreeCentro(CentroMonitoraggio center, ListaAree newlist) throws RemoteException;
-
-	Result<Boolean> inserisciParametriClimatici(Misurazione misurazione) throws RemoteException;
+	Result<Misurazione> inserisciParametriClimatici(Misurazione misurazione) throws RemoteException;
 
 	Result<Misurazione> getMisurazione(long recordID) throws RemoteException;
 

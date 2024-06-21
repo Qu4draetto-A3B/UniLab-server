@@ -15,7 +15,7 @@
 package org.a3b.commons.utils;
 
 /**
- * L'enumerativo {@code TipoDatoGeografico}rappresenta il tipo di un {@link DatoGeografico}.
+ * L'enumerativo {@code TipoDatoGeografico}rappresenta il tipo di un parametro climatico.
  */
 
 public enum TipoDatoGeografico {
