@@ -4,6 +4,7 @@ import lombok.extern.log4j.Log4j2;
 import org.a3b.commons.ServicesCM;
 import org.a3b.commons.magazzeno.*;
 import org.a3b.commons.result.Result;
+import org.a3b.commons.result.errors.DataNotFoundException;
 import org.a3b.commons.utils.TipoDatoGeografico;
 
 import java.rmi.RemoteException;
@@ -129,7 +130,29 @@ public class ServerImpl extends UnicastRemoteObject implements ServicesCM {
 
 	@Override
 	public Result<Operatore> login(long userID, String password) throws RemoteException {
-		return null;
+		String query = """
+				SELECT *
+				FROM "OperatoriRegistrati"
+				WHERE "UserID" = ? AND "Password" = ?;
+				""";
+
+		try (var stmt = ServerCM.db.prepareStatement(query)) {
+			stmt.setLong(1, userID);
+			stmt.setString(2, password);
+			log.debug(stmt.toString());
+
+			ResultSet set = stmt.executeQuery();
+			set.next();
+
+			if (set.getRow() == 0) {
+				return new Result<>(new DataNotFoundException("User " + userID + " not found"));
+			}
+
+			return new Result<>(DataFactory.buildOperatore(set));
+		} catch (SQLException e) {
+			log.error("Error!", e);
+			return new Result<>(e);
+		}
 	}
 
 	@Override

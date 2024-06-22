@@ -4,6 +4,8 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.util.Objects;
 import java.util.function.BiConsumer;
 import java.util.function.Supplier;
@@ -16,7 +18,9 @@ import java.util.function.Supplier;
  */
 @EqualsAndHashCode
 @ToString
-public class Result<T> {
+public class Result<T> implements Serializable {
+	@Serial
+	private static final long serialVersionUID = 1L;
 	private final T content;
 	@Getter
 	private final ResultException error;

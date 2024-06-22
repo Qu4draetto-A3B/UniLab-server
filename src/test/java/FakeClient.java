@@ -24,5 +24,6 @@ public class FakeClient {
 
 	private static void test() throws RemoteException {
 		log.debug(srv.cercaAreaGeografica(54, 45));
+		log.debug(srv.login(2, "password0"));
 	}
 }
