@@ -25,8 +25,6 @@ public interface ServicesCM extends Remote {
 
 	Result<CentroMonitoraggio> getCentroMonitoraggio(long centerID) throws RemoteException;
 
-	Result<Operatore> getOperatore(long userID) throws RemoteException;
-
 	Result<AreaGeografica> getAreaGeografica(long geoID) throws RemoteException;
 
 	Result<ListaAree> getListaAree(long centerID) throws RemoteException;

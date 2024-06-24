@@ -283,23 +283,4 @@ public class ServerImpl extends UnicastRemoteObject implements ServicesCM {
 			return new Result<>(e);
 		}
 	}
-
-	@Override
-	public Result<Operatore> getOperatore(long userID) throws RemoteException {
-		String query = """
-				SELECT *
-				FROM "ParamteriClimatici"
-				WHERE "UserID" = ?;
-				""";
-		try (var stmt = ServerCM.db.prepareStatement(query)) {
-			stmt.setLong(1, userID);
-			ResultSet set = stmt.executeQuery();
-			set.next();
-
-			return new Result<>(DataFactory.buildOperatore(set));
-		} catch (SQLException e) {
-			log.error("Error!", e);
-			return new Result<>(e);
-		}
-	}
 }

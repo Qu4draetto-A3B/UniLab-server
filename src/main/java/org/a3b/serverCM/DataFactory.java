@@ -4,12 +4,16 @@ import org.a3b.commons.magazzeno.AreaGeografica;
 import org.a3b.commons.magazzeno.CentroMonitoraggio;
 import org.a3b.commons.magazzeno.Misurazione;
 import org.a3b.commons.magazzeno.Operatore;
+import org.a3b.commons.result.Result;
+
+import lombok.extern.log4j.Log4j2;
 
 import java.rmi.RemoteException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Objects;
 
+@Log4j2
 public class DataFactory {
 	public static AreaGeografica buildAreaGeografica(ResultSet record) throws SQLException {
 		if (Objects.isNull(record)) {
@@ -78,7 +82,7 @@ public class DataFactory {
 		return new Misurazione(
 				record.getLong("RecordID"),
 				record.getTimestamp("Datetime").toLocalDateTime(),
-				ServerCM.server.getOperatore(record.getLong("Operator")).get(),
+				getOperatore(record.getLong("Operator")).get(),
 				ServerCM.server.getCentroMonitoraggio(record.getLong("Center")).get(),
 				ServerCM.server.getAreaGeografica(record.getLong("Area")).get(),
 				Misurazione.buildDati(
@@ -100,5 +104,23 @@ public class DataFactory {
 						record.getString("WindNotes")
 				)
 		);
+	}
+
+	private static Result<Operatore> getOperatore(long userID) throws RemoteException {
+		String query = """
+				SELECT *
+				FROM "ParamteriClimatici"
+				WHERE "UserID" = ?;
+				""";
+		try (var stmt = ServerCM.db.prepareStatement(query)) {
+			stmt.setLong(1, userID);
+			ResultSet set = stmt.executeQuery();
+			set.next();
+
+			return new Result<>(DataFactory.buildOperatore(set));
+		} catch (SQLException e) {
+			log.error("Error!", e);
+			return new Result<>(e);
+		}
 	}
 }
