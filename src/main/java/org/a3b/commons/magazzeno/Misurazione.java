@@ -78,6 +78,18 @@ public class Misurazione implements Serializable {
 		this.centro = centro;
 	}
 
+	/**
+	 * Raccolta dei parametri relativi ad una {@link Misurazione}
+	 *
+	 * @param altitudineGhiacciai altitudine dei ghiacciai
+	 * @param massaGhiacciai massa dei ghiacciai
+	 * @param precipitazioni volume delle precipitazioni
+	 * @param pressione pressione dell'area
+	 * @param temperatura gradi dell'area
+	 * @param umidita precentuale dell'umidita'
+	 * @param vento velocita' del vento
+	 * @return l'hash map con i relativi valori dei parametri inseriti
+	 */
 	public static HashMap<TipoDatoGeografico, Byte> buildDati(byte altitudineGhiacciai, byte massaGhiacciai, byte precipitazioni, byte pressione, byte temperatura, byte umidita, byte vento) {
 		HashMap<TipoDatoGeografico, Byte> dati = new HashMap<>();
 		dati.put(TipoDatoGeografico.AltitudineGhiacciai, altitudineGhiacciai);
@@ -90,6 +102,18 @@ public class Misurazione implements Serializable {
 		return dati;
 	}
 
+	/**
+	 * Raccolta delle note relative ad una {@link Misurazione}
+	 *
+	 * @param altitudineGhiacciai altitudine dei ghiacciai
+	 * @param massaGhiacciai massa dei ghiacciai
+	 * @param precipitazioni volume delle precipitazioni
+	 * @param pressione pressione dell'area
+	 * @param temperatura gradi dell'area
+	 * @param umidita precentuale dell'umidita'
+	 * @param vento velocita' del vento
+	 * @return l'hash map con i relativi valori dei parametri inseriti
+	 */
 	public static HashMap<TipoDatoGeografico, String> buildNote(String altitudineGhiacciai, String massaGhiacciai, String precipitazioni, String pressione, String temperatura, String umidita, String vento) {
 		HashMap<TipoDatoGeografico, String> dati = new HashMap<>();
 		dati.put(TipoDatoGeografico.AltitudineGhiacciai, altitudineGhiacciai);
@@ -111,14 +135,29 @@ public class Misurazione implements Serializable {
 		return dati.get(tipo);
 	}
 
+	/**
+	 * Restituisce la nota della misurazione.
+	 *
+	 * @return nota relativa alla {@code Misurazione}
+	 */
 	public String getNota(TipoDatoGeografico tipo) {
 		return note.get(tipo);
 	}
 
+	/**
+	 * Restituisce una stringa che rappresento la data
+	 *
+	 * @return stringa relativo al formato data
+	 */
 	public String getTimeString() {
 		return time.format(DATE_TIME_FORMAT);
 	}
 
+	/**
+	 * Formatta in una stringa il {@link TipoDatoGeografico} con tutti gli attributi
+	 *
+	 * @return il {@link TipoDatoGeografico} formattato in una stringa.
+	 */
 	public String toString() {
 		StringBuilder dato = new StringBuilder();
 

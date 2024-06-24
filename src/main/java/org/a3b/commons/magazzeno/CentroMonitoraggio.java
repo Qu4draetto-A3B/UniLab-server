@@ -37,11 +37,17 @@ public class CentroMonitoraggio implements Serializable {
 	private String provincia;
 
 	/**
-	 * Costruttore di un'istanza di {@code CentroMonitoraggio}.
+	 * Costruttore di un'istanza di {@link  CentroMonitoraggio}.
 	 *
-	 * @param nome      nome del centro di monitoraggio
-	 * @param indirizzo indirizzo relativo al centro di monitoraggio
-	 * @param lag       lista delle aree associate al centro di monitoraggio
+	 * @param CenterID id del centro di monitoraggio
+	 * @param nome  nome del centro di monitoraggio
+	 * @param via via del centro di monitoraggio
+	 * @param civico civico del centro di monitoraggio
+	 * @param cap cap del centro di monitoraggio
+	 * @param comune comune del centro di monitoraggio
+	 * @param provincia provincia del centro di monitoraggio
+	 * @param lag lag del centro di monitoraggio
+	 *
 	 */
 
 	public CentroMonitoraggio(long CenterID, String nome, String via, int civico, int cap, String comune, String provincia, ListaAree lag) {
@@ -60,9 +66,12 @@ public class CentroMonitoraggio implements Serializable {
 	/**
 	 * Costruttore di un'istanza di {@code CentroMonitoraggio} con valori predefiniti.
 	 * <p>
-	 * Il {@link #nome} del centro viene impostato su "<i>Torre Civile</i>", mentre l'{@link #indirizzo} e la
-	 * lista delle {@link #aree} vengono inizializzati rispettivamente con un nuovo oggetto
-	 * di tipo {@link Indirizzo} e una nuova {@link ListaAree} vuota.
+	 * Il {@link #nome} del centro viene impostato su "<i>Centro non trovato</i>", il{@link #nomeVia} del centro
+	 * viene impostato su "<i> Via delle Vie</i>", mentre il {@link #civico} e il {@link #cap} del centro a 0.
+	 * Il {@link #Comune} del centro viene impostato su "<i>Atlantide</i>", la {@link #provincia } viene impostato su "<i> I Sette Mari</i>".
+	 * Infine viene costrutita {@link #aree}
+	 *
+	 *
 	 */
 
 	public CentroMonitoraggio() {

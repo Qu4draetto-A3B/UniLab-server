@@ -53,6 +53,9 @@ public class AreaGeografica implements Serializable {
 		this.denominazione = denominazione;
 	}
 
+	/**
+	 * Costruttore di un'istanza di {@code AreaGeografica}.
+	 */
 	public AreaGeografica() {
 		geoID = 0;
 		latitudine = 0;

@@ -90,7 +90,11 @@ public class Operatore implements Serializable {
 				"%s: (\n\tCF: %s\n\tUserID: %s\n\tNome: %s\n\tCognome: %s\n\tEmail: %s\n\tCentro: %s\n)",
 				super.toString(), cf, uid, nome, cognome, email, centro.getNome());
 	}
-
+	/**
+	 * Formatta una stringa con tutti gli attributi dell'{@link Operatore}.
+	 *
+	 * @return la stringa formatta con gli attributi dell'{@link Operatore}.
+	 */
 	public String toStringPretty() {
 		return String.format(
 				"C.F.\t: %s\nUser ID\t: %s\nNome\t: %s %s\nEmail\t: %s\nCentro\t: %s",
