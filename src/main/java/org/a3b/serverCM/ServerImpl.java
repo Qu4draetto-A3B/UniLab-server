@@ -211,7 +211,6 @@ public class ServerImpl extends UnicastRemoteObject implements ServicesCM {
 				FROM "CoordinateMonitoraggio";
 				""";
 		try (var stmt = ServerCM.db.prepareStatement(query)) {
-			stmt.setLong(1, centerID);
 			ResultSet set = stmt.executeQuery();
 			while (set.next()) {
 				la.add(DataFactory.buildAreaGeografica(set));
