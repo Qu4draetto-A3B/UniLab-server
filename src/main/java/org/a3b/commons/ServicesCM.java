@@ -28,4 +28,7 @@ public interface ServicesCM extends Remote {
 	Result<AreaGeografica> getAreaGeografica(long geoID) throws RemoteException;
 
 	Result<ListaAree> getListaAree(long centerID) throws RemoteException;
+
+	Result<ListaAree> getAreeGeografiche() throws RemoteException;
+
 }

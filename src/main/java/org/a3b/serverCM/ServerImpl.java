@@ -204,6 +204,27 @@ public class ServerImpl extends UnicastRemoteObject implements ServicesCM {
 	}
 
 	@Override
+	public Result<ListaAree> getAreeGeografiche() throws RemoteException {
+		ListaAree la = new ListaAree();
+		String query = """
+				SELECT *
+				FROM "CoordinateMonitoraggio";
+				""";
+		try (var stmt = ServerCM.db.prepareStatement(query)) {
+			stmt.setLong(1, centerID);
+			ResultSet set = stmt.executeQuery();
+			while (set.next()) {
+				la.add(DataFactory.buildAreaGeografica(set));
+			}
+
+			return new Result<>(la);
+		} catch (SQLException e) {
+			log.error("Error!", e);
+			return new Result<>(e);
+		}
+	}
+
+	@Override
 	public Result<Misurazione> inserisciParametriClimatici(Misurazione misurazione) throws RemoteException {
 		String query = """
 				INSERT INTO "ParametriClimatici"("RecordID", "Center", "Operator", "Area", "Datetime",
