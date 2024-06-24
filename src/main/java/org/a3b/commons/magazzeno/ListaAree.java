@@ -27,9 +27,11 @@ import java.util.LinkedList;
  * <p>
  * Fornisce metodi per gestire e accedere agli elementi della lista.
  * <p>
- * Implementa l'interfaccia {@link Iterable} per consentire l'iterazione delle
- * aree geografiche nella lista, mentre le interfacce {@link CercaAree}  fornisce metodi per effettuare
+ * Implementa l' interfaccia {@link CercaAree} che fornisce metodi per effettuare
  * operazioni di ricerca e convertire le istanze.
+ * <p>
+ * Questa classe implementa l'interfaccia {@link Serializable} per consentire la
+ * serializzazione dei dati.
  */
 @Data
 public class ListaAree extends LinkedList<AreaGeografica> implements CercaAree, Serializable {

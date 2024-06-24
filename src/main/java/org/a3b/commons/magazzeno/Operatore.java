@@ -26,6 +26,9 @@ import java.util.HashMap;
  * La classe {@code Operatore} rappresenta un operatore identificato
  * da: nome, cognome, e-mail, codice fiscale, user ID e centro di monitoraggio
  * associato.
+ * <p>
+ * Questa classe implementa l'interfaccia {@link Serializable} per consentire la
+ * serializzazione dei dati.
  */
 
 @Data
@@ -91,9 +94,9 @@ public class Operatore implements Serializable {
 				super.toString(), cf, uid, nome, cognome, email, centro.getNome());
 	}
 	/**
-	 * Formatta una stringa con tutti gli attributi dell'{@link Operatore}.
+	 * Formatta una stringa con tutti gli attributi dell'{@code Operatore}.
 	 *
-	 * @return la stringa formatta con gli attributi dell'{@link Operatore}.
+	 * @return la stringa formatta con gli attributi dell'{@code Operatore}.
 	 */
 	public String toStringPretty() {
 		return String.format(

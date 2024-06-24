@@ -23,8 +23,8 @@ import java.io.Serializable;
  * La classe {@code AreaGeografica} rappresenta un'area geografica identificata
  * da: GeoID, latitudine, longitudine, stato e denominazione.
  * <p>
- * Questa classe implementa l'interfaccia {@link DataTable} per consentire la
- * gestione dei dati.
+ * Questa classe implementa l'interfaccia {@link Serializable} per consentire la
+ * serializzazione dei dati.
  */
 @Data
 public class AreaGeografica implements Serializable {
