@@ -50,7 +50,14 @@ public class ListaAree extends LinkedList<AreaGeografica> implements CercaAree, 
 		}
 		throw new IllegalArgumentException("Area non trovata");
 	}
-
+	/**
+	 * Cerca le aree geografiche nella lista basandosi sulla denominazione e stato.
+	 *
+	 * @param denominazione nome dell'area
+	 * @param stato	stato dell'area
+	 * @return Risultato della ricerca dell'area geografica
+	 *
+	 * */
 	@Override
 	public ListaAree cercaAreeGeografiche(String denominazione, String stato) {
 		if (denominazione == null) {
@@ -81,7 +88,14 @@ public class ListaAree extends LinkedList<AreaGeografica> implements CercaAree, 
 
 		return la;
 	}
-
+	/**
+	 * Cerca le aree geografiche nella lista basandosi sulla sulla latitudine e longitudine
+	 *
+	 * @param latitudine	latitudine dell'area
+	 * @param longitudine	longitudine dell'area
+	 * @return Risultato della ricerca dell'area geografica
+	 *
+	 * */
 	@Override
 	public ListaAree cercaAreeGeografiche(double latitudine, double longitudine) {
 		ListaAree list = new ListaAree();
