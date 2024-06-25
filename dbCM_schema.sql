@@ -1,8 +1,6 @@
-
-DROP DATABASE IF EXISTS "dbCM";
-CREATE DATABASE "dbCM";
-
-\c dbCM;
+--DROP DATABASE IF EXISTS "dbCM";
+--CREATE DATABASE "dbCM";
+--\c dbCM;
 
 DROP TABLE IF EXISTS "Area_Center";
 CREATE TABLE "public"."Area_Center"

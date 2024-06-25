@@ -1,3 +1,17 @@
+/*
+ * Interdisciplinary Workshop B
+ * Climate Monitoring
+ * A.A. 2023-2024
+ *
+ * Authors:
+ * - Iuri Antico, 753144, VA
+ * - Beatrice Balzarini, 752257, VA
+ * - Michael Bernasconi, 752259, VA
+ * - Gabriele Borgia, 753262, VA
+ *
+ * Some rights reserved.
+ * See LICENSE file for additional information.
+ */
 package org.a3b.serverCM;
 
 import lombok.extern.log4j.Log4j2;
@@ -13,6 +27,7 @@ import java.rmi.server.UnicastRemoteObject;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+
 /**
  * La classe {@code ServerImpl} contiene l'implementazione di tutti i metodi utilizzati dal client
  * dichiarati nell'interfaccia {@link ServicesCM}
@@ -25,9 +40,10 @@ public class ServerImpl extends UnicastRemoteObject implements ServicesCM {
 
 	/**
 	 * Metodo per la ricerca dell'area geografica in base al nome e allo stato di appartenenza
-	 * @param name nome dell'area geografica
+	 *
+	 * @param name    nome dell'area geografica
 	 * @param country stato dell'area geografica
-	 * @return  {@link Result<ListaAree>} lista delle aree
+	 * @return {@link Result<ListaAree>} lista delle aree
 	 * @throws RemoteException per la gestione delle eccezioni legate alla comunicazione con il client
 	 */
 	@Override
@@ -51,11 +67,13 @@ public class ServerImpl extends UnicastRemoteObject implements ServicesCM {
 		}
 		return new Result<>(la.cercaAreeGeografiche(name, country));
 	}
+
 	/**
 	 * Metodo per la ricerca dell'area geografica in base alla latitudine e alla longituidine
-	 * @param latitude latitudine dell'area geografica
+	 *
+	 * @param latitude  latitudine dell'area geografica
 	 * @param longitude longitudine dell'area geografica
-	 * @return  {@link Result<ListaAree>} lista delle aree
+	 * @return {@link Result<ListaAree>} lista delle aree
 	 * @throws RemoteException per la gestione delle eccezioni legate alla comunicazione con il client
 	 */
 	@Override
@@ -81,8 +99,10 @@ public class ServerImpl extends UnicastRemoteObject implements ServicesCM {
 		}
 		return new Result<>(la.cercaAreeGeografiche(latitude, longitude));
 	}
+
 	/**
 	 * Metodo per la recuperare l'area geografica in base al geoID
+	 *
 	 * @param geoID geoID dell'area geografica
 	 * @return {@link Result<AreaGeografica>} area geografica
 	 * @throws RemoteException per la gestione delle eccezioni legate alla comunicazione con il client
@@ -105,8 +125,10 @@ public class ServerImpl extends UnicastRemoteObject implements ServicesCM {
 			return new Result<>(e);
 		}
 	}
+
 	/**
 	 * Metodo per visualizaare l'area geografica in base al geoID
+	 *
 	 * @param geoID geoID dell'area geografica
 	 * @return {@link Result<Misurazione>} misurazione dell' area geografica
 	 * @throws RemoteException per la gestione delle eccezioni legate alla comunicazione con il client
@@ -132,6 +154,7 @@ public class ServerImpl extends UnicastRemoteObject implements ServicesCM {
 
 	/**
 	 * Metodo per far avvenire la registrazione tramite l'operatore e la password
+	 *
 	 * @param operator operatore del centro di monitoraggio
 	 * @param password dell'operatore per la registrazione
 	 * @return {@link Result<Operatore>} operatore dell' area geografica
@@ -183,7 +206,8 @@ public class ServerImpl extends UnicastRemoteObject implements ServicesCM {
 
 	/**
 	 * Metodo che per far accedere l'operatore
-	 * @param userID ID dell'operatore
+	 *
+	 * @param userID   ID dell'operatore
 	 * @param password dell'operatore per la registrazione
 	 * @return {@link Result<Operatore>} operatore dell' area geografica
 	 * @throws RemoteException per la gestione delle eccezioni legate alla comunicazione con il client
@@ -216,6 +240,7 @@ public class ServerImpl extends UnicastRemoteObject implements ServicesCM {
 
 	/**
 	 * Metodo per registrare il CentroAree
+	 *
 	 * @param centro centro di monitoraggio per la sua registrazione
 	 * @return {@link Result<CentroMonitoraggio>} centro di monitoraggio dell' area geografica
 	 * @throws RemoteException per la gestione delle eccezioni legate alla comunicazione con il client
@@ -247,6 +272,7 @@ public class ServerImpl extends UnicastRemoteObject implements ServicesCM {
 
 	/**
 	 * Metodo che restituisce la lista delle aree geografiche
+	 *
 	 * @param centerID id del centro di monitaggio
 	 * @return {@link Result<ListaAree>} lista delle aree
 	 * @throws RemoteException per la gestione delle eccezioni legate alla comunicazione con il client
@@ -274,7 +300,6 @@ public class ServerImpl extends UnicastRemoteObject implements ServicesCM {
 	}
 
 	/**
-	 *
 	 * @return {@link Result<ListaAree>} lista delle aree
 	 * @throws RemoteException per la gestione delle eccezioni legate alla comunicazione con il client
 	 */
@@ -300,6 +325,7 @@ public class ServerImpl extends UnicastRemoteObject implements ServicesCM {
 
 	/**
 	 * Metodo per inserire i parametri climatici
+	 *
 	 * @param misurazione dell'area geografica
 	 * @return {@link Result<Misurazione>} misurazione dell' area geografica
 	 * @throws RemoteException per la gestione delle eccezioni legate alla comunicazione con il client
@@ -349,6 +375,7 @@ public class ServerImpl extends UnicastRemoteObject implements ServicesCM {
 
 	/**
 	 * Metodo per restiuire una Misurazione
+	 *
 	 * @param recordID record per accedere alle misurazione nel database
 	 * @return {@link Result<Misurazione>} misurazione dell' area geografica
 	 * @throws RemoteException per la gestione delle eccezioni legate alla comunicazione con il client
@@ -374,6 +401,7 @@ public class ServerImpl extends UnicastRemoteObject implements ServicesCM {
 
 	/**
 	 * Metodo che restituisce un centro di monitaggio
+	 *
 	 * @param centerID id del centro di monitoraggio per cercarlo nel database
 	 * @return {@link Result<CentroMonitoraggio>} centro di monitoraggio dell' area geografica
 	 * @throws RemoteException per la gestione delle eccezioni legate alla comunicazione con il client
