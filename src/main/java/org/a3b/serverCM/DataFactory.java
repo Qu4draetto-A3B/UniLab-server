@@ -8,13 +8,23 @@ import org.a3b.commons.result.Result;
 
 import lombok.extern.log4j.Log4j2;
 
+import java.io.Serializable;
 import java.rmi.RemoteException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Objects;
-
+/**
+ * La classe {@code Datafactory} fornisce una serie di metodi per la costruzioni d'istanze
+ * a partire dai record del database
+ */
 @Log4j2
 public class DataFactory {
+	/**
+	 * Costruisce un oggetto di tipo {@link AreaGeografica} a partire dal {@link ResultSet} fornito
+	 * @param record relativo all'oggetto da costruire
+	 * @return di istanza di {@link AreaGeografica} costruita
+	 * @throws SQLException per gestire eccezioni legate a errori database
+	 */
 	public static AreaGeografica buildAreaGeografica(ResultSet record) throws SQLException {
 		if (Objects.isNull(record)) {
 			throw new NullPointerException("record was null while trying to extract AreaGeografica");
@@ -31,7 +41,13 @@ public class DataFactory {
 				record.getString("Name")
 		);
 	}
-
+	/**
+	 * Costruisce un oggetto di tipo {@link CentroMonitoraggio} a partire dal {@link ResultSet} fornito
+	 * @param record relativo all'oggetto da costruire
+	 * @return di istanza di {@link CentroMonitoraggio} costruita
+	 * @throws SQLException per gestire eccezioni legate a errori database
+	 * @throws RemoteException per gestire eccezioni legate alla comunicazione con il client
+	 */
 	public static CentroMonitoraggio buildCentroMonitoraggio(ResultSet record) throws SQLException, RemoteException {
 		if (Objects.isNull(record)) {
 			throw new NullPointerException("record was null while trying to extract CentroMonitoraggio");
@@ -52,7 +68,13 @@ public class DataFactory {
 				ServerCM.server.getListaAree(id).get()
 		);
 	}
-
+	/**
+	 * Costruisce un oggetto di tipo {@link Operatore} a partire dal {@link ResultSet} fornito
+	 * @param record relativo all'oggetto da costruire
+	 * @return di istanza di {@link Operatore} costruita
+	 * @throws SQLException per gestire eccezioni legate a errori database
+	 * @throws RemoteException per gestire eccezioni legate alla comunicazione con il client
+	 */
 	public static Operatore buildOperatore(ResultSet record) throws SQLException, RemoteException {
 		if (Objects.isNull(record)) {
 			throw new NullPointerException("record was null while trying to extract Operatore");
@@ -70,7 +92,13 @@ public class DataFactory {
 				ServerCM.server.getCentroMonitoraggio(record.getLong("Center")).get()
 		);
 	}
-
+	/**
+	 * Costruisce un oggetto di tipo {@link Misurazione} a partire dal {@link ResultSet} fornito
+	 * @param record relativo all'oggetto da costruire
+	 * @return di istanza di {@link Misurazione} costruita
+	 * @throws SQLException per gestire eccezioni legate a errori database
+	 * @throws RemoteException per gestire eccezioni legate alla comunicazione con il client
+	 */
 	public static Misurazione buildMisurazione(ResultSet record) throws SQLException, RemoteException {
 		if (Objects.isNull(record)) {
 			throw new NullPointerException("record was null while trying to extract Misurazione");
@@ -106,6 +134,12 @@ public class DataFactory {
 		);
 	}
 
+	/**
+	 * Restituisce l'operatore corrisponde all'{@code userID}
+	 * @param userID dell'operatore
+	 * @return {@link Result<Operatore>} cercato nel database
+	 * @throws RemoteException per gestire eccezioni legate alla comunicazione con il client
+	 */
 	private static Result<Operatore> getOperatore(long userID) throws RemoteException {
 		String query = """
 				SELECT *
