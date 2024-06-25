@@ -22,6 +22,7 @@ import java.rmi.registry.Registry;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.util.Properties;
+
 /**
  * La classe {@code ServerCM} e' il punto d'avvio del server
  */
@@ -31,33 +32,32 @@ public class ServerCM {
 	public static Registry registry;
 	public static ServerImpl server;
 
+	/**
+	 * Metodo di inizializzazione del server
+	 *
+	 * @param args Argomenti dalla linea di comando
+	 */
 	public static void main(String[] args) {
 		try {
-			init();
+			log.trace("Initializing ServerCM");
+
+			Dotenv env = Dotenv.configure().filename("postgres.env").load();
+
+			Properties props = new Properties();
+			props.setProperty("user", env.get("POSTGRES_USER"));
+			props.setProperty("password", env.get("POSTGRES_PASSWORD"));
+			String url = String.format("jdbc:postgresql://%s/%s",
+					env.get("POSTGRES_HOST", "localhost"),
+					env.get("POSTGRES_DB"));
+			db = DriverManager.getConnection(url, props);
+
+			server = new ServerImpl();
+			registry = LocateRegistry.createRegistry(Registry.REGISTRY_PORT);
+			registry.rebind("CM", server);
+
+			log.trace("ServerCM initialized");
 		} catch (Exception e) {
 			log.fatal("Error! ", e);
 		}
-	}
-
-	/**
-	 * Metodo di inizializzazione del server
-	 * @throws Exception per gestire le eccezioni legate agli errori del server
-	 */
-	public static void init() throws Exception {
-		log.trace("Initializing ServerCM");
-
-		Dotenv env = Dotenv.configure().filename("postgres.env").load();
-
-		String url = "jdbc:postgresql://localhost/dbCM";
-		Properties props = new Properties();
-		props.setProperty("user", "postgres");
-		props.setProperty("password", env.get("POSTGRES_PASSWORD"));
-		db = DriverManager.getConnection(url, props);
-
-		server = new ServerImpl();
-		registry = LocateRegistry.createRegistry(Registry.REGISTRY_PORT);
-		registry.rebind("CM", server);
-
-		log.trace("ServerCM initialized");
 	}
 }
