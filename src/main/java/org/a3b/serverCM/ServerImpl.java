@@ -5,6 +5,7 @@ import org.a3b.commons.ServicesCM;
 import org.a3b.commons.magazzeno.*;
 import org.a3b.commons.result.Result;
 import org.a3b.commons.result.errors.DataNotFoundException;
+import org.a3b.commons.result.errors.InconsistentDataException;
 import org.a3b.commons.utils.TipoDatoGeografico;
 
 import java.rmi.RemoteException;
@@ -105,18 +106,37 @@ public class ServerImpl extends UnicastRemoteObject implements ServicesCM {
 
 	@Override
 	public Result<Operatore> registrazione(Operatore operator, String password) throws RemoteException {
-		String query = """
+		String insertQuery = """
 				INSERT INTO "OpertoriRegistrati"("UserID", "Name", "Surname", "CF", "Email", "Password", "Center")
-				VALUES (?, ?, ?, ?, ?, ?, ?)
+				VALUES (NULL, ?, ?, ?, ?, ?, ?);
 				""";
-		try (var stmt = ServerCM.db.prepareStatement(query)) {
-			stmt.setLong(1, operator.getUid());
-			stmt.setString(2, operator.getNome());
-			stmt.setString(3, operator.getCognome());
-			stmt.setString(4, operator.getCf());
-			stmt.setString(5, operator.getEmail());
-			stmt.setString(6, password);
-			stmt.setLong(7, operator.getCentro().getCenterID());
+
+		String selectQuery = """
+				SELECT *
+				FROM "OperatoriRegistrati"
+				WHERE "CF" = ?;
+				""";
+
+		try (var stmt = ServerCM.db.prepareStatement(insertQuery)) {
+			stmt.setString(1, operator.getNome());
+			stmt.setString(2, operator.getCognome());
+			stmt.setString(3, operator.getCf());
+			stmt.setString(4, operator.getEmail());
+			stmt.setString(5, password);
+			stmt.setLong(6, operator.getCentro().getCenterID());
+
+			int rows = stmt.executeUpdate();
+			if (rows != 1) {
+				return new Result<>(new InconsistentDataException("Insertion added " + rows + " instead of 1"));
+			}
+
+		} catch (SQLException e) {
+			log.error("Error!", e);
+			return new Result<>(e);
+		}
+
+		try (var stmt = ServerCM.db.prepareStatement(selectQuery)) {
+			stmt.setString(1, operator.getCf());
 
 			ResultSet set = stmt.executeQuery();
 			set.next();
@@ -139,7 +159,6 @@ public class ServerImpl extends UnicastRemoteObject implements ServicesCM {
 		try (var stmt = ServerCM.db.prepareStatement(query)) {
 			stmt.setLong(1, userID);
 			stmt.setString(2, password);
-			log.debug(stmt.toString());
 
 			ResultSet set = stmt.executeQuery();
 			set.next();
