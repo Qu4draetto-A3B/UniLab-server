@@ -108,8 +108,8 @@ public class DataFactory {
 	private static Result<Operatore> getOperatore(long userID) throws RemoteException {
 		String query = """
 				SELECT *
-				FROM "ParamteriClimatici"
-				WHERE "UserID" = ?;
+				FROM "ParametriClimatici"
+				WHERE "Operator" = ?;
 				""";
 		try (var stmt = ServerCM.db.prepareStatement(query)) {
 			stmt.setLong(1, userID);

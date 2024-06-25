@@ -70,7 +70,7 @@ public class Operatore implements Serializable {
 	 */
 	public Operatore() {
 		cf = "CIVILE";
-		uid = 0000;
+		uid = 0;
 		nome = "Civile";
 		cognome = "Civile";
 		email = "civile@example.com";
