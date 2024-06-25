@@ -140,7 +140,7 @@ public class ServerImpl extends UnicastRemoteObject implements ServicesCM {
 	@Override
 	public Result<Operatore> registrazione(Operatore operator, String password) throws RemoteException {
 		String insertQuery = """
-				INSERT INTO "OpertoriRegistrati"("UserID", "Name", "Surname", "CF", "Email", "Password", "Center")
+				INSERT INTO "OperatoriRegistrati"("UserID", "Name", "Surname", "CF", "Email", "Password", "Center")
 				VALUES (NULL, ?, ?, ?, ?, ?, ?);
 				""";
 
