@@ -1,5 +1,6 @@
 package org.a3b.serverCM;
 
+import lombok.extern.log4j.Log4j2;
 import org.a3b.commons.magazzeno.AreaGeografica;
 import org.a3b.commons.magazzeno.CentroMonitoraggio;
 import org.a3b.commons.magazzeno.Misurazione;
@@ -143,8 +144,8 @@ public class DataFactory {
 	private static Result<Operatore> getOperatore(long userID) throws RemoteException {
 		String query = """
 				SELECT *
-				FROM "ParamteriClimatici"
-				WHERE "UserID" = ?;
+				FROM "ParametriClimatici"
+				WHERE "Operator" = ?;
 				""";
 		try (var stmt = ServerCM.db.prepareStatement(query)) {
 			stmt.setLong(1, userID);

@@ -2,8 +2,6 @@ package org.a3b.commons.result.errors;
 
 import org.a3b.commons.result.ResultException;
 
-import java.io.Serializable;
-
 /**
  * La classe {@code DataNotFoundException} rappresenta un eccezione non controllata se il dato non e' presente,
  * creata con il messaggio dell'eccezione e l'eccezione
@@ -19,6 +17,7 @@ public class DataNotFoundException extends ResultException {
 	public DataNotFoundException(String msg) {
 		super(msg);
 	}
+
 	/**
 	 * Costruttore di un'istanza di {@code DataNotFoundException}
 	 *

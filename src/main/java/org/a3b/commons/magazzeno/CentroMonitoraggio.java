@@ -42,15 +42,14 @@ public class CentroMonitoraggio implements Serializable {
 	/**
 	 * Costruttore di un'istanza di {@code CentroMonitoraggio}.
 	 *
-	 * @param CenterID id del centro di monitoraggio
-	 * @param nome  nome del centro di monitoraggio
-	 * @param via via del centro di monitoraggio
-	 * @param civico civico del centro di monitoraggio
-	 * @param cap cap del centro di monitoraggio
-	 * @param comune comune del centro di monitoraggio
+	 * @param CenterID  id del centro di monitoraggio
+	 * @param nome      nome del centro di monitoraggio
+	 * @param via       via del centro di monitoraggio
+	 * @param civico    civico del centro di monitoraggio
+	 * @param cap       cap del centro di monitoraggio
+	 * @param comune    comune del centro di monitoraggio
 	 * @param provincia provincia del centro di monitoraggio
-	 * @param lag lag del centro di monitoraggio
-	 *
+	 * @param lag       lag del centro di monitoraggio
 	 */
 
 	public CentroMonitoraggio(long CenterID, String nome, String via, int civico, int cap, String comune, String provincia, ListaAree lag) {
@@ -73,8 +72,6 @@ public class CentroMonitoraggio implements Serializable {
 	 * viene impostato su "<i> Via delle Vie</i>", mentre il {@code #civico} e il {@code #cap} del centro a 0.
 	 * Il {@code  #Comune} del centro viene impostato su "<i>Atlantide</i>", la {@code #provincia } viene impostato su "<i> I Sette Mari</i>".
 	 * Infine viene costrutita {@code #aree}
-	 *
-	 *
 	 */
 
 	public CentroMonitoraggio() {
