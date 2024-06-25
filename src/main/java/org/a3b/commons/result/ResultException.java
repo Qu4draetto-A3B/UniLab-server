@@ -1,8 +1,8 @@
 package org.a3b.commons.result;
 
 /**
- * La classe {@code Panic} rappresenta un'eccezione non controllata ed estende
- * {@link Error}.
+ * La classe {@code ResultException} rappresenta un'eccezione non controllata ed estende
+ * {@link RuntimeException}.
  * <p>
  * Viene utilizzata quando si presenta un errore inaspettato o una situazione
  * critica che impediscono la continuazione del programma.
@@ -13,7 +13,7 @@ public class ResultException extends RuntimeException {
 	 * <p>
 	 * L'istanza viene creata a partire dal messaggio da mostrare all'utente.
 	 *
-	 * @param msg The error message to display to the user.
+	 * @param msg l'errore visualizzato sul display dell'user
 	 */
 	public ResultException(String msg) {
 		super(msg);

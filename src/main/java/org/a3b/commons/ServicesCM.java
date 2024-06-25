@@ -2,10 +2,13 @@ package org.a3b.commons;
 
 import org.a3b.commons.magazzeno.*;
 import org.a3b.commons.result.Result;
+import org.a3b.commons.utils.MediaAree;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
-
+/**
+ * L'interfaccia {@link ServicesCM} estende {@link Remote} si occupa fornire i metodi che deve utilizzare il Client.
+ */
 public interface ServicesCM extends Remote {
 	Result<ListaAree> cercaAreaGeografica(String name, String country) throws RemoteException;
 
@@ -28,4 +31,7 @@ public interface ServicesCM extends Remote {
 	Result<AreaGeografica> getAreaGeografica(long geoID) throws RemoteException;
 
 	Result<ListaAree> getListaAree(long centerID) throws RemoteException;
+
+	Result<ListaAree> getAreeGeografiche() throws RemoteException;
+
 }

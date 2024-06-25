@@ -11,7 +11,7 @@ import java.util.function.BiConsumer;
 import java.util.function.Supplier;
 
 /**
- * La classe {@code Result<T, E>} rappresenta il risultato di un'operazione che
+ * La classe {@code Result<T>} rappresenta il risultato di un'operazione che
  * può essere stata eseguita correttamente o contenere un errore.
  *
  * @param <T> tipo del contenuto del {@code Result}
@@ -48,6 +48,7 @@ public class Result<T> implements Serializable {
 	 *
 	 * @param content contenuto del {@code Result}, {@code null} se l'operazione non
 	 *                viene eseguita correttamente
+	 * @param error oggetto che ha causato l'errore
 	 */
 	public Result(T content, Throwable error) {
 		this.content = content;

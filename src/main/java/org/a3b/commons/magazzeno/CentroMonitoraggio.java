@@ -22,6 +22,9 @@ import java.io.Serializable;
 /**
  * La classe {@code CentroMonitoraggio} rappresenta un centro di monitoraggio
  * identificato da nome, indirizzo e aree associate.
+ * <p>
+ * Questa classe implementa l'interfaccia {@link Serializable} per consentire la
+ * serializzazione dei dati.
  */
 @Data
 public class CentroMonitoraggio implements Serializable {
@@ -37,7 +40,7 @@ public class CentroMonitoraggio implements Serializable {
 	private String provincia;
 
 	/**
-	 * Costruttore di un'istanza di {@link  CentroMonitoraggio}.
+	 * Costruttore di un'istanza di {@code CentroMonitoraggio}.
 	 *
 	 * @param CenterID id del centro di monitoraggio
 	 * @param nome  nome del centro di monitoraggio
@@ -66,10 +69,10 @@ public class CentroMonitoraggio implements Serializable {
 	/**
 	 * Costruttore di un'istanza di {@code CentroMonitoraggio} con valori predefiniti.
 	 * <p>
-	 * Il {@link #nome} del centro viene impostato su "<i>Centro non trovato</i>", il{@link #nomeVia} del centro
-	 * viene impostato su "<i> Via delle Vie</i>", mentre il {@link #civico} e il {@link #cap} del centro a 0.
-	 * Il {@link #Comune} del centro viene impostato su "<i>Atlantide</i>", la {@link #provincia } viene impostato su "<i> I Sette Mari</i>".
-	 * Infine viene costrutita {@link #aree}
+	 * Il {@code #nome} del centro viene impostato su "<i>Centro non trovato</i>", il{@code #nomeVia} del centro
+	 * viene impostato su "<i> Via delle Vie</i>", mentre il {@code #civico} e il {@code #cap} del centro a 0.
+	 * Il {@code  #Comune} del centro viene impostato su "<i>Atlantide</i>", la {@code #provincia } viene impostato su "<i> I Sette Mari</i>".
+	 * Infine viene costrutita {@code #aree}
 	 *
 	 *
 	 */

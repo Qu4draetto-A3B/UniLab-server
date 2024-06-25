@@ -28,6 +28,9 @@ import java.util.Locale;
  * La classe {@code Misurazione} rappresenta una misurazione identificata
  * da: ID, dato geografico, data e ora, operatore, centro di monitoraggio e area
  * geografica.
+ * <p>
+ * Questa classe implementa l'interfaccia {@link Serializable} per consentire la
+ * serializzazione dei dati.
  */
 @Data
 public class Misurazione implements Serializable {
@@ -103,7 +106,7 @@ public class Misurazione implements Serializable {
 	}
 
 	/**
-	 * Raccolta delle note relative ad una {@link Misurazione}
+	 * Raccolta delle note relative ad una {@code Misurazione}
 	 *
 	 * @param altitudineGhiacciai altitudine dei ghiacciai
 	 * @param massaGhiacciai massa dei ghiacciai
