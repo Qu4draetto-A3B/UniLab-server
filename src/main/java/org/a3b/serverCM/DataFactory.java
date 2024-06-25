@@ -1,12 +1,11 @@
 package org.a3b.serverCM;
 
+import lombok.extern.log4j.Log4j2;
 import org.a3b.commons.magazzeno.AreaGeografica;
 import org.a3b.commons.magazzeno.CentroMonitoraggio;
 import org.a3b.commons.magazzeno.Misurazione;
 import org.a3b.commons.magazzeno.Operatore;
 import org.a3b.commons.result.Result;
-
-import lombok.extern.log4j.Log4j2;
 
 import java.rmi.RemoteException;
 import java.sql.ResultSet;

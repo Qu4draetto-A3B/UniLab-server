@@ -178,7 +178,7 @@ public class ServerImpl extends UnicastRemoteObject implements ServicesCM {
 	public Result<CentroMonitoraggio> registraCentroAree(CentroMonitoraggio centro) throws RemoteException {
 		String query = """
 				INSERT INTO "CentriMonitoraggio"("CenterID", "Name", "Street", "CivicNumber", "ZIPCode", "Town",
-                                 "Province")
+				                             "Province")
 				VALUES (?, ?, ?, ?, ?, ?, ?)
 				""";
 		try (var stmt = ServerCM.db.prepareStatement(query)) {
@@ -246,9 +246,9 @@ public class ServerImpl extends UnicastRemoteObject implements ServicesCM {
 	public Result<Misurazione> inserisciParametriClimatici(Misurazione misurazione) throws RemoteException {
 		String query = """
 				INSERT INTO "ParametriClimatici"("RecordID", "Center", "Operator", "Area", "Datetime",
-                                 "Wind", "Humidity", "Pressure", "Temperature", "Precipitation", "GlacierAltitude",
-                                 "GlacierMass", "WindNotes", "HumidityNotes", "PressureNotes", "TemperatureNotes", 
-                                 "PrecipitationNotes", "GlacierAltitudeNotes", "GlacierMassNotes")
+				                             "Wind", "Humidity", "Pressure", "Temperature", "Precipitation", "GlacierAltitude",
+				                             "GlacierMass", "WindNotes", "HumidityNotes", "PressureNotes", "TemperatureNotes",
+				                             "PrecipitationNotes", "GlacierAltitudeNotes", "GlacierMassNotes")
 				VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
 				""";
 		try (var stmt = ServerCM.db.prepareStatement(query)) {

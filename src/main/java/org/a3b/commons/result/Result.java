@@ -48,7 +48,7 @@ public class Result<T> implements Serializable {
 	 *
 	 * @param content contenuto del {@code Result}, {@code null} se l'operazione non
 	 *                viene eseguita correttamente
-	 * @param error oggetto che ha causato l'errore
+	 * @param error   oggetto che ha causato l'errore
 	 */
 	public Result(T content, Throwable error) {
 		this.content = content;

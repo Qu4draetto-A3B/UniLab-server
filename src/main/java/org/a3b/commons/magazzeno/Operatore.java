@@ -93,6 +93,7 @@ public class Operatore implements Serializable {
 				"%s: (\n\tCF: %s\n\tUserID: %s\n\tNome: %s\n\tCognome: %s\n\tEmail: %s\n\tCentro: %s\n)",
 				super.toString(), cf, uid, nome, cognome, email, centro.getNome());
 	}
+
 	/**
 	 * Formatta una stringa con tutti gli attributi dell'{@code Operatore}.
 	 *

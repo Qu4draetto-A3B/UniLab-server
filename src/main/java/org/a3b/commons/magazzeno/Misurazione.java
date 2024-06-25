@@ -85,12 +85,12 @@ public class Misurazione implements Serializable {
 	 * Raccolta dei parametri relativi ad una {@link Misurazione}
 	 *
 	 * @param altitudineGhiacciai altitudine dei ghiacciai
-	 * @param massaGhiacciai massa dei ghiacciai
-	 * @param precipitazioni volume delle precipitazioni
-	 * @param pressione pressione dell'area
-	 * @param temperatura gradi dell'area
-	 * @param umidita precentuale dell'umidita'
-	 * @param vento velocita' del vento
+	 * @param massaGhiacciai      massa dei ghiacciai
+	 * @param precipitazioni      volume delle precipitazioni
+	 * @param pressione           pressione dell'area
+	 * @param temperatura         gradi dell'area
+	 * @param umidita             precentuale dell'umidita'
+	 * @param vento               velocita' del vento
 	 * @return l'hash map con i relativi valori dei parametri inseriti
 	 */
 	public static HashMap<TipoDatoGeografico, Byte> buildDati(byte altitudineGhiacciai, byte massaGhiacciai, byte precipitazioni, byte pressione, byte temperatura, byte umidita, byte vento) {
@@ -109,12 +109,12 @@ public class Misurazione implements Serializable {
 	 * Raccolta delle note relative ad una {@code Misurazione}
 	 *
 	 * @param altitudineGhiacciai altitudine dei ghiacciai
-	 * @param massaGhiacciai massa dei ghiacciai
-	 * @param precipitazioni volume delle precipitazioni
-	 * @param pressione pressione dell'area
-	 * @param temperatura gradi dell'area
-	 * @param umidita precentuale dell'umidita'
-	 * @param vento velocita' del vento
+	 * @param massaGhiacciai      massa dei ghiacciai
+	 * @param precipitazioni      volume delle precipitazioni
+	 * @param pressione           pressione dell'area
+	 * @param temperatura         gradi dell'area
+	 * @param umidita             precentuale dell'umidita'
+	 * @param vento               velocita' del vento
 	 * @return l'hash map con i relativi valori dei parametri inseriti
 	 */
 	public static HashMap<TipoDatoGeografico, String> buildNote(String altitudineGhiacciai, String massaGhiacciai, String precipitazioni, String pressione, String temperatura, String umidita, String vento) {
