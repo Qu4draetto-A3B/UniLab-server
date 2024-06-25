@@ -22,7 +22,9 @@ import java.rmi.registry.Registry;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.util.Properties;
-
+/**
+ * La classe {@code ServerCM} e' il punto d'avvio del server
+ */
 @Log4j2
 public class ServerCM {
 	public static Connection db;
@@ -37,6 +39,10 @@ public class ServerCM {
 		}
 	}
 
+	/**
+	 * Metodo di inizializzazione del server
+	 * @throws Exception per gestire le eccezioni legate agli errori del server
+	 */
 	public static void init() throws Exception {
 		log.trace("Initializing ServerCM");
 
