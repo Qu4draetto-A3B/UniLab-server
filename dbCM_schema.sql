@@ -21,7 +21,8 @@ CREATE TABLE "public"."CentriMonitoraggio"
     "ZIPCode"     character(5) NOT NULL,
     "Town"        text         NOT NULL,
     "Province"    text         NOT NULL,
-    CONSTRAINT "CentriMonitoraggio_pkey" PRIMARY KEY ("CenterID")
+    CONSTRAINT "CentriMonitoraggio_pkey" PRIMARY KEY ("CenterID"),
+    CONSTRAINT "CentriMonitoraggio_ukey" UNIQUE ("Name")
 ) WITH (oids = false);
 
 
@@ -47,7 +48,8 @@ CREATE TABLE "public"."OperatoriRegistrati"
     "Email"    text          NOT NULL,
     "Password" text          NOT NULL,
     "Center"   bigint        NOT NULL,
-    CONSTRAINT "OperatoriRegistrati_pkey" PRIMARY KEY ("UserID")
+    CONSTRAINT "OperatoriRegistrati_pkey" PRIMARY KEY ("UserID"),
+    CONSTRAINT "OperatoriRegistrati_ukey" UNIQUE ("CF")
 ) WITH (oids = false);
 
 
@@ -73,7 +75,8 @@ CREATE TABLE "public"."ParametriClimatici"
     "PrecipitationNotes"   character varying(256) NOT NULL,
     "GlacierAltitudeNotes" character varying(256) NOT NULL,
     "GlacierMassNotes"     character varying(256) NOT NULL,
-    CONSTRAINT "ParametriClimatici_pkey" PRIMARY KEY ("RecordID")
+    CONSTRAINT "ParametriClimatici_pkey" PRIMARY KEY ("RecordID"),
+    CONSTRAINT "ParametriClimatici_ukey" UNIQUE ("Datetime")
 ) WITH (oids = false);
 
 
@@ -92,6 +95,7 @@ ALTER TABLE ONLY "public"."ParametriClimatici"
 ALTER TABLE ONLY "public"."ParametriClimatici"
     ADD CONSTRAINT "ParametriClimatici_Operator_fkey" FOREIGN KEY ("Operator") REFERENCES "OperatoriRegistrati" ("UserID") ON UPDATE CASCADE NOT DEFERRABLE;
 
+-- Monitoring coordinates
 INSERT INTO "CoordinateMonitoraggio" VALUES(2522677,'Zumpano','IT',39.3105299999999999,16.2926900000000003);
 INSERT INTO "CoordinateMonitoraggio" VALUES(2522683,'Zerfaliu','IT',39.960880000000003,8.70970999999999939);
 INSERT INTO "CoordinateMonitoraggio" VALUES(2522685,'Zeddiani','IT',39.9889799999999979,8.59580000000000055);

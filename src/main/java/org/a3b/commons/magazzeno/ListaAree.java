@@ -19,7 +19,7 @@ import org.a3b.commons.utils.CercaAree;
 
 import java.io.Serial;
 import java.io.Serializable;
-import java.util.LinkedList;
+import java.util.concurrent.ConcurrentLinkedDeque;
 
 /**
  * La classe {@code ListaAree} rappresenta una lista di istanze di
@@ -34,7 +34,7 @@ import java.util.LinkedList;
  * serializzazione dei dati.
  */
 @Data
-public class ListaAree extends LinkedList<AreaGeografica> implements CercaAree, Serializable {
+public class ListaAree extends ConcurrentLinkedDeque<AreaGeografica> implements CercaAree, Serializable {
 	@Serial
 	private static final long serialVersionUID = 1L;
 
@@ -112,11 +112,10 @@ public class ListaAree extends LinkedList<AreaGeografica> implements CercaAree, 
 		for (AreaGeografica areaGeografica : this) {
 			if ((latitudine == areaGeografica.getLatitudine()) && (longitudine == areaGeografica.getLongitudine())) {
 				list.add(areaGeografica);
-				return list;
 			}
 		}
 
-		AreaGeografica ag = this.getFirst();
+		AreaGeografica ag = (list.size() > 0) ? list.getFirst() : new AreaGeografica(0, latitudine, longitudine, "NONE", "NONE");
 		double differenzalat = latitudine - ag.getLatitudine();
 		differenzalat *= differenzalat;
 

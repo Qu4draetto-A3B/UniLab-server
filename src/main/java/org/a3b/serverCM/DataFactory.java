@@ -78,7 +78,7 @@ public class DataFactory {
 				record.getString("Name"),
 				record.getString("Street"),
 				record.getInt("CivicNumber"),
-				Integer.parseInt(record.getString("ZIPCode")),
+				Integer.parseInt(record.getString("ZIPCode").strip()),
 				record.getString("Town"),
 				record.getString("Province"),
 				ServerCM.server.getListaAree(id).get()
@@ -164,8 +164,8 @@ public class DataFactory {
 	private static Result<Operatore> getOperatore(long userID) throws RemoteException {
 		String query = """
 				SELECT *
-				FROM "ParametriClimatici"
-				WHERE "Operator" = ?;
+				FROM "OperatoriRegistrati"
+				WHERE "UserID" = ?;
 				""";
 		try (var stmt = ServerCM.db.prepareStatement(query)) {
 			stmt.setLong(1, userID);

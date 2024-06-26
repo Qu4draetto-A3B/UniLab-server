@@ -41,7 +41,9 @@ public class ServerCM {
 		try {
 			log.trace("Initializing ServerCM");
 
-			Dotenv env = Dotenv.configure().filename("postgres.env").load();
+			Dotenv env = Dotenv.configure()
+					.filename((args.length > 0) ? args[0] : "postgres.env")
+					.load();
 
 			Properties props = new Properties();
 			props.setProperty("user", env.get("POSTGRES_USER"));

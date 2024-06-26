@@ -163,8 +163,8 @@ public class ServerImpl extends UnicastRemoteObject implements ServicesCM {
 	@Override
 	public Result<Operatore> registrazione(Operatore operator, String password) throws RemoteException {
 		String insertQuery = """
-				INSERT INTO "OperatoriRegistrati"("UserID", "Name", "Surname", "CF", "Email", "Password", "Center")
-				VALUES (NULL, ?, ?, ?, ?, ?, ?);
+				INSERT INTO "OperatoriRegistrati"("Name", "Surname", "CF", "Email", "Password", "Center")
+				VALUES (?, ?, ?, ?, ?, ?);
 				""";
 
 		String selectQuery = """
@@ -185,7 +185,6 @@ public class ServerImpl extends UnicastRemoteObject implements ServicesCM {
 			if (rows != 1) {
 				return new Result<>(new InconsistentDataException("Insertion added " + rows + " instead of 1"));
 			}
-
 		} catch (SQLException e) {
 			log.error("Error!", e);
 			return new Result<>(e);
@@ -247,18 +246,34 @@ public class ServerImpl extends UnicastRemoteObject implements ServicesCM {
 	 */
 	@Override
 	public Result<CentroMonitoraggio> registraCentroAree(CentroMonitoraggio centro) throws RemoteException {
-		String query = """
-				INSERT INTO "CentriMonitoraggio"("CenterID", "Name", "Street", "CivicNumber", "ZIPCode", "Town", "Province")
-				VALUES (?, ?, ?, ?, ?, ?, ?)
+		String insertQuery = """
+				INSERT INTO "CentriMonitoraggio"("Name", "Street", "CivicNumber", "ZIPCode", "Town", "Province")
+				VALUES (?, ?, ?, ?, ?, ?);
 				""";
-		try (var stmt = ServerCM.db.prepareStatement(query)) {
-			stmt.setLong(1, centro.getCenterID());
-			stmt.setString(2, centro.getNome());
-			stmt.setString(3, centro.getNomeVia());
-			stmt.setInt(4, centro.getCivico());
-			stmt.setInt(5, centro.getCap());
-			stmt.setString(6, centro.getComune());
-			stmt.setString(7, centro.getProvincia());
+		String selectQuery = """
+				SELECT *
+				FROM "CentriMonitoraggio"
+				WHERE "Name" = ?;
+				""";
+		try (var stmt = ServerCM.db.prepareStatement(insertQuery)) {
+			stmt.setString(1, centro.getNome());
+			stmt.setString(2, centro.getNomeVia());
+			stmt.setInt(3, centro.getCivico());
+			stmt.setInt(4, centro.getCap());
+			stmt.setString(5, centro.getComune());
+			stmt.setString(6, centro.getProvincia());
+
+			int rows = stmt.executeUpdate();
+			if (rows != 1) {
+				return new Result<>(new InconsistentDataException("Insertion added " + rows + " instead of 1"));
+			}
+		} catch (SQLException e) {
+			log.error("Error!", e);
+			return new Result<>(e);
+		}
+
+		try (var stmt = ServerCM.db.prepareStatement(selectQuery)) {
+			stmt.setString(1, centro.getNome());
 
 			ResultSet set = stmt.executeQuery();
 			set.next();
@@ -333,35 +348,34 @@ public class ServerImpl extends UnicastRemoteObject implements ServicesCM {
 	@Override
 	public Result<Misurazione> inserisciParametriClimatici(Misurazione misurazione) throws RemoteException {
 		String query = """
-				INSERT INTO "ParametriClimatici"("RecordID", "Center", "Operator", "Area", "Datetime",
+				INSERT INTO "ParametriClimatici"("Center", "Operator", "Area", "Datetime",
 				                             "Wind", "Humidity", "Pressure", "Temperature", "Precipitation", "GlacierAltitude",
 				                             "GlacierMass", "WindNotes", "HumidityNotes", "PressureNotes", "TemperatureNotes",
 				                             "PrecipitationNotes", "GlacierAltitudeNotes", "GlacierMassNotes")
-				VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+				VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
 				""";
 		try (var stmt = ServerCM.db.prepareStatement(query)) {
-			stmt.setLong(1, misurazione.getRid());
-			stmt.setLong(2, misurazione.getCentro().getCenterID());
-			stmt.setLong(3, misurazione.getOperatore().getUid());
-			stmt.setLong(4, misurazione.getArea().getGeoID());
+			stmt.setLong(1, misurazione.getCentro().getCenterID());
+			stmt.setLong(2, misurazione.getOperatore().getUid());
+			stmt.setLong(3, misurazione.getArea().getGeoID());
 
-			stmt.setTimestamp(5, Timestamp.valueOf(misurazione.getTime()));
+			stmt.setTimestamp(4, Timestamp.valueOf(misurazione.getTime()));
 
-			stmt.setInt(6, misurazione.getDato(TipoDatoGeografico.Vento));
-			stmt.setInt(7, misurazione.getDato(TipoDatoGeografico.Umidita));
-			stmt.setInt(8, misurazione.getDato(TipoDatoGeografico.Pressione));
-			stmt.setInt(9, misurazione.getDato(TipoDatoGeografico.Temperatura));
-			stmt.setInt(10, misurazione.getDato(TipoDatoGeografico.Precipitazioni));
-			stmt.setInt(11, misurazione.getDato(TipoDatoGeografico.AltitudineGhiacciai));
-			stmt.setInt(12, misurazione.getDato(TipoDatoGeografico.MassaGhiacciai));
+			stmt.setInt(5, misurazione.getDato(TipoDatoGeografico.Vento));
+			stmt.setInt(6, misurazione.getDato(TipoDatoGeografico.Umidita));
+			stmt.setInt(7, misurazione.getDato(TipoDatoGeografico.Pressione));
+			stmt.setInt(8, misurazione.getDato(TipoDatoGeografico.Temperatura));
+			stmt.setInt(9, misurazione.getDato(TipoDatoGeografico.Precipitazioni));
+			stmt.setInt(10, misurazione.getDato(TipoDatoGeografico.AltitudineGhiacciai));
+			stmt.setInt(11, misurazione.getDato(TipoDatoGeografico.MassaGhiacciai));
 
-			stmt.setString(13, misurazione.getNota(TipoDatoGeografico.Vento));
-			stmt.setString(14, misurazione.getNota(TipoDatoGeografico.Umidita));
-			stmt.setString(15, misurazione.getNota(TipoDatoGeografico.Pressione));
-			stmt.setString(16, misurazione.getNota(TipoDatoGeografico.Temperatura));
-			stmt.setString(17, misurazione.getNota(TipoDatoGeografico.Precipitazioni));
-			stmt.setString(18, misurazione.getNota(TipoDatoGeografico.AltitudineGhiacciai));
-			stmt.setString(19, misurazione.getNota(TipoDatoGeografico.MassaGhiacciai));
+			stmt.setString(12, misurazione.getNota(TipoDatoGeografico.Vento));
+			stmt.setString(13, misurazione.getNota(TipoDatoGeografico.Umidita));
+			stmt.setString(14, misurazione.getNota(TipoDatoGeografico.Pressione));
+			stmt.setString(15, misurazione.getNota(TipoDatoGeografico.Temperatura));
+			stmt.setString(16, misurazione.getNota(TipoDatoGeografico.Precipitazioni));
+			stmt.setString(17, misurazione.getNota(TipoDatoGeografico.AltitudineGhiacciai));
+			stmt.setString(18, misurazione.getNota(TipoDatoGeografico.MassaGhiacciai));
 
 			ResultSet set = stmt.executeQuery();
 			set.next();
