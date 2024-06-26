@@ -48,4 +48,6 @@ public interface ServicesCM extends Remote {
 
 	Result<ListaAree> getAreeGeografiche() throws RemoteException;
 
+	Result<ListaOperatori> getOperatoriRegistrati() throws RemoteException;
+
 }

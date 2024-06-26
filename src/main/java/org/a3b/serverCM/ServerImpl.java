@@ -300,7 +300,7 @@ public class ServerImpl extends UnicastRemoteObject implements ServicesCM {
 	}
 
 	/**
-	 * @return {@link Result<ListaAree>} lista delle aree
+	 * @return {@link Result<ListaAree>} lista delle aree geografiche
 	 * @throws RemoteException per la gestione delle eccezioni legate alla comunicazione con il client
 	 */
 	@Override
@@ -317,6 +317,30 @@ public class ServerImpl extends UnicastRemoteObject implements ServicesCM {
 			}
 
 			return new Result<>(la);
+		} catch (SQLException e) {
+			log.error("Error!", e);
+			return new Result<>(e);
+		}
+	}
+
+	/**
+	 * @return {@link Result<ListaOperatori>} lista delgli operatori registrati
+	 * @throws RemoteException per la gestione delle eccezioni legate alla comunicazione con il client
+	 */
+	@Override
+	public Result<ListaOperatori> getOperatoriRegistrati() throws RemoteException {
+		ListaOperatori lo = new ListaOperatori();
+		String query = """
+				SELECT *
+				FROM "OperatoriRegistrati";
+				""";
+		try (var stmt = ServerCM.db.prepareStatement(query)) {
+			ResultSet set = stmt.executeQuery();
+			while (set.next()) {
+				lo.add(DataFactory.buildOperatore(set));
+			}
+
+			return new Result<>(lo);
 		} catch (SQLException e) {
 			log.error("Error!", e);
 			return new Result<>(e);
