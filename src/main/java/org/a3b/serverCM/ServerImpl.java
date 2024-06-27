@@ -431,8 +431,8 @@ public class ServerImpl extends UnicastRemoteObject implements ServicesCM {
 			int rows = 0;
 			int x = newList.size();
 			for (int i = 1; i < x; i++) {
-				stmt.setLong(2 * i, newList.poll().getGeoID());
-				stmt.setLong(2 * i + 1, center.getCenterID());
+				stmt.setLong(1, newList.poll().getGeoID());
+				stmt.setLong(2, center.getCenterID());
 				stmt.executeUpdate();
 				rows++;
 			}
