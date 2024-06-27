@@ -17,6 +17,7 @@ import lombok.extern.log4j.Log4j2;
 import org.a3b.commons.ServicesCM;
 import org.a3b.commons.magazzeno.AreaGeografica;
 import org.a3b.commons.magazzeno.CentroMonitoraggio;
+import org.a3b.commons.magazzeno.ListaAree;
 import org.a3b.commons.magazzeno.Operatore;
 import org.a3b.serverCM.ServerCM;
 
@@ -47,6 +48,10 @@ public class FakeClient {
 
 		CentroMonitoraggio cm = new CentroMonitoraggio();
 		log.debug(cm = srv.registraCentroAree(cm).get());
+
+		ListaAree la = new ListaAree();
+		la.add(ag);
+		log.debug(cm = srv.alterListaAree(cm, la).get());
 
 		Operatore op = new Operatore(0, "Iuri", "Antico", "1234567890abcdef", "test@example.org", cm);
 		log.debug(op = srv.registrazione(op, "password0").get());

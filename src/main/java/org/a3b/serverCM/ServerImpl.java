@@ -299,6 +299,7 @@ public class ServerImpl extends UnicastRemoteObject implements ServicesCM {
 		String query = """
 				SELECT *
 				FROM "Area_Center"
+				JOIN "CoordinateMonitoraggio" ON "Area" = "GeoID"
 				WHERE "Center" = ?;
 				""";
 		try (var stmt = ServerCM.db.prepareStatement(query)) {
@@ -406,13 +407,11 @@ public class ServerImpl extends UnicastRemoteObject implements ServicesCM {
 		String insertQuery = """
 				INSERT INTO "Area_Center"("Area", "Center")
 				""";
-
-		StringBuilder valuesBuilder = new StringBuilder();
-		for (int i = 0; i < newList.size(); i++) {
-			if (i > 0) valuesBuilder.append(", ");
-			valuesBuilder.append("(?, ?)");
-		}
-		insertQuery += valuesBuilder.toString() + ";";
+		insertQuery += """
+				VALUES (?, ?)
+				    
+				""".repeat(newList.size());
+		insertQuery += ";";
 
 		try (var stmt = ServerCM.db.prepareStatement(deleteQuery)) {
 			stmt.setLong(1, center.getCenterID());
@@ -420,7 +419,7 @@ public class ServerImpl extends UnicastRemoteObject implements ServicesCM {
 			int rows = stmt.executeUpdate();
 
 			if (rows != center.getAree().size()) {
-				return new Result(new ResultException("Number of rows deleted did not equal list size"));
+				return new Result<>(new ResultException("Number of rows deleted did not equal list size"));
 			}
 
 
@@ -435,22 +434,20 @@ public class ServerImpl extends UnicastRemoteObject implements ServicesCM {
 				stmt.setLong(i++, area.getGeoID());
 				stmt.setLong(i++, center.getCenterID());
 			}
+
 			int rows = stmt.executeUpdate();
 
 			CentroMonitoraggio newcenter = ServerCM.server.getCentroMonitoraggio(center.getCenterID()).get();
 
 			if (rows != newList.size()) {
-				return new Result(newcenter, new ResultException("Number of rows modified did not equal list size"));
+				return new Result<>(newcenter, new ResultException("Number of rows modified did not equal list size"));
 			}
 
-			return new Result(newcenter);
+			return new Result<>(newcenter);
 		} catch (SQLException e) {
 			log.error("Error!", e);
 			return new Result<>(e);
 		}
-
-
-
 	}
 
 	/**
