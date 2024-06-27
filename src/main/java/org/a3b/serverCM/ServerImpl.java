@@ -407,7 +407,7 @@ public class ServerImpl extends UnicastRemoteObject implements ServicesCM {
 				INSERT INTO "Area_Center"("Area", "Center")
 				""";
 		insertQuery += """
-				VALUES ("?", "?")
+				VALUES (?, ?)
 				""".repeat(newList.size());
 
 		insertQuery += ";";
@@ -429,8 +429,8 @@ public class ServerImpl extends UnicastRemoteObject implements ServicesCM {
 
 		try (var stmt = ServerCM.db.prepareStatement(insertQuery)) {
 			for (int i = 0; i < newList.size(); i++) {
-				stmt.setLong(2 * (i + 1), newList.peekFirst().getGeoID());
-				stmt.setLong(2 * (i +1) + 1, center.getCenterID());
+				stmt.setLong(2 * i, newList.peekFirst().getGeoID());
+				stmt.setLong(2 * i + 1, center.getCenterID());
 			}
 
 			int rows = stmt.executeUpdate();

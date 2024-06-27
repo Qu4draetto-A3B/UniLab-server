@@ -27,7 +27,7 @@ import java.sql.SQLException;
 import java.util.Objects;
 
 /**
- * La classe {@code Datafactory} fornisce una serie di metodi per la costruzioni d'istanze
+ * La classe {@code DataFactory} fornisce una serie di metodi per la costruzioni d'istanze
  * a partire dai record del database
  */
 @Log4j2
