@@ -50,6 +50,8 @@ public interface ServicesCM extends Remote {
 
 	Result<ListaOperatori> getOperatoriRegistrati() throws RemoteException;
 
+	Result<ListaCentri> getCentriMonitoraggio() throws RemoteException;
+
 	Result<CentroMonitoraggio> alterListaAree(long centerID, ListaAree newlist) throws RemoteException;
 
 }

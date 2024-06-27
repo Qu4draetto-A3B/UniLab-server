@@ -363,6 +363,30 @@ public class ServerImpl extends UnicastRemoteObject implements ServicesCM {
 	}
 
 	/**
+	 * @return {@link Result<ListaCentri>} lista degli centri di monitoraggio nel database
+	 * @throws RemoteException per la gestione delle eccezioni legate alla comunicazione con il client
+	 */
+	@Override
+	public Result<ListaCentri> getCentriMonitoraggio() throws RemoteException {
+		ListaCentri lc = new ListaCentri();
+		String query = """
+				SELECT *
+				FROM "CentriMonitoraggio";
+				""";
+		try (var stmt = ServerCM.db.prepareStatement(query)) {
+			ResultSet set = stmt.executeQuery();
+			while (set.next()) {
+				lc.add(DataFactory.buildCentroMonitoraggio(set));
+			}
+
+			return new Result<>(lc);
+		} catch (SQLException e) {
+			log.error("Error!", e);
+			return new Result<>(e);
+		}
+	}
+
+	/**
 	 * Metodo per modificare la {@link ListaAree} associate a un determinato {@link CentroMonitoraggio}
 	 *
 	 * @param centerID ID univoco del centro di cui modificare la lista
