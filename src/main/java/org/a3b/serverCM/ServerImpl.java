@@ -399,12 +399,12 @@ public class ServerImpl extends UnicastRemoteObject implements ServicesCM {
 	@Override
 	public Result<CentroMonitoraggio> alterListaAree(CentroMonitoraggio center, ListaAree newList) throws RemoteException {
 		String deleteQuery = """
-				DELETE FROM "Area_Centro"
+				DELETE FROM "Area_Center"
 				WHERE Centro = ?;
 				""";
 
 		String insertQuery = """
-				INSERT INTO "Area_Centro"("Area", "Centro")
+				INSERT INTO "Area_Center"("Area", "Centro")
 				""";
 		insertQuery += """
 				VALUES ("?", "?")

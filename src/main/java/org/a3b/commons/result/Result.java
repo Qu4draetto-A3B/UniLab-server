@@ -159,7 +159,7 @@ public class Result<T> implements Serializable {
 	}
 
 	/**
-	 * Alza la {@link ResultException} contenuta in questo {@code Result}
+	 * Lancia la {@link ResultException} contenuta in questo {@code Result}
 	 */
 	public void panic() {
 		throw error;
