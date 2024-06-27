@@ -400,7 +400,7 @@ public class ServerImpl extends UnicastRemoteObject implements ServicesCM {
 	public Result<CentroMonitoraggio> alterListaAree(CentroMonitoraggio center, ListaAree newList) throws RemoteException {
 		String deleteQuery = """
 				DELETE FROM "Area_Center"
-				WHERE Center = ?;
+				WHERE "Center" = ?;
 				""";
 
 		String insertQuery = """
