@@ -127,10 +127,10 @@ public class ServerImpl extends UnicastRemoteObject implements ServicesCM {
 	}
 
 	/**
-	 * Metodo per visualizaare l'area geografica in base al geoID
+	 * Metodo per visualizzare le misurazioni climatiche associate a una determinata area geografica
 	 *
 	 * @param geoID geoID dell'area geografica
-	 * @return {@link Result<Misurazione>} misurazione dell' area geografica
+	 * @return {@link Result<Misurazione>} insieme di rilevazioni climatiche legate all'area geografica
 	 * @throws RemoteException per la gestione delle eccezioni legate alla comunicazione con il client
 	 */
 	@Override
@@ -153,11 +153,11 @@ public class ServerImpl extends UnicastRemoteObject implements ServicesCM {
 	}
 
 	/**
-	 * Metodo per far avvenire la registrazione tramite l'operatore e la password
+	 * Metodo per la registrazione degli operatori
 	 *
-	 * @param operator operatore del centro di monitoraggio
-	 * @param password dell'operatore per la registrazione
-	 * @return {@link Result<Operatore>} operatore dell' area geografica
+	 * @param operator operatore da registare
+	 * @param password associata all'operatore
+	 * @return {@link Result<Operatore>} istanza che rappresenta l'operatore registrato
 	 * @throws RemoteException per la gestione delle eccezioni legate alla comunicazione con il client
 	 */
 	@Override
@@ -204,11 +204,11 @@ public class ServerImpl extends UnicastRemoteObject implements ServicesCM {
 	}
 
 	/**
-	 * Metodo che per far accedere l'operatore
+	 * Metodo per l'accesso degli operatori
 	 *
 	 * @param userID   ID dell'operatore
 	 * @param password dell'operatore per la registrazione
-	 * @return {@link Result<Operatore>} operatore dell' area geografica
+	 * @return {@link Result<Operatore>} istanza che rappresenta l'operatore che ha effettuato il login
 	 * @throws RemoteException per la gestione delle eccezioni legate alla comunicazione con il client
 	 */
 	@Override
@@ -238,10 +238,10 @@ public class ServerImpl extends UnicastRemoteObject implements ServicesCM {
 	}
 
 	/**
-	 * Metodo per registrare il CentroAree
+	 * Metodo per la registrazione di un {@link CentroMonitoraggio} nel database
 	 *
-	 * @param centro centro di monitoraggio per la sua registrazione
-	 * @return {@link Result<CentroMonitoraggio>} centro di monitoraggio dell' area geografica
+	 * @param centro centro di monitoraggio da registrare
+	 * @return {@link Result<CentroMonitoraggio>} istanza che rappresenta il centro di monitoraggio registrato
 	 * @throws RemoteException per la gestione delle eccezioni legate alla comunicazione con il client
 	 */
 	@Override
@@ -286,10 +286,10 @@ public class ServerImpl extends UnicastRemoteObject implements ServicesCM {
 	}
 
 	/**
-	 * Metodo che restituisce la lista delle aree geografiche
+	 * Metodo che restituisce la lista delle aree geografiche associate a un determinato {@link CentroMonitoraggio}
 	 *
-	 * @param centerID id del centro di monitaggio
-	 * @return {@link Result<ListaAree>} lista delle aree
+	 * @param centerID id del centro di monitoraggio
+	 * @return {@link Result<ListaAree>} lista delle aree associate al centro
 	 * @throws RemoteException per la gestione delle eccezioni legate alla comunicazione con il client
 	 */
 	@Override
@@ -315,7 +315,7 @@ public class ServerImpl extends UnicastRemoteObject implements ServicesCM {
 	}
 
 	/**
-	 * @return {@link Result<ListaAree>} lista delle aree geografiche
+	 * @return {@link Result<ListaAree>} lista delle aree geografiche presenti nel database
 	 * @throws RemoteException per la gestione delle eccezioni legate alla comunicazione con il client
 	 */
 	@Override
@@ -339,7 +339,7 @@ public class ServerImpl extends UnicastRemoteObject implements ServicesCM {
 	}
 
 	/**
-	 * @return {@link Result<ListaOperatori>} lista delgli operatori registrati
+	 * @return {@link Result<ListaOperatori>} lista degli operatori registrati nel database
 	 * @throws RemoteException per la gestione delle eccezioni legate alla comunicazione con il client
 	 */
 	@Override
@@ -363,10 +363,53 @@ public class ServerImpl extends UnicastRemoteObject implements ServicesCM {
 	}
 
 	/**
-	 * Metodo per inserire i parametri climatici
+	 * Metodo per modificare la {@link ListaAree} associate a un determinato {@link CentroMonitoraggio}
 	 *
-	 * @param misurazione dell'area geografica
-	 * @return {@link Result<Misurazione>} misurazione dell' area geografica
+	 * @param centerID ID univoco del centro di cui modificare la lista
+	 * @param newList lista modificata
+	 * @return {@link Result<CentroMonitoraggio>} centro monitoraggio con la relativa lista di aree aggiornata
+	 * @throws RemoteException per la gestione delle eccezioni legate alla comunicazione con il client
+	 */
+
+	@Override
+	public Result<CentroMonitoraggio> alterListaAree(long centerID, ListaAree newList) throws RemoteException {
+		String deleteQuery = """
+				DELETE FROM "Area_Centro"
+				WHERE Centro = ?;
+				""";
+
+		String insertQuery = """
+				INSERT INTO "Area_Centro"("Name", "Street", "CivicNumber", "ZIPCode", "Town", "Province")
+				VALUES (?, ?, ?, ?, ?, ?);
+				""";
+		insertQuery += """""VALUES ("?", "?")""".repeat(newList.size())\n";
+
+		insertQuery += ";";
+
+// Setup statement
+
+		for (int i = 0; i < newList.size(); i++) {
+			stmt.setLong(2 * i, newList.get(i).getGeoID);
+			stmt.setLong(2 * i + 1, center.getId);
+		}
+
+		int rows = stmt.executeUpdate();
+
+		CentroMonitoraggio newcenter = ServerCM.server.getCentro(center.getId());
+
+		if (rows != newlist.size()) {
+			return new Result<newcenter, new ResultException("Number of rows modified did not equal list size")>;
+		}
+
+		return new Result<newcenter>;
+
+	}
+
+	/**
+	 * Metodo per inserire parametri climatici ({@link Misurazione}) all'interno del database
+	 *
+	 * @param misurazione insieme dei parametri climatici
+	 * @return {@link Result<Misurazione>} istanza che rappresenta la misurazione registrata
 	 * @throws RemoteException per la gestione delle eccezioni legate alla comunicazione con il client
 	 */
 	@Override
@@ -412,10 +455,10 @@ public class ServerImpl extends UnicastRemoteObject implements ServicesCM {
 	}
 
 	/**
-	 * Metodo per restiuire una Misurazione
+	 * Metodo che restituisce una specifica {@link Misurazione} del database
 	 *
-	 * @param recordID record per accedere alle misurazione nel database
-	 * @return {@link Result<Misurazione>} misurazione dell' area geografica
+	 * @param recordID ID univoco della misurazione
+	 * @return {@link Result<Misurazione>} misurazione corrispondente all'ID fornito
 	 * @throws RemoteException per la gestione delle eccezioni legate alla comunicazione con il client
 	 */
 	@Override
@@ -438,10 +481,10 @@ public class ServerImpl extends UnicastRemoteObject implements ServicesCM {
 	}
 
 	/**
-	 * Metodo che restituisce un centro di monitaggio
+	 * Metodo che restituisce uno specifico {@link CentroMonitoraggio} del database
 	 *
-	 * @param centerID id del centro di monitoraggio per cercarlo nel database
-	 * @return {@link Result<CentroMonitoraggio>} centro di monitoraggio dell' area geografica
+	 * @param centerID ID univoco del centro di monitoraggio
+	 * @return {@link Result<CentroMonitoraggio>} centro di monitoraggio corrispondente all'ID fornito
 	 * @throws RemoteException per la gestione delle eccezioni legate alla comunicazione con il client
 	 */
 	@Override
