@@ -18,6 +18,7 @@ import lombok.extern.log4j.Log4j2;
 import org.a3b.commons.ServicesCM;
 import org.a3b.commons.magazzeno.*;
 import org.a3b.commons.result.Result;
+import org.a3b.commons.result.ResultException;
 import org.a3b.commons.result.errors.DataNotFoundException;
 import org.a3b.commons.result.errors.InconsistentDataException;
 import org.a3b.commons.utils.TipoDatoGeografico;
@@ -389,43 +390,64 @@ public class ServerImpl extends UnicastRemoteObject implements ServicesCM {
 	/**
 	 * Metodo per modificare la {@link ListaAree} associate a un determinato {@link CentroMonitoraggio}
 	 *
-	 * @param centerID ID univoco del centro di cui modificare la lista
+	 * @param center centro di monitoraggio di cui modificare la lista
 	 * @param newList lista modificata
 	 * @return {@link Result<CentroMonitoraggio>} centro monitoraggio con la relativa lista di aree aggiornata
 	 * @throws RemoteException per la gestione delle eccezioni legate alla comunicazione con il client
 	 */
 
 	@Override
-	public Result<CentroMonitoraggio> alterListaAree(long centerID, ListaAree newList) throws RemoteException {
+	public Result<CentroMonitoraggio> alterListaAree(CentroMonitoraggio center, ListaAree newList) throws RemoteException {
 		String deleteQuery = """
 				DELETE FROM "Area_Centro"
 				WHERE Centro = ?;
 				""";
 
 		String insertQuery = """
-				INSERT INTO "Area_Centro"("Name", "Street", "CivicNumber", "ZIPCode", "Town", "Province")
-				VALUES (?, ?, ?, ?, ?, ?);
+				INSERT INTO "Area_Centro"("Area", "Centro")
 				""";
-		insertQuery += """""VALUES ("?", "?")""".repeat(newList.size())\n";
+		insertQuery += """
+				VALUES ("?", "?")
+				""".repeat(newList.size());
 
 		insertQuery += ";";
 
-// Setup statement
+		try (var stmt = ServerCM.db.prepareStatement(deleteQuery)) {
+			stmt.setLong(1, center.getCenterID());
 
-		for (int i = 0; i < newList.size(); i++) {
-			stmt.setLong(2 * i, newList.get(i).getGeoID);
-			stmt.setLong(2 * i + 1, center.getId);
+			int rows = stmt.executeUpdate();
+
+			if (rows != center.getAree().size()) {
+				return new Result(new ResultException("Number of rows deleted did not equal list size"));
+			}
+
+
+		} catch (SQLException e) {
+			log.error("Error!", e);
+			return new Result<>(e);
 		}
 
-		int rows = stmt.executeUpdate();
+		try (var stmt = ServerCM.db.prepareStatement(insertQuery)) {
+			for (int i = 0; i < newList.size(); i++) {
+				stmt.setLong(2 * i, newList.peekFirst().getGeoID());
+				stmt.setLong(2 * i + 1, center.getCenterID());
+			}
 
-		CentroMonitoraggio newcenter = ServerCM.server.getCentro(center.getId());
+			int rows = stmt.executeUpdate();
 
-		if (rows != newlist.size()) {
-			return new Result<newcenter, new ResultException("Number of rows modified did not equal list size")>;
+			CentroMonitoraggio newcenter = ServerCM.server.getCentroMonitoraggio(center.getCenterID()).get();
+
+			if (rows != newList.size()) {
+				return new Result(newcenter, new ResultException("Number of rows modified did not equal list size"));
+			}
+
+			return new Result(newcenter);
+		} catch (SQLException e) {
+			log.error("Error!", e);
+			return new Result<>(e);
 		}
 
-		return new Result<newcenter>;
+
 
 	}
 
