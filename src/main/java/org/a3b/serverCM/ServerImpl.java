@@ -406,11 +406,13 @@ public class ServerImpl extends UnicastRemoteObject implements ServicesCM {
 		String insertQuery = """
 				INSERT INTO "Area_Center"("Area", "Center")
 				""";
-		insertQuery += """
-				VALUES (?, ?)
-				""".repeat(newList.size());
 
-		insertQuery += ";";
+		StringBuilder valuesBuilder = new StringBuilder();
+		for (int i = 0; i < newList.size(); i++) {
+			if (i > 0) valuesBuilder.append(", ");
+			valuesBuilder.append("(?, ?)");
+		}
+		insertQuery += valuesBuilder.toString() + ";";
 
 		try (var stmt = ServerCM.db.prepareStatement(deleteQuery)) {
 			stmt.setLong(1, center.getCenterID());
