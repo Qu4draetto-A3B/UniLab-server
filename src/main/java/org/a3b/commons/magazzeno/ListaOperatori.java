@@ -17,7 +17,7 @@ package org.a3b.commons.magazzeno;
 import lombok.Data;
 import java.io.Serial;
 import java.io.Serializable;
-import java.util.LinkedList;
+import java.util.concurrent.ConcurrentLinkedDeque;
 
 /**
  * La classe {@code ListaOperatori} rappresenta una lista di istanze di
@@ -30,7 +30,7 @@ import java.util.LinkedList;
  */
 
 @Data
-public class ListaOperatori extends LinkedList<Operatore> implements Serializable {
+public class ListaOperatori extends ConcurrentLinkedDeque<Operatore> implements Serializable {
 	@Serial
 	private static final long serialVersionUID = 1L;
 
