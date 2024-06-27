@@ -430,12 +430,13 @@ public class ServerImpl extends UnicastRemoteObject implements ServicesCM {
 		try (var stmt = ServerCM.db.prepareStatement(insertQuery)) {
 			int rows = 0;
 			int x = newList.size();
-			for (int i = 0; i < x; i++) {
+			for (int i = 1; i < x; i++) {
 				stmt.setLong(2 * i, newList.poll().getGeoID());
 				stmt.setLong(2 * i + 1, center.getCenterID());
 				stmt.executeUpdate();
 				rows++;
 			}
+			ServerCM.db.commit();
 
 			CentroMonitoraggio newcenter = ServerCM.server.getCentroMonitoraggio(center.getCenterID()).get();
 
