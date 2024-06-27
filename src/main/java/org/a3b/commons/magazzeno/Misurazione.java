@@ -34,7 +34,7 @@ import java.util.Locale;
  */
 @Data
 public class Misurazione implements Serializable {
-	public static final DateTimeFormatter DATE_TIME_FORMAT = DateTimeFormatter.RFC_1123_DATE_TIME.localizedBy(Locale.getDefault());
+	public static final DateTimeFormatter DATE_TIME_FORMAT = DateTimeFormatter.ISO_LOCAL_DATE_TIME.localizedBy(Locale.getDefault());
 	@Serial
 	private static final long serialVersionUID = 1L;
 	private long rid;
@@ -54,12 +54,7 @@ public class Misurazione implements Serializable {
 	 * @param area      area geografica relativa alla misurazione
 	 */
 	public Misurazione(long rid, Operatore operatore, AreaGeografica area, HashMap<TipoDatoGeografico, Byte> dati, HashMap<TipoDatoGeografico, String> note) {
-		this.dati = dati;
-		this.note = note;
-		this.operatore = operatore;
-		this.area = area;
-		time = LocalDateTime.now();
-		centro = operatore.getCentro();
+		this(rid, LocalDateTime.now(), operatore, operatore.getCentro(), area, dati, note);
 	}
 
 	/**
@@ -73,6 +68,7 @@ public class Misurazione implements Serializable {
 	 * @param dati      dato geografico relativo alla misurazione
 	 */
 	public Misurazione(long rid, LocalDateTime dateTime, Operatore operatore, CentroMonitoraggio centro, AreaGeografica area, HashMap<TipoDatoGeografico, Byte> dati, HashMap<TipoDatoGeografico, String> note) {
+		this.rid = rid;
 		this.dati = dati;
 		this.note = note;
 		this.operatore = operatore;
@@ -93,15 +89,15 @@ public class Misurazione implements Serializable {
 	 * @param vento               velocita' del vento
 	 * @return l'hash map con i relativi valori dei parametri inseriti
 	 */
-	public static HashMap<TipoDatoGeografico, Byte> buildDati(byte altitudineGhiacciai, byte massaGhiacciai, byte precipitazioni, byte pressione, byte temperatura, byte umidita, byte vento) {
+	public static HashMap<TipoDatoGeografico, Byte> buildDati(int altitudineGhiacciai, int massaGhiacciai, int precipitazioni, int pressione, int temperatura, int umidita, int vento) {
 		HashMap<TipoDatoGeografico, Byte> dati = new HashMap<>();
-		dati.put(TipoDatoGeografico.AltitudineGhiacciai, altitudineGhiacciai);
-		dati.put(TipoDatoGeografico.MassaGhiacciai, massaGhiacciai);
-		dati.put(TipoDatoGeografico.Precipitazioni, precipitazioni);
-		dati.put(TipoDatoGeografico.Pressione, pressione);
-		dati.put(TipoDatoGeografico.Temperatura, temperatura);
-		dati.put(TipoDatoGeografico.Umidita, umidita);
-		dati.put(TipoDatoGeografico.Vento, vento);
+		dati.put(TipoDatoGeografico.AltitudineGhiacciai, (byte) altitudineGhiacciai);
+		dati.put(TipoDatoGeografico.MassaGhiacciai, (byte) massaGhiacciai);
+		dati.put(TipoDatoGeografico.Precipitazioni, (byte) precipitazioni);
+		dati.put(TipoDatoGeografico.Pressione, (byte) pressione);
+		dati.put(TipoDatoGeografico.Temperatura, (byte) temperatura);
+		dati.put(TipoDatoGeografico.Umidita, (byte) umidita);
+		dati.put(TipoDatoGeografico.Vento, (byte) vento);
 		return dati;
 	}
 

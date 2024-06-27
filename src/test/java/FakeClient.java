@@ -15,15 +15,13 @@
 
 import lombok.extern.log4j.Log4j2;
 import org.a3b.commons.ServicesCM;
-import org.a3b.commons.magazzeno.AreaGeografica;
-import org.a3b.commons.magazzeno.CentroMonitoraggio;
-import org.a3b.commons.magazzeno.ListaAree;
-import org.a3b.commons.magazzeno.Operatore;
+import org.a3b.commons.magazzeno.*;
 import org.a3b.serverCM.ServerCM;
 
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
+import java.time.LocalDateTime;
 
 @Log4j2
 public class FakeClient {
@@ -57,5 +55,10 @@ public class FakeClient {
 		log.debug(op = srv.registrazione(op, "password0").get());
 
 		log.debug(srv.login(op.getUid(), "password0"));
+
+		Misurazione mis = new Misurazione(-1, op, ag, Misurazione.buildDati(0, 0, 0, 0, 0, 0, 0), Misurazione.buildNote("", "", "", "", "", "", ""));
+		log.debug(srv.inserisciParametriClimatici(mis));
+
+		log.debug(srv.getListaMisurazioni(-1, -1, -1, -1, null, LocalDateTime.now().plusMinutes(10)).get());
 	}
 }

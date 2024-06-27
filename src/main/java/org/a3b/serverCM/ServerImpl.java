@@ -28,6 +28,8 @@ import java.rmi.server.UnicastRemoteObject;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 /**
  * La classe {@code ServerImpl} contiene l'implementazione di tutti i metodi utilizzati dal client
@@ -459,14 +461,20 @@ public class ServerImpl extends UnicastRemoteObject implements ServicesCM {
 	 */
 	@Override
 	public Result<Misurazione> inserisciParametriClimatici(Misurazione misurazione) throws RemoteException {
-		String query = """
+		String insertQuery = """
 				INSERT INTO "ParametriClimatici"("Center", "Operator", "Area", "Datetime",
 				                             "Wind", "Humidity", "Pressure", "Temperature", "Precipitation", "GlacierAltitude",
 				                             "GlacierMass", "WindNotes", "HumidityNotes", "PressureNotes", "TemperatureNotes",
 				                             "PrecipitationNotes", "GlacierAltitudeNotes", "GlacierMassNotes")
 				VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
 				""";
-		try (var stmt = ServerCM.db.prepareStatement(query)) {
+		String selectQuery = """
+				SELECT *
+				FROM "ParametriClimatici"
+				WHERE "Datetime" = ?;
+				""";
+
+		try (var stmt = ServerCM.db.prepareStatement(insertQuery)) {
 			stmt.setLong(1, misurazione.getCentro().getCenterID());
 			stmt.setLong(2, misurazione.getOperatore().getUid());
 			stmt.setLong(3, misurazione.getArea().getGeoID());
@@ -488,6 +496,18 @@ public class ServerImpl extends UnicastRemoteObject implements ServicesCM {
 			stmt.setString(16, misurazione.getNota(TipoDatoGeografico.Precipitazioni));
 			stmt.setString(17, misurazione.getNota(TipoDatoGeografico.AltitudineGhiacciai));
 			stmt.setString(18, misurazione.getNota(TipoDatoGeografico.MassaGhiacciai));
+
+			int rows = stmt.executeUpdate();
+			if (rows != 1) {
+				return new Result<>(new ResultException("Did not insert exactly 1 row"));
+			}
+		} catch (SQLException e) {
+			log.error("Error!", e);
+			return new Result<>(e);
+		}
+
+		try (var stmt = ServerCM.db.prepareStatement(selectQuery)) {
+			stmt.setTimestamp(1, Timestamp.valueOf(misurazione.getTime()));
 
 			ResultSet set = stmt.executeQuery();
 			set.next();
@@ -545,6 +565,61 @@ public class ServerImpl extends UnicastRemoteObject implements ServicesCM {
 			set.next();
 
 			return new Result<>(DataFactory.buildCentroMonitoraggio(set));
+		} catch (SQLException e) {
+			log.error("Error!", e);
+			return new Result<>(e);
+		}
+	}
+
+	@Override
+	public Result<ListaMisurazioni> getListaMisurazioni(long recordID, long userID, long centerID, long geoID, LocalDateTime start, LocalDateTime end) throws RemoteException {
+		String query = """
+				SELECT *
+				FROM "ParametriClimatici"
+				WHERE 1 = 1
+				    
+				""";
+
+		if (recordID >= 0) {
+			query += String.format("""
+					AND "RecordID" = %d
+
+					""", recordID);
+		}
+		if (userID >= 0) {
+			query += String.format("""
+					AND "Operator" = %d
+
+					""", userID);
+		}
+		if (centerID >= 0) {
+			query += String.format("""
+					AND "Center" = %d
+
+					""", centerID);
+		}
+		if (geoID >= 0) {
+			query += String.format("""
+					AND "Area" = %d
+
+					""", geoID);
+		}
+		if (start != null || end != null) {
+			query += String.format("""
+							AND "Datetime" BETWEEN '%s' AND '%s'
+
+							""",
+					start != null ? start.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME) : "1970-01-01T00:00:00",
+					end != null ? end.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME) : "2970-01-01T00:00:00");
+		}
+		query += ";";
+		try (var stmt = ServerCM.db.prepareStatement(query)) {
+			ListaMisurazioni lm = new ListaMisurazioni();
+			ResultSet set = stmt.executeQuery();
+			while (set.next()) {
+				lm.offer(DataFactory.buildMisurazione(set));
+			}
+			return new Result<>(lm);
 		} catch (SQLException e) {
 			log.error("Error!", e);
 			return new Result<>(e);

@@ -19,6 +19,7 @@ import org.a3b.commons.result.Result;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
+import java.time.LocalDateTime;
 
 /**
  * L'interfaccia {@link ServicesCM} estende {@link Remote} si occupa fornire i metodi che deve utilizzare il Client.
@@ -53,5 +54,7 @@ public interface ServicesCM extends Remote {
 	Result<ListaCentri> getCentriMonitoraggio() throws RemoteException;
 
 	Result<CentroMonitoraggio> alterListaAree(CentroMonitoraggio center, ListaAree newList) throws RemoteException;
+
+	Result<ListaMisurazioni> getListaMisurazioni(long recordID, long userID, long centerID, long geoID, LocalDateTime start, LocalDateTime end) throws RemoteException;
 
 }
