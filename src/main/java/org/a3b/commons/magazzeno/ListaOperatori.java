@@ -15,6 +15,7 @@
 package org.a3b.commons.magazzeno;
 
 import lombok.Data;
+
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.concurrent.ConcurrentLinkedDeque;

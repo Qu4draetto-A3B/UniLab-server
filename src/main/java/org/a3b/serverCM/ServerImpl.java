@@ -391,7 +391,7 @@ public class ServerImpl extends UnicastRemoteObject implements ServicesCM {
 	/**
 	 * Metodo per modificare la {@link ListaAree} associate a un determinato {@link CentroMonitoraggio}
 	 *
-	 * @param center centro di monitoraggio di cui modificare la lista
+	 * @param center  centro di monitoraggio di cui modificare la lista
 	 * @param newList lista modificata
 	 * @return {@link Result<CentroMonitoraggio>} centro monitoraggio con la relativa lista di aree aggiornata
 	 * @throws RemoteException per la gestione delle eccezioni legate alla comunicazione con il client
@@ -430,7 +430,7 @@ public class ServerImpl extends UnicastRemoteObject implements ServicesCM {
 
 		try (var stmt = ServerCM.db.prepareStatement(insertQuery)) {
 			int i = 1;
-			for (AreaGeografica area: newList) {
+			for (AreaGeografica area : newList) {
 				stmt.setLong(i++, area.getGeoID());
 				stmt.setLong(i++, center.getCenterID());
 			}
