@@ -4,11 +4,20 @@ import java.time.LocalDateTime;
 import java.time.Month;
 import java.util.concurrent.ConcurrentLinkedDeque;
 
+/**
+ * Wrapper intorno a {@link ConcurrentLinkedDeque} adibito alla gestione di {@link Misurazione}
+ */
 public class ListaMisurazioni extends ConcurrentLinkedDeque<Misurazione> {
 	public ListaMisurazioni() {
 		//
 	}
 
+	/**
+	 * Metodo che ritorna l'elemento in posizione {@code idx} della {@code ListaMisurazioni}
+	 *
+	 * @param idx indice dell'elemento
+	 * @return elemento all'indice {@code idx}
+	 */
 	public Misurazione get(int idx) {
 		int i = 0;
 		for (Misurazione mis : this) {
@@ -19,6 +28,12 @@ public class ListaMisurazioni extends ConcurrentLinkedDeque<Misurazione> {
 		return null;
 	}
 
+
+	/**
+	 * Metodo che ritorna la {@link Misurazione} specificata
+	 * @param rid RecordID della misurazione
+	 * @return la misurazione con RecordID == a {@code rid}
+	 */
 	public Misurazione get(long rid) {
 		for (Misurazione mis : this) {
 			if (mis.getRid() == rid) {

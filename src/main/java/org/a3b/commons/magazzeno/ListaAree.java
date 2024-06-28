@@ -145,6 +145,11 @@ public class ListaAree extends ConcurrentLinkedDeque<AreaGeografica> implements 
 	}
 
 	@Override
+	public Misurazione visualizzaAreaGeografica(AreaGeografica area) {
+		return null;
+	}
+
+	@Override
 	public String toString() {
 		StringBuilder str = new StringBuilder();
 		for (AreaGeografica tmp : this)
