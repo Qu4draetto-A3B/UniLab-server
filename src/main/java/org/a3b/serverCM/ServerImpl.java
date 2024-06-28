@@ -407,12 +407,14 @@ public class ServerImpl extends UnicastRemoteObject implements ServicesCM {
 				""";
 
 		String insertQuery = """
-				INSERT INTO "Area_Center"("Area", "Center")
+				INSERT INTO "Area_Center"("Area", "Center") VALUES
 				""";
-		insertQuery += """
-				VALUES (?, ?)
-				    
-				""".repeat(newList.size());
+		for (int i = 0; i < newList.size(); i++) {
+			insertQuery += "(?, ?)";
+			if (i < newList.size() - 1) {
+				insertQuery += ", ";
+			}
+		}
 		insertQuery += ";";
 
 		try (var stmt = ServerCM.db.prepareStatement(deleteQuery)) {
