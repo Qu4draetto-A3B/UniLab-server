@@ -46,10 +46,11 @@ public class ServerCM {
 					.load();
 
 			Properties props = new Properties();
-			//props.setProperty("user", env.get("POSTGRES_USER"));
-			props.setProperty("user","postgres");
+			props.setProperty("user", env.get("POSTGRES_USER"));
 			props.setProperty("password", env.get("POSTGRES_PASSWORD"));
-			String url = "jdbc:postgresql://localhost/dbCM";
+			String url = String.format("jdbc:postgresql://%s/%s",
+					env.get("POSTGRES_HOST", "localhost"),
+					env.get("POSTGRES_DB"));
 			db = DriverManager.getConnection(url, props);
 
 			server = new ServerImpl();
