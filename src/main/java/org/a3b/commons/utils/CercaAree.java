@@ -16,7 +16,6 @@ package org.a3b.commons.utils;
 
 import org.a3b.commons.magazzeno.AreaGeografica;
 import org.a3b.commons.magazzeno.ListaAree;
-import org.a3b.commons.magazzeno.Misurazione;
 
 /**
  * L'interfaccia {@code CercaAree} modella la ricerca di aree geografiche.
@@ -42,12 +41,4 @@ public interface CercaAree {
 	 */
 
 	ListaAree cercaAreeGeografiche(double latitudine, double longitudine);
-
-	/**
-	 * Calcolo della media dei dati di una certa area geografica
-	 *
-	 * @param area l'area di cui fare la media
-	 * @return la media dei dati riguardanti l'area
-	 */
-	Misurazione visualizzaAreaGeografica(AreaGeografica area);
 }

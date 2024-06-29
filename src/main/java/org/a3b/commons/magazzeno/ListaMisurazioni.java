@@ -1,7 +1,10 @@
 package org.a3b.commons.magazzeno;
 
+import org.a3b.commons.utils.TipoDatoGeografico;
+
 import java.time.LocalDateTime;
 import java.time.Month;
+import java.util.HashMap;
 import java.util.concurrent.ConcurrentLinkedDeque;
 
 /**
@@ -89,5 +92,49 @@ public class ListaMisurazioni extends ConcurrentLinkedDeque<Misurazione> {
 			}
 		}
 		return lm;
+	}
+
+	/**
+	 * Calcolo della media dei dati di una certa area geografica
+	 *
+	 * @param area l'area di cui fare la media
+	 * @return la media dei dati riguardanti l'area
+	 */
+	public Misurazione visualizzaAreaGeografica(AreaGeografica area) {
+		Operatore srv = new Operatore(0,
+				"Server",
+				" Monitoraggio",
+				"",
+				"server@example.org",
+				new CentroMonitoraggio(
+						0,
+						"Server Monitoraggio",
+						"Via Ravasi",
+						2,
+						21000,
+						"Varese",
+						"Varese",
+						new ListaAree()
+				));
+		HashMap<TipoDatoGeografico, Integer> aggragates = new HashMap<>();
+		int count = 0;
+
+		for (Misurazione mis : this) {
+			for (TipoDatoGeografico tipo : TipoDatoGeografico.values()) {
+				aggragates.put(tipo, aggragates.get(tipo) + mis.getDato(tipo));
+			}
+			count++;
+		}
+
+		HashMap<TipoDatoGeografico, Byte> dati = new HashMap<>();
+		for (TipoDatoGeografico tipo : TipoDatoGeografico.values()) {
+			dati.put(tipo, (byte) (aggragates.get(tipo) / count));
+		}
+
+		return new Misurazione(0,
+				srv,
+				new AreaGeografica(0, 0, 0, "IT", "Varese"),
+				dati,
+				null);
 	}
 }
