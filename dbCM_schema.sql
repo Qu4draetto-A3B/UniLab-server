@@ -9321,3 +9321,11 @@ INSERT INTO "CoordinateMonitoraggio" VALUES(12188755,'Arcella','IT',45.421779999
 INSERT INTO "CoordinateMonitoraggio" VALUES(12188856,'Tor Tre Teste','IT',41.8823300000000031,12.5851799999999993);
 INSERT INTO "CoordinateMonitoraggio" VALUES(12188857,'Tor Vergata','IT',41.8474900000000005,12.6194600000000001);
 INSERT INTO "CoordinateMonitoraggio" VALUES(12188859,'Casal Bertone','IT',41.8982099999999988,12.5341299999999993);
+
+INSERT INTO "CentriMonitoraggio" VALUES('Parco Berrini', 'Via Roma', '71', '21020', 'Ternate', 'Varese');
+INSERT INTO "CentriMonitoraggio" VALUES('Parco Valle del Lanza', 'SP20', '69', '22070', 'Valmorea', 'Como');
+INSERT INTO "CentriMonitoraggio" VALUES('Golf Club', 'Via Belmonte', '169', '21100', 'Induno Olona', 'Varese');
+INSERT INTO "CentriMonitoraggio" VALUES('Parco Filo Blu', 'Via al Collegio', '10', '28922', 'Verbania', 'Verbano-Cusio-Ossola');
+
+INSERT INTO "OperatoriRegistrati" VALUES('Beatrice', 'Balzarini', 'FFHTJN27B59C528G', 'bbalzarini@studenti.uninsubria.it', 'Lampada!23', '2');
+INSERT INTO "OperatoriRegistrati" VALUES('Michael', 'Bernasconi', 'CTAGSM30R50C483Y', 'mbernasconi@studenti.uninsubria.it', 'HikesLover?15', '2');
