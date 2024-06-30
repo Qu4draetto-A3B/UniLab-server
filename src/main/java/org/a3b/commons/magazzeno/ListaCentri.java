@@ -1,13 +1,13 @@
 /*
- * Interdisciplinary Workshop A
+ * Interdisciplinary Workshop B
  * Climate Monitoring
- * A.A. 2022-2023
+ * A.A. 2023-2024
  *
  * Authors:
- * - Iuri Antico, 753144
- * - Beatrice Balzarini, 752257
- * - Michael Bernasconi, 752259
- * - Gabriele Borgia, 753262
+ * - Iuri Antico, 753144, VA
+ * - Beatrice Balzarini, 752257, VA
+ * - Michael Bernasconi, 752259, VA
+ * - Gabriele Borgia, 753262, VA
  *
  * Some rights reserved.
  * See LICENSE file for additional information.
