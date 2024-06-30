@@ -34,6 +34,7 @@ public class ListaMisurazioni extends ConcurrentLinkedDeque<Misurazione> {
 
 	/**
 	 * Metodo che ritorna la {@link Misurazione} specificata
+	 *
 	 * @param rid RecordID della misurazione
 	 * @return la misurazione con RecordID == a {@code rid}
 	 */
@@ -46,6 +47,12 @@ public class ListaMisurazioni extends ConcurrentLinkedDeque<Misurazione> {
 		return null;
 	}
 
+	/**
+	 * Metodo che rimuove ogni misurazione che non è stata fatta dall'utente dato
+	 *
+	 * @param userID l'operatore da filtrare
+	 * @return una nuova lista con solo misurazioni dell'operatore
+	 */
 	public ListaMisurazioni filterOperator(long userID) {
 		ListaMisurazioni lm = new ListaMisurazioni();
 		for (Misurazione mis : this) {
@@ -56,6 +63,12 @@ public class ListaMisurazioni extends ConcurrentLinkedDeque<Misurazione> {
 		return lm;
 	}
 
+	/**
+	 * Metodo che rimuove ogni misurazione che non è stata fatta dal centro dato
+	 *
+	 * @param centerID il centro da filtrare
+	 * @return una nuova lista con solo misurazioni dal centro dato
+	 */
 	public ListaMisurazioni filterCenter(long centerID) {
 		ListaMisurazioni lm = new ListaMisurazioni();
 		for (Misurazione mis : this) {
@@ -66,6 +79,12 @@ public class ListaMisurazioni extends ConcurrentLinkedDeque<Misurazione> {
 		return lm;
 	}
 
+	/**
+	 * Metodo che rimuove ogni misurazione che non è stata fatta nell'area data
+	 *
+	 * @param geoID l'area da filtrare
+	 * @return una nuova lista con solo misurazioni dall'area data
+	 */
 	public ListaMisurazioni filterArea(long geoID) {
 		ListaMisurazioni lm = new ListaMisurazioni();
 		for (Misurazione mis : this) {
@@ -76,6 +95,13 @@ public class ListaMisurazioni extends ConcurrentLinkedDeque<Misurazione> {
 		return lm;
 	}
 
+	/**
+	 * Metodo che filtra le misurazioni in base alla data di immissione nel sistema
+	 *
+	 * @param start Data di inizio del periodo di immissione
+	 * @param end   Data di fine del periodo di immissione
+	 * @return una nuova lista con solo misurazioni fatte nel lasso di tempo indicato
+	 */
 	public ListaMisurazioni filterTimestamp(LocalDateTime start, LocalDateTime end) {
 		if (start == null) {
 			start = LocalDateTime.of(1970, Month.JANUARY, 1, 0, 0, 0);
@@ -87,7 +113,7 @@ public class ListaMisurazioni extends ConcurrentLinkedDeque<Misurazione> {
 		ListaMisurazioni lm = new ListaMisurazioni();
 		for (Misurazione mis : this) {
 			LocalDateTime time = mis.getTime();
-			if (time.isAfter(start) || time.isBefore(end)) {
+			if (time.isAfter(start) && time.isBefore(end)) {
 				lm.offer(mis);
 			}
 		}
@@ -101,6 +127,7 @@ public class ListaMisurazioni extends ConcurrentLinkedDeque<Misurazione> {
 	 * @return la media dei dati riguardanti l'area
 	 */
 	public Misurazione visualizzaAreaGeografica(AreaGeografica area) {
+		ListaMisurazioni lm = filterArea(area.getGeoID());
 		Operatore srv = new Operatore(0,
 				"Server",
 				" Monitoraggio",
@@ -116,10 +143,14 @@ public class ListaMisurazioni extends ConcurrentLinkedDeque<Misurazione> {
 						"Varese",
 						new ListaAree()
 				));
-		HashMap<TipoDatoGeografico, Integer> aggragates = new HashMap<>();
-		int count = 0;
 
-		for (Misurazione mis : this) {
+		int count = 0;
+		HashMap<TipoDatoGeografico, Integer> aggragates = new HashMap<>();
+		for (TipoDatoGeografico tipo : TipoDatoGeografico.values()) {
+			aggragates.put(tipo, 0);
+		}
+
+		for (Misurazione mis : lm) {
 			for (TipoDatoGeografico tipo : TipoDatoGeografico.values()) {
 				aggragates.put(tipo, aggragates.get(tipo) + mis.getDato(tipo));
 			}
@@ -133,7 +164,7 @@ public class ListaMisurazioni extends ConcurrentLinkedDeque<Misurazione> {
 
 		return new Misurazione(0,
 				srv,
-				new AreaGeografica(0, 0, 0, "IT", "Varese"),
+				area,
 				dati,
 				null);
 	}
