@@ -27,7 +27,7 @@ public interface CercaAree {
 	 *
 	 * @param denominazione nome relativo a un'{@link AreaGeografica}
 	 * @param stato         stato di appartenenza di un'{@link AreaGeografica}
-	 * @return aree nel cui nome &egrave presente la stringa di caratteri fornita
+	 * @return aree nel cui nome &egrave; presente la stringa di caratteri fornita
 	 */
 	ListaAree cercaAreeGeografiche(String denominazione, String stato);
 

@@ -50,6 +50,11 @@ public class Result<T> implements Serializable {
 		this(content, null);
 	}
 
+	/**
+	 * Costruttore di un'istanza di un'operazione fallita
+	 *
+	 * @param error errore che ha causato il fallimento
+	 */
 	public Result(Throwable error) {
 		this(null, error);
 	}

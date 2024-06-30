@@ -50,7 +50,7 @@ public class Operatore implements Serializable {
 	 * @param nome    nome dell'operatore
 	 * @param cognome cognome dell'operatore
 	 * @param email   e-mail dell'operatore
-	 * @param centro  centro di monitoraggio a cui l'operatore &egrave associato
+	 * @param centro  centro di monitoraggio a cui l'operatore &egrave; associato
 	 */
 	public Operatore(long uid, String nome, String cognome, String cf, String email, CentroMonitoraggio centro) {
 		this.cf = cf;

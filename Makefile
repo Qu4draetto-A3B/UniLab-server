@@ -24,6 +24,8 @@ TARGET_WIN := $(BUILD_DIR)/$(EXE_NAME).exe
 TARGET_DIR := $(PRJ_NAME)
 TARGET_ZIP := $(BUILD_DIR)/$(TARGET_DIR).zip
 
+SRCS := $(shell find ./src -type f -name '*.java')
+
 # Compile and run project
 run: jar
 	java -jar $(TARGET_JAR)
@@ -48,6 +50,7 @@ exe_win: jar
 # Generate documentation
 docs: $(SRCS)
 	mvn site
+	mvn javadoc:javadoc
 
 # Clean BUILD_DIR by deleting it
 clean:
