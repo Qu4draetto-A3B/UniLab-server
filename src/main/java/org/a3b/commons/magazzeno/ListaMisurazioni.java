@@ -145,21 +145,21 @@ public class ListaMisurazioni extends ConcurrentLinkedDeque<Misurazione> {
 				));
 
 		int count = 0;
-		HashMap<TipoDatoGeografico, Integer> aggragates = new HashMap<>();
+		HashMap<TipoDatoGeografico, Integer> aggregates = new HashMap<>();
 		for (TipoDatoGeografico tipo : TipoDatoGeografico.values()) {
-			aggragates.put(tipo, 0);
+			aggregates.put(tipo, 0);
 		}
 
 		for (Misurazione mis : lm) {
 			for (TipoDatoGeografico tipo : TipoDatoGeografico.values()) {
-				aggragates.put(tipo, aggragates.get(tipo) + mis.getDato(tipo));
+				aggregates.put(tipo, aggregates.get(tipo) + mis.getDato(tipo));
 			}
 			count++;
 		}
 
 		HashMap<TipoDatoGeografico, Byte> dati = new HashMap<>();
 		for (TipoDatoGeografico tipo : TipoDatoGeografico.values()) {
-			dati.put(tipo, (byte) (aggragates.get(tipo) / count));
+			dati.put(tipo, (byte) (aggregates.get(tipo) / count));
 		}
 
 		return new Misurazione(0,
