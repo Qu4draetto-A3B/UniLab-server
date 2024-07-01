@@ -18,7 +18,7 @@ MAN_USER_OUT := $(MAN_DIR)/out/$(MAN_USER)
 MAN_TECH_OUT := $(MAN_DIR)/out/$(MAN_TECH)
 
 # Names for generated files
-TARGET_JAR := $(BUILD_DIR)/$(EXE_NAME)-shaded.jar
+TARGET_JAR := $(BUILD_DIR)/$(EXE_NAME)-jar-with-dependencies.jar
 TARGET_EXE := $(BUILD_DIR)/$(EXE_NAME)
 TARGET_WIN := $(BUILD_DIR)/$(EXE_NAME).exe
 TARGET_DIR := $(PRJ_NAME)
